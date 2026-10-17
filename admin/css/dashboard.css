@@ -2198,6 +2198,12 @@ header .container .user-actions { flex: 0 0 auto; }
     .dashboard-header > .btn,
     .dashboard-header > button,
     .page-header > .add-product-btn { flex: 0 0 auto; }
+    .admin-page-heading {
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+    .admin-page-heading h1 { flex: 1 1 0%; }
     .search-box i { inset-inline-start: 14px; left: auto; }
     .search-box input { padding-inline: 40px 14px; }
 }
@@ -2272,7 +2278,9 @@ header .container .user-actions { flex: 0 0 auto; }
         padding: 16px 12px !important;
         margin-bottom: 14px !important;
         border-radius: 10px !important;
+        min-width: 0;
     }
+    .chart-box canvas { max-width: 100%; }
     .chart-box h2 {
         font-size: 1.05rem !important;
     }
@@ -3107,6 +3115,4 @@ input:checked + .slider:before {
         padding-bottom: 0 !important;
     }
 }
-
-
 

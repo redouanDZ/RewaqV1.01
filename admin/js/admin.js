@@ -246,6 +246,7 @@ const AdminUI = {
             const titleElement = dashboardHeader.querySelector('h1, h2, h3');
             if (titleElement) {
                 const wrapper = document.createElement('div');
+                wrapper.className = 'admin-page-heading';
                 wrapper.style.display = 'flex';
                 wrapper.style.alignItems = 'center';
                 dashboardHeader.insertBefore(wrapper, titleElement);
