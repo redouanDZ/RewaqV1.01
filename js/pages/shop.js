@@ -241,7 +241,8 @@
       const selectedRatingRadio = document.querySelector('input[name="ratingFilter"]:checked');
       const minRating = Number(selectedRatingRadio ? selectedRatingRadio.value : 0);
 
-      const maxPrice = Number(document.getElementById('priceRange')?.value || 200000);
+      const priceRange = document.getElementById('priceRange');
+      const maxPrice = priceRange ? Number(priceRange.value) : 200000;
       const inStockOnly = document.getElementById('inStockOnly')?.checked || false;
       const sortFilter = document.getElementById('sortFilter')?.value || 'newest';
 
