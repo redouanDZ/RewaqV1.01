@@ -1,4 +1,4 @@
-const CACHE_NAME = 'myshop-pwa-v34e81483c8';
+const CACHE_NAME = 'myshop-pwa-v82a6719f67';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -41,6 +41,7 @@ const STATIC_ASSETS = [
   '/manifest.json'
 ];
 const CACHE_VERSION_ASSETS = [
+  '/js/pages/shop.js',
   '/images/hero-banner.jpg',
   '/images/hero-banner.webp',
   '/images/prod_classic_watch.jpg',

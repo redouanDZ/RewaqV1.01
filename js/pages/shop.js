@@ -736,6 +736,8 @@ window.handleToggleWishlist = handleToggleWishlist;
 (function initFiltersSheet() {
     const mq = window.matchMedia('(max-width: 992px)');
     let lastFocus = null;
+    let portalPlaceholder = null;
+    let portalParent = null;
 
     function els() {
         return {
@@ -745,6 +747,20 @@ window.handleToggleWishlist = handleToggleWishlist;
             closeBtn: document.getElementById('closeFiltersBtn'),
             applyBtn: document.getElementById('applyFiltersBtn')
         };
+    }
+
+    function syncPortal() {
+        const { sidebar, backdrop } = els();
+        if (!sidebar || !backdrop || !portalPlaceholder || !portalParent) return;
+
+        if (mq.matches) {
+            document.body.append(backdrop, sidebar);
+            return;
+        }
+
+        const insertionPoint = portalPlaceholder.nextSibling;
+        portalParent.insertBefore(backdrop, insertionPoint);
+        portalParent.insertBefore(sidebar, backdrop.nextSibling);
     }
 
     function setOpen(open) {
@@ -794,6 +810,13 @@ window.handleToggleWishlist = handleToggleWishlist;
         const { sidebar, backdrop, openBtn, closeBtn, applyBtn } = els();
         if (!sidebar) return;
 
+        if (backdrop) {
+            portalParent = backdrop.parentNode;
+            portalPlaceholder = document.createComment('Mobile shop filters');
+            portalParent.insertBefore(portalPlaceholder, backdrop);
+            syncPortal();
+        }
+
         if (openBtn) openBtn.addEventListener('click', () => setOpen(true));
         if (closeBtn) closeBtn.addEventListener('click', () => setOpen(false));
         if (applyBtn) applyBtn.addEventListener('click', () => setOpen(false));
@@ -801,7 +824,10 @@ window.handleToggleWishlist = handleToggleWishlist;
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && sidebar.classList.contains('open')) setOpen(false);
         });
-        const onMq = () => { if (!mq.matches) setOpen(false); };
+        const onMq = () => {
+            setOpen(false);
+            syncPortal();
+        };
         if (mq.addEventListener) mq.addEventListener('change', onMq); else if (mq.addListener) mq.addListener(onMq);
 
         sidebar.addEventListener('change', refresh);

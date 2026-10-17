@@ -6279,6 +6279,7 @@ input[type="tel"] {
 .legal-sidebar {
     position: sticky;
     top: 95px;
+    min-width: 0;
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
@@ -6331,6 +6332,7 @@ input[type="tel"] {
 
 /* Content Card & Sections */
 .legal-content-card {
+    min-width: 0;
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
