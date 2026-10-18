@@ -930,18 +930,29 @@ body.dark-mode .search-bar input[type="text"] {
 /* ========================================================
    Hero Section (قسم البانر الرئيسي الفاخر)
    ======================================================== */
+.banner-section,
+.hero-section {
+    position: relative;
+    display: block;
+    width: 100%;
+    margin-bottom: 50px !important;
+}
+
 .banner {
     background: linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(30, 27, 75, 0.85) 50%, rgba(15, 23, 42, 0.92) 100%), url('../images/hero-banner.webp') center/cover no-repeat;
     border-radius: var(--radius-lg, 16px);
-    min-height: 480px;
+    position: relative;
+    width: 100%;
+    height: auto !important;
+    min-height: 450px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     color: white;
-    margin: 24px 0 48px;
-    padding: 64px 32px;
-    position: relative;
+    margin: 20px 0 0;
+    padding: 60px 32px;
+    box-sizing: border-box;
     overflow: hidden;
     box-shadow: var(--shadow-xl);
     border: 1px solid rgba(255, 255, 255, 0.12);
@@ -1055,7 +1066,13 @@ body.dark-mode .search-bar input[type="text"] {
 /* ========================================================
    Trust Badges Bar (شريط مميزات المتجر - Micro-copy System)
    ======================================================== */
-.trust-section {
+.trust-section,
+.features-section {
+    position: relative;
+    display: block;
+    width: 100%;
+    clear: both !important;
+    margin-top: 30px !important;
     margin-bottom: var(--section-spacing, 56px);
 }
 
