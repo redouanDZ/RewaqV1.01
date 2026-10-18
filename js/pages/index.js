@@ -55,7 +55,10 @@ let homeProductsList = [];
                                 <img src="${p.image_url || '/images/product-placeholder.jpg'}" srcset="${p.image_url || '/images/product-placeholder.jpg'} 1x, ${p.image_url || '/images/product-placeholder.jpg'} 2x" width="400" height="400" alt="${safeName}" loading="lazy">
                             </a>
                             <div class="product-info">
-                                <span class="product-category">${safeCat}</span>
+                                <div class="product-meta-top">
+                                    <span class="product-category">${safeCat}</span>
+                                    ${getStockBadge(p.stock)}
+                                </div>
                                 <h3 class="product-name">
                                     <a href="product.html?id=${p.id}" title="${safeName}">${safeName}</a>
                                 </h3>
@@ -70,7 +73,6 @@ let homeProductsList = [];
                                         <span class="product-price">${Number(p.price).toLocaleString()} <small data-i18n="common.currency">دج</small></span>
                                         ${hasDiscount ? `<span class="product-old-price">${Number(p.old_price).toLocaleString()} <small data-i18n="common.currency">دج</small></span>` : ''}
                                     </div>
-                                    ${getStockBadge(p.stock)}
                                 </div>
                                 <div class="product-card-actions">
                                     <button type="button" data-action="quickAddToCart" data-id="${p.id}" aria-label="${window.escapeHtml ? window.escapeHtml(window.I18n.t('product.add_to_cart', 'أضف للسلة')) : 'أضف للسلة'} ${safeName}" class="btn btn-primary" ${p.stock <= 0 ? 'disabled' : ''}>
@@ -110,7 +112,10 @@ let homeProductsList = [];
                                 <img src="${p.image_url || '/images/product-placeholder.jpg'}" srcset="${p.image_url || '/images/product-placeholder.jpg'} 1x, ${p.image_url || '/images/product-placeholder.jpg'} 2x" width="400" height="400" alt="${safeName}" loading="lazy">
                             </a>
                             <div class="product-info">
-                                <span class="product-category">${safeCat}</span>
+                                <div class="product-meta-top">
+                                    <span class="product-category">${safeCat}</span>
+                                    ${getStockBadge(p.stock)}
+                                </div>
                                 <h3 class="product-name">
                                     <a href="product.html?id=${p.id}" title="${safeName}">${safeName}</a>
                                 </h3>
@@ -125,7 +130,6 @@ let homeProductsList = [];
                                         <span class="product-price">${Number(p.price).toLocaleString()} <small data-i18n="common.currency">دج</small></span>
                                         <span class="product-old-price">${Number(p.old_price).toLocaleString()} <small data-i18n="common.currency">دج</small></span>
                                     </div>
-                                    ${getStockBadge(p.stock)}
                                 </div>
                                 <div class="product-card-actions">
                                     <button type="button" data-action="quickAddToCart" data-id="${p.id}" class="btn btn-primary" ${p.stock <= 0 ? 'disabled' : ''}>

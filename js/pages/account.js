@@ -366,23 +366,38 @@
                         }
 
                         window.accountWishlistProducts = favoritedProducts;
-                        container.innerHTML = favoritedProducts.map((p, index) => `
-                            <div class="product-card" style="border: 1px solid var(--border-color, #e1e8ed); border-radius: var(--border-radius-sm, 8px); padding: 12px; display: flex; flex-direction: column; justify-content: space-between; background: var(--card-bg, #fff);">
-                                <div>
-                                    <img ${index === 0 ? '' : 'loading="lazy"'} src="${window.escapeHtml(p.image_url || '/images/product-placeholder.jpg')}" alt="${window.escapeHtml(p.name)}" style="width: 100%; height: 140px; object-fit: cover; border-radius: 6px; margin-bottom: 10px;">
-                                    <h4 style="font-size: 0.95rem; margin-bottom: 8px;">${window.escapeHtml(p.name)}</h4>
-                                    <p style="font-weight: bold; color: var(--primary-color); margin-bottom: 12px;">${Number(p.price).toLocaleString()} ${window.I18n ? window.I18n.t('common.currency', 'دج') : 'دج'}</p>
-                                </div>
-                                <div style="display: flex; gap: 8px;">
-                                    <button class="btn" style="flex: 1; font-size: 0.8rem; padding: 6px;" data-action="accountAddToCart" data-args="${p.id}">
-                                        <i class="fas fa-shopping-cart"></i> <span>${window.I18n ? window.I18n.t('common.add_to_cart', 'أضف للسلة') : 'أضف للسلة'}</span>
-                                    </button>
-                                    <button class="btn-sm-danger" style="padding: 6px 10px;" data-action="removeFromWishlist" data-args="${p.id}">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
+                        container.innerHTML = favoritedProducts.map((p, index) => {
+                            const safeName = window.escapeHtml(p.name);
+                            const safeCat = window.escapeHtml(p.category || 'عام');
+                            const currency = window.I18n ? window.I18n.t('common.currency', 'دج') : 'دج';
+                            const addText = window.I18n ? window.I18n.t('common.add_to_cart', 'أضف للسلة') : 'أضف للسلة';
+                            const removeText = window.I18n ? window.I18n.t('wishlist.remove_btn', 'حذف من المفضلة') : 'حذف';
+                            return `
+                            <div class="product-card" id="account-wishlist-${p.id}">
+                                <a href="product.html?id=${p.id}" class="product-image">
+                                    <img ${index === 0 ? '' : 'loading="lazy"'} src="${window.escapeHtml(p.image_url || '/images/product-placeholder.jpg')}" alt="${safeName}">
+                                </a>
+                                <div class="product-info">
+                                    <div class="product-meta-top">
+                                        <span class="product-category">${safeCat}</span>
+                                    </div>
+                                    <h3 class="product-name"><a href="product.html?id=${p.id}">${safeName}</a></h3>
+                                    <div class="product-price-row">
+                                        <div class="price-group">
+                                            <span class="product-price">${Number(p.price).toLocaleString()} <small>${currency}</small></span>
+                                        </div>
+                                    </div>
+                                    <div class="product-card-actions" style="gap: 8px;">
+                                        <button class="btn btn-primary" style="flex: 1; min-height: 40px; font-size: 0.85rem;" data-action="accountAddToCart" data-args="${p.id}">
+                                            <i class="fas fa-cart-plus"></i> <span>${addText}</span>
+                                        </button>
+                                        <button class="btn-sm-danger" style="width: 40px; min-height: 40px; border-radius: var(--radius-sm, 8px); border: 1px solid rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.08); color: var(--danger-color); cursor: pointer; display: flex; align-items: center; justify-content: center;" data-action="removeFromWishlist" data-args="${p.id}" title="${removeText}" aria-label="${removeText}">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        `).join('');
+                        `;}).join('');
                     }
                 } catch (e) {}
             }

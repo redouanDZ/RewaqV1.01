@@ -1,4 +1,4 @@
-const CACHE_NAME = 'myshop-pwa-v6302f6e7cc';
+const CACHE_NAME = 'myshop-pwa-v6ca17786d3';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -41,7 +41,14 @@ const STATIC_ASSETS = [
   '/manifest.json'
 ];
 const CACHE_VERSION_ASSETS = [
+  '/js/pages/index.js',
   '/js/pages/shop.js',
+  '/js/pages/product.js',
+  '/js/pages/cart.js',
+  '/js/pages/checkout.js',
+  '/js/pages/account.js',
+  '/js/pages/wishlist.js',
+  '/js/pages/track-order.js',
   '/images/hero-banner.jpg',
   '/images/hero-banner.webp',
   '/images/prod_classic_watch.jpg',
@@ -145,7 +152,25 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 6. For Same-Origin Static Assets (CSS, JS, images) -> Cache-first with background revalidation
+  // 6. For JS, CSS, and JSON assets -> Network First to ensure instant updates, fallback to cache
+  if (url.pathname.endsWith('.js') || url.pathname.endsWith('.css') || url.pathname.endsWith('.json')) {
+    event.respondWith(
+      fetch(event.request)
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            const copy = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+          }
+          return networkResponse;
+        })
+        .catch(() => {
+          return caches.match(event.request);
+        })
+    );
+    return;
+  }
+
+  // 7. For Static Media Assets (images, fonts) -> Cache-first with background revalidation
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       if (cachedResponse) {

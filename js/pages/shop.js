@@ -379,7 +379,10 @@
             <img src="${product.image_url || '/images/product-placeholder.jpg'}" srcset="${product.image_url || '/images/product-placeholder.jpg'} 1x, ${product.image_url || '/images/product-placeholder.jpg'} 2x" width="400" height="400" alt="${safeName}" loading="lazy">
           </a>
           <div class="product-info">
-            <span class="product-category">${safeCat}</span>
+            <div class="product-meta-top">
+              <span class="product-category">${safeCat}</span>
+              ${getStockBadge(stockNum)}
+            </div>
             <h3 class="product-name">
               <a href="product.html?id=${product.id}" title="${safeName}">${safeName}</a>
             </h3>
@@ -394,7 +397,6 @@
                 <span class="product-price">${window.I18n ? window.I18n.formatNumber(product.price) : Number(product.price).toLocaleString()} <small data-i18n="common.currency">دج</small></span>
                 ${hasDiscount ? `<span class="product-old-price">${window.I18n ? window.I18n.formatNumber(product.old_price) : Number(product.old_price).toLocaleString()} <small data-i18n="common.currency">دج</small></span>` : ''}
               </div>
-              ${getStockBadge(stockNum)}
             </div>
             <div class="product-card-actions">
               <button type="button" data-action="handleAddToCart" data-args="${product.id}" class="btn btn-primary" ${stockNum <= 0 ? 'disabled' : ''}>

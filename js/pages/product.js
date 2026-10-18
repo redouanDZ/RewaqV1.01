@@ -796,27 +796,47 @@ let currentProduct = null;
                 const currency = window.I18n ? window.I18n.t('common.currency', 'دج') : 'دج';
                 const viewDetailsText = window.I18n ? window.I18n.t('product.view_details', 'عرض التفاصيل') : 'عرض التفاصيل';
 
+                const wishlistIds = window.getWishlist ? window.getWishlist() : [];
                 container.innerHTML = similar.map(p => {
                     const locP = getLocalizedProduct(p);
                     const safeName = window.escapeHtml ? window.escapeHtml(locP.name) : locP.name;
+                    const safeCat = window.escapeHtml ? window.escapeHtml(locP.category || 'عام') : (locP.category || 'عام');
+                    const hasDiscount = p.old_price && Number(p.old_price) > Number(p.price);
+                    const discountPct = hasDiscount ? Math.round((1 - Number(p.price) / Number(p.old_price)) * 100) : null;
+                    const stockNum = Number(p.stock) || 0;
+                    const isFav = wishlistIds.includes(p.id);
                     return `
-                    <div class="product-card similar-product">
+                    <div class="product-card similar-product" id="similar-product-${p.id}">
+                        ${hasDiscount ? `<span class="product-badge">-${discountPct}%</span>` : ''}
+                        <button type="button" class="product-wishlist ${isFav ? 'active' : ''}" data-wishlist-id="${p.id}" data-action="toggleWishlist" data-args="${p.id}" data-i18n-title="common.wishlist" aria-label="${window.I18n ? window.I18n.t('common.wishlist', 'المفضلة') : 'المفضلة'}">
+                            <i class="${isFav ? 'fas fa-heart text-danger' : 'far fa-heart'}"></i>
+                        </button>
                         <a href="product.html?id=${p.id}" class="product-image">
-                            <img src="${p.image_url || 'images/product-placeholder.jpg'}" srcset="${p.image_url || 'images/product-placeholder.jpg'} 1x, ${p.image_url || 'images/product-placeholder.jpg'} 2x" width="400" height="400" alt="${safeName}" loading="lazy" >
+                            <img src="${p.image_url || '/images/product-placeholder.jpg'}" srcset="${p.image_url || '/images/product-placeholder.jpg'} 1x, ${p.image_url || '/images/product-placeholder.jpg'} 2x" width="400" height="400" alt="${safeName}" loading="lazy">
                         </a>
                         <div class="product-info">
-                            <h3 class="product-name"><a href="product.html?id=${p.id}">${safeName}</a></h3>
-                            <div class="product-rating" style="margin-bottom: 6px;">
-                                <div class="rating-stars" style="color: #f59e0b; font-size: 0.82rem; display: inline-flex; gap: 2px;">
+                            <div class="product-meta-top">
+                                <span class="product-category">${safeCat}</span>
+                                <span class="product-stock-note ${stockNum <= 0 ? 'is-out' : (stockNum <= 5 ? 'is-low' : '')}">
+                                    <i class="fas ${stockNum <= 0 ? 'fa-times-circle' : (stockNum <= 5 ? 'fa-fire-alt' : 'fa-check-circle')}"></i>
+                                    ${stockNum <= 0 ? (window.I18n ? window.I18n.t('product.out_of_stock', 'نفد المخزون') : 'نفد المخزون') : (stockNum <= 5 ? (window.I18n ? window.I18n.t('product.few_left', 'متبقي {count} قطع! ⚡').replace('{count}', stockNum) : `متبقي ${stockNum} قطع! ⚡`) : (window.I18n ? window.I18n.t('common.in_stock', 'متوفر') : 'متوفر'))}
+                                </span>
+                            </div>
+                            <h3 class="product-name"><a href="product.html?id=${p.id}" title="${safeName}">${safeName}</a></h3>
+                            <div class="product-rating">
+                                <div class="rating-stars" aria-label="${Number(p.rating || 5).toFixed(1)} من 5 نجوم" title="${Number(p.rating || 5).toFixed(1)} من 5 نجوم">
                                     ${renderStars(p.rating)}
                                 </div>
-                                <span class="rating-count" style="font-size: 0.78rem; color: var(--light-text); margin-inline-start: 4px;">(${Number(p.rating || 5).toFixed(1)})</span>
+                                <span class="rating-count">(${Number(p.rating || 5).toFixed(1)})</span>
                             </div>
                             <div class="product-price-row">
-                                <span class="product-price">${Number(p.price).toLocaleString()} <small>${currency}</small></span>
+                                <div class="price-group">
+                                    <span class="product-price">${Number(p.price).toLocaleString()} <small>${currency}</small></span>
+                                    ${hasDiscount ? `<span class="product-old-price">${Number(p.old_price).toLocaleString()} <small>${currency}</small></span>` : ''}
+                                </div>
                             </div>
                             <div class="product-card-actions">
-                                <a href="product.html?id=${p.id}" class="btn btn-secondary"><span data-i18n="product.view_details">${viewDetailsText}</span></a>
+                                <a href="product.html?id=${p.id}" class="btn btn-primary"><i class="fas fa-eye"></i> <span data-i18n="product.view_details">${viewDetailsText}</span></a>
                             </div>
                         </div>
                     </div>`;
