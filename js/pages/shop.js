@@ -388,11 +388,13 @@
                 ${renderStars(product.rating)}
               </div>
               <span class="rating-count">(${Number(product.rating || 5).toFixed(1)})</span>
-              ${getStockBadge(stockNum)}
             </div>
             <div class="product-price-row">
-              <span class="product-price">${window.I18n ? window.I18n.formatNumber(product.price) : Number(product.price).toLocaleString()} <small data-i18n="common.currency">دج</small></span>
-              ${hasDiscount ? `<span class="product-old-price">${window.I18n ? window.I18n.formatNumber(product.old_price) : Number(product.old_price).toLocaleString()} <small data-i18n="common.currency">دج</small></span>` : ''}
+              <div class="price-group">
+                <span class="product-price">${window.I18n ? window.I18n.formatNumber(product.price) : Number(product.price).toLocaleString()} <small data-i18n="common.currency">دج</small></span>
+                ${hasDiscount ? `<span class="product-old-price">${window.I18n ? window.I18n.formatNumber(product.old_price) : Number(product.old_price).toLocaleString()} <small data-i18n="common.currency">دج</small></span>` : ''}
+              </div>
+              ${getStockBadge(stockNum)}
             </div>
             <div class="product-card-actions">
               <button type="button" data-action="handleAddToCart" data-args="${product.id}" class="btn btn-primary" ${stockNum <= 0 ? 'disabled' : ''}>

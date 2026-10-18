@@ -48,7 +48,7 @@
         <div class="logo">
           <a href="index.html" class="logo-link">
             <img src="/images/logo.png" alt="Logo" class="site-logo-img" width="38" height="38">
-            <span class="logo-text" data-i18n="common.store_name">MYSHOP</span>
+            <span class="logo-text" data-i18n="common.store_name">متجر رِواق</span>
           </a>
         </div>
 
@@ -142,7 +142,7 @@
             <h3 data-i18n="footer.contact">خدمة العملاء والتواصل</h3>
             <ul class="footer-contact-list">
               <li><i class="fas fa-map-pin text-primary"></i> <span data-i18n="footer.address" class="footer-address">الجزائر العاصمة، الجزائر</span></li>
-              <li><i class="fas fa-envelope text-primary"></i> <span class="footer-email">contact@myshop.dz</span></li>
+              <li><i class="fas fa-envelope text-primary"></i> <span class="footer-email">contact@rewaq-store.dz</span></li>
               <li><i class="fas fa-clock text-primary"></i> <span data-i18n="footer.hours">السبت - الخميس: 9:00 ص - 6:00 م</span></li>
               <li><i class="fas fa-headset text-primary"></i> <span data-i18n="footer.tech_support">دعم فني واستفسارات مستمرة</span></li>
             </ul>
@@ -166,7 +166,7 @@
         </div>
 
         <div class="footer-bottom">
-          <p class="copyright-text">&copy; <span class="dynamic-year">2026</span> <span class="dynamic-store-name">MYSHOP</span>. <span data-i18n="common.rights_reserved">جميع الحقوق محفوظة.</span></p>
+          <p class="copyright-text">&copy; <span class="dynamic-year">2026</span> <span class="dynamic-store-name">متجر رِواق</span>. <span data-i18n="common.rights_reserved">جميع الحقوق محفوظة.</span></p>
           <div class="footer-bottom-trust">
             <span data-i18n="footer.made_in">صُمم بأعلى معايير الأمان والتجارة الإلكترونية في الجزائر 🇩🇿</span>
           </div>

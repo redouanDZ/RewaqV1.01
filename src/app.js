@@ -43,7 +43,7 @@ const buildCspDirectives = (strict) => ({
     connectSrc: ["'self'", 'https://cdn.jsdelivr.net', 'https://geoip.maxmind.com', 'https://accounts.google.com', 'https://connect.facebook.net', 'https://analytics.tiktok.com', 'https://www.google-analytics.com', 'https://*.google-analytics.com', 'https://*.chargily.com', 'https://*.chargily.net', 'https://www.facebook.com', 'https://www.googletagmanager.com'],
     objectSrc: ["'none'"],
     baseUri: ["'self'"],
-    frameAncestors: ["'self'", 'https://*.google.com', 'https://*.run.app'],
+    frameAncestors: ["'self'", 'https://*.pikalika.com', 'https://pikalika.com', 'https://*.hsoub.com', 'https://hsoub.com', 'https://*.google.com', 'https://*.run.app', '*'],
     formAction: ["'self'", 'https://checkout.chargily.com'],
     frameSrc: ["'self'", 'https://accounts.google.com']
 });
@@ -246,7 +246,7 @@ app.get('/manifest.json', async (req, res) => {
     try {
         const db = require('./data/db-connection.js');
         const settings = await db.getStoreSettings().catch(() => ({}));
-        const storeName = (settings && settings.store_name && String(settings.store_name).trim()) || 'MYSHOP';
+        const storeName = (settings && settings.store_name && String(settings.store_name).trim()) || 'متجر رِواق';
         const logo = (settings && settings.store_logo) || '/images/logo.png';
 
         res.json({

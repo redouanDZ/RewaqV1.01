@@ -21,8 +21,8 @@
         "logout": "Logout"
     },
     "common": {
-        "store_name": "MYSHOP",
-        "store_brand_title": "MYSHOP",
+        "store_name": "Rewaq Store",
+        "store_brand_title": "Rewaq Store",
         "search": "Search...",
         "search_placeholder": "Search for clothing, electronics, perfumes, home goods...",
         "currency": "DZD",
@@ -83,7 +83,7 @@
         "empty_title": "Wishlist is empty",
         "empty_desc": "You haven't added any products to your wishlist yet. Browse the store and save your favorite products here.",
         "explore_btn": "Explore Products Now",
-        "meta_title": "Wishlist | MYSHOP - Saved Favorites",
+        "meta_title": "Wishlist | Rewaq Store - Saved Favorites",
         "page_title": "Wishlist",
         "empty_btn": "Browse Store Now",
         "remove_btn": "Remove from Wishlist",
@@ -105,7 +105,7 @@
         "total": "Total Amount",
         "proceed_checkout": "Proceed to Checkout",
         "continue_shopping": "Continue Shopping",
-        "meta_title": "Shopping Cart | MYSHOP",
+        "meta_title": "Shopping Cart | Rewaq Store",
         "added_products": "Added Products",
         "empty_desc": "You haven't added any products to your cart yet. Explore our wide collection and start shopping now.",
         "browse_shop": "Browse Products Shop",
@@ -138,7 +138,7 @@
         "cod": "Cash on Delivery (COD)",
         "chargily": "Online Payment EDAHABIA / CIB (Chargily Pay)",
         "confirm_order": "Confirm Order",
-        "meta_title": "Checkout | MYSHOP - Secure Ordering",
+        "meta_title": "Checkout | Rewaq Store - Secure Ordering",
         "shipping_info": "Shipping & Delivery Information",
         "name_placeholder": "Enter your full name",
         "phone_label": "Phone Number (Algeria)",
@@ -186,7 +186,7 @@
         "footer_links": "Important Links",
         "footer_support": "Order Support",
         "footer_protection": "Full data and order protection",
-        "footer_copyright": "© 2026 MYSHOP. All rights reserved.",
+        "footer_copyright": "© 2026 Rewaq Store. All rights reserved.",
         "select_wilaya_58": "-- Select your Wilaya (58 Wilayas) --",
         "price_prefix": "Price:",
         "wilaya_fallback": "Wilaya",
@@ -267,7 +267,7 @@
         "details": "Details",
         "add_to_cart": "Add to Cart",
         "order_now_offer": "Order Offer Now",
-        "meta_title": "Product Details | MYSHOP",
+        "meta_title": "Product Details | Rewaq Store",
         "page_title": "Product Details",
         "main_image_alt": "Main Product",
         "color_label": "Color:",
@@ -315,7 +315,7 @@
         "loading_desc": "Product description..."
     },
     "account": {
-        "title": "My Account | MYSHOP",
+        "title": "My Account | Rewaq Store",
         "profile": "Personal Profile",
         "orders": "Order History",
         "addresses": "Shipping Addresses",
@@ -402,11 +402,11 @@
     },
     "home": {
         "meta": {
-            "title": "MYSHOP - Professional Multi-Category E-Commerce Store",
+            "title": "Rewaq Store - Professional Multi-Category E-Commerce Store",
             "description": "Modern and complete Arabic & multi-language e-commerce script featuring cash on delivery, wishlist, and real-time tracking.",
-            "og_title": "MYSHOP - Professional Multi-Category E-Commerce Store",
+            "og_title": "Rewaq Store - Professional Multi-Category E-Commerce Store",
             "og_desc": "Shop the best and latest products at the best prices.",
-            "twitter_title": "MYSHOP - Professional Multi-Category E-Commerce Store",
+            "twitter_title": "Rewaq Store - Professional Multi-Category E-Commerce Store",
             "twitter_desc": "Shop the best and latest products at the best prices."
         },
         "trusted_badge": "🇩🇿 The trusted e-store in Algeria",
@@ -510,7 +510,7 @@
         "data_protected": "Data encrypted and protected",
         "reliable_shopping": "100% reliable shopping experience",
         "important_links": "Important Links",
-        "myshop_pro": "Get a store like this (MYSHOP Pro)",
+        "myshop_pro": "Get a store like this (Rewaq Store Pro)",
         "newsletter_success": "Thank you for subscribing to our newsletter! 🎉 You will receive our offers soon.",
         "newsletter_invalid": "Please enter a valid email address",
         "newsletter_error": "An error occurred while subscribing. Please try again later.",
@@ -584,7 +584,7 @@
         "delete_error": "Error deleting"
     },
     "shop": {
-        "meta_title": "Shop | MYSHOP - Browse Products and Categories",
+        "meta_title": "Shop | Rewaq Store - Browse Products and Categories",
         "title": "Shop",
         "filters_title": "Product Filters",
         "reset_filters": "Reset",
@@ -645,7 +645,7 @@
         "algiers_16": "16 - Algiers (Alger)"
     },
     "track": {
-        "meta_title": "Order Tracking | MYSHOP - Track Your Shipment",
+        "meta_title": "Order Tracking | Rewaq Store - Track Your Shipment",
         "page_title": "Track Order Status",
         "form_desc": "Enter your order number and phone number to check your shipment status.",
         "order_id_label": "Order Number (e.g. 1234 or DZ-2026-1234)",
@@ -671,7 +671,7 @@
         "footer_fast_delivery": "Fast delivery to 58 wilayas"
     },
     "conf": {
-        "meta_title": "Order Confirmation | MYSHOP",
+        "meta_title": "Order Confirmation | Rewaq Store",
         "success_title": "Order Confirmed Successfully!",
         "success_desc": "Thank you for shopping with us. We will process your order soon and our delivery agent will contact you.",
         "order_number": "Order Number:",
@@ -699,7 +699,7 @@
         "meta_title": "Order Invoice - E-Store",
         "store_tagline": "Reliable shopping service in Algeria",
         "store_contact": "Phone: 0550000000 | Email: contact@myshop.dz",
-        "title": "Invoice | MYSHOP",
+        "title": "Invoice | Rewaq Store",
         "invoice_num": "Invoice Number:",
         "order_num": "Order Number:",
         "date": "Date:",
@@ -914,7 +914,7 @@
         "WISHLIST_CHECK_FAILED": "Failed to check wishlist status"
     },
     "terms": {
-        "meta_title": "Terms and Conditions | MYSHOP",
+        "meta_title": "Terms and Conditions | Rewaq Store",
         "meta_description": "Learn about the terms and conditions governing the use of our online store, orders, warranty, shipping, and delivery across Algeria.",
         "badge": "Legal & Regulatory Document",
         "page_title": "Terms and Conditions",
@@ -973,7 +973,7 @@
         "address_label": "Address:"
     },
     "privacy": {
-        "meta_title": "Privacy Policy | MYSHOP",
+        "meta_title": "Privacy Policy | Rewaq Store",
         "meta_description": "Learn how your personal data is collected, used, and protected in our store following the highest security and transparency standards.",
         "badge": "Data Protection & Privacy",
         "page_title": "Privacy Policy & Data Protection",

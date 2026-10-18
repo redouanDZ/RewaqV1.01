@@ -64,11 +64,13 @@ let homeProductsList = [];
                                         ${renderStars(p.rating)}
                                     </div>
                                     <span class="rating-count">(${Number(p.rating || 5).toFixed(1)})</span>
-                                    ${getStockBadge(p.stock)}
                                 </div>
                                 <div class="product-price-row">
-                                    <span class="product-price">${Number(p.price).toLocaleString()} <small data-i18n="common.currency">دج</small></span>
-                                    ${hasDiscount ? `<span class="product-old-price">${Number(p.old_price).toLocaleString()} <small data-i18n="common.currency">دج</small></span>` : ''}
+                                    <div class="price-group">
+                                        <span class="product-price">${Number(p.price).toLocaleString()} <small data-i18n="common.currency">دج</small></span>
+                                        ${hasDiscount ? `<span class="product-old-price">${Number(p.old_price).toLocaleString()} <small data-i18n="common.currency">دج</small></span>` : ''}
+                                    </div>
+                                    ${getStockBadge(p.stock)}
                                 </div>
                                 <div class="product-card-actions">
                                     <button type="button" data-action="quickAddToCart" data-id="${p.id}" aria-label="${window.escapeHtml ? window.escapeHtml(window.I18n.t('product.add_to_cart', 'أضف للسلة')) : 'أضف للسلة'} ${safeName}" class="btn btn-primary" ${p.stock <= 0 ? 'disabled' : ''}>
@@ -117,11 +119,13 @@ let homeProductsList = [];
                                         ${renderStars(p.rating)}
                                     </div>
                                     <span class="rating-count">(${Number(p.rating || 5).toFixed(1)})</span>
-                                    ${getStockBadge(p.stock)}
                                 </div>
                                 <div class="product-price-row">
-                                    <span class="product-price">${Number(p.price).toLocaleString()} <small data-i18n="common.currency">دج</small></span>
-                                    <span class="product-old-price">${Number(p.old_price).toLocaleString()} <small data-i18n="common.currency">دج</small></span>
+                                    <div class="price-group">
+                                        <span class="product-price">${Number(p.price).toLocaleString()} <small data-i18n="common.currency">دج</small></span>
+                                        <span class="product-old-price">${Number(p.old_price).toLocaleString()} <small data-i18n="common.currency">دج</small></span>
+                                    </div>
+                                    ${getStockBadge(p.stock)}
                                 </div>
                                 <div class="product-card-actions">
                                     <button type="button" data-action="quickAddToCart" data-id="${p.id}" class="btn btn-primary" ${p.stock <= 0 ? 'disabled' : ''}>

@@ -21,8 +21,8 @@
         "logout": "Déconnexion"
     },
     "common": {
-        "store_name": "MYSHOP",
-        "store_brand_title": "MYSHOP",
+        "store_name": "Boutique Rewaq",
+        "store_brand_title": "Boutique Rewaq",
         "search": "Recherche...",
         "search_placeholder": "Rechercher des vêtements, électronique, parfums, maison...",
         "currency": "DA",
@@ -83,7 +83,7 @@
         "empty_title": "La liste de souhaits est vide",
         "empty_desc": "Vous n'avez encore ajouté aucun produit à vos favoris. Parcourez la boutique et enregistrez vos produits préférés ici.",
         "explore_btn": "Explorer la boutique",
-        "meta_title": "Favoris | MYSHOP - Produits Sauvegardés",
+        "meta_title": "Favoris | Boutique Rewaq - Produits Sauvegardés",
         "page_title": "Liste de souhaits (Favoris)",
         "empty_btn": "Parcourir la boutique maintenant",
         "remove_btn": "Retirer des favoris",
@@ -105,7 +105,7 @@
         "total": "Montant Total",
         "proceed_checkout": "Passer la commande",
         "continue_shopping": "Continuer vos achats",
-        "meta_title": "Panier d'Achat | MYSHOP",
+        "meta_title": "Panier d'Achat | Boutique Rewaq",
         "added_products": "Produits ajoutés",
         "empty_desc": "Vous n'avez encore ajouté aucun produit à votre panier. Explorez notre large collection et commencez vos achats dès maintenant.",
         "browse_shop": "Parcourir la boutique",
@@ -138,7 +138,7 @@
         "cod": "Paiement à la livraison (COD)",
         "chargily": "Paiement en ligne EDAHABIA / CIB (Chargily Pay)",
         "confirm_order": "Confirmer la commande définitivement",
-        "meta_title": "Commander | MYSHOP - Achat Sécurisé",
+        "meta_title": "Commander | Boutique Rewaq - Achat Sécurisé",
         "shipping_info": "Informations d'expédition et de livraison",
         "name_placeholder": "Entrez votre nom complet",
         "phone_label": "Numéro de téléphone (Algérie)",
@@ -186,7 +186,7 @@
         "footer_links": "Liens importants",
         "footer_support": "Support de commande",
         "footer_protection": "Protection totale des données et des commandes",
-        "footer_copyright": "© 2026 MYSHOP. Tous droits réservés.",
+        "footer_copyright": "© 2026 Boutique Rewaq. Tous droits réservés.",
         "select_wilaya_58": "-- Sélectionnez votre Wilaya (58 Wilayas) --",
         "price_prefix": "Prix:",
         "wilaya_fallback": "Wilaya",
@@ -267,7 +267,7 @@
         "details": "Détails",
         "add_to_cart": "Ajouter au panier",
         "order_now_offer": "Commander l'offre",
-        "meta_title": "Détails du Produit | MYSHOP",
+        "meta_title": "Détails du Produit | Boutique Rewaq",
         "page_title": "Détails du produit",
         "main_image_alt": "Produit principal",
         "color_label": "Couleur:",
@@ -315,7 +315,7 @@
         "loading_desc": "Description du produit..."
     },
     "account": {
-        "title": "Mon Compte | MYSHOP",
+        "title": "Mon Compte | Boutique Rewaq",
         "profile": "Profil personnel",
         "orders": "Historique des commandes",
         "addresses": "Mes adresses de livraison",
@@ -402,11 +402,11 @@
     },
     "home": {
         "meta": {
-            "title": "MYSHOP - Boutique E-Commerce Complète et Multi-Catégories",
+            "title": "Boutique Rewaq - Boutique E-Commerce Complète et Multi-Catégories",
             "description": "Script e-commerce moderne et complet avec paiement à la livraison, panier d'achat, favoris et suivi des commandes.",
-            "og_title": "MYSHOP - Boutique E-Commerce Complète et Multi-Catégories",
+            "og_title": "Boutique Rewaq - Boutique E-Commerce Complète et Multi-Catégories",
             "og_desc": "Achetez les meilleurs produits aux meilleurs prix.",
-            "twitter_title": "MYSHOP - Boutique E-Commerce Complète et Multi-Catégories",
+            "twitter_title": "Boutique Rewaq - Boutique E-Commerce Complète et Multi-Catégories",
             "twitter_desc": "Achetez les meilleurs produits aux meilleurs prix."
         },
         "trusted_badge": "🇩🇿 La boutique de confiance en Algérie",
@@ -510,7 +510,7 @@
         "data_protected": "Données cryptées et protégées",
         "reliable_shopping": "Expérience d'achat 100% fiable",
         "important_links": "Liens importants",
-        "myshop_pro": "Obtenez une boutique comme celle-ci (MYSHOP Pro)",
+        "myshop_pro": "Obtenez une boutique comme celle-ci (Boutique Rewaq Pro)",
         "newsletter_success": "Merci pour votre inscription à la newsletter! 🎉 Vous recevrez bientôt nos offres.",
         "newsletter_invalid": "Veuillez entrer une adresse e-mail valide",
         "newsletter_error": "Une erreur est survenue lors de l'inscription. Veuillez réessayer ultérieurement.",
@@ -584,7 +584,7 @@
         "delete_error": "Erreur lors de la suppression"
     },
     "shop": {
-        "meta_title": "Boutique | MYSHOP - Parcourir les Produits",
+        "meta_title": "Boutique | Boutique Rewaq - Parcourir les Produits",
         "title": "Boutique",
         "filters_title": "Filtres de produits",
         "reset_filters": "Réinitialiser",
@@ -645,7 +645,7 @@
         "algiers_16": "16 - Alger"
     },
     "track": {
-        "meta_title": "Suivi de Commande | MYSHOP - Statut de Livraison",
+        "meta_title": "Suivi de Commande | Boutique Rewaq - Statut de Livraison",
         "page_title": "Suivre l'état de la commande",
         "form_desc": "Entrez votre numéro de commande et votre numéro de téléphone pour vérifier l'état de votre expédition.",
         "order_id_label": "Numéro de commande (ex: 1234 ou DZ-2026-1234)",
@@ -671,7 +671,7 @@
         "footer_fast_delivery": "Livraison rapide vers 58 wilayas"
     },
     "conf": {
-        "meta_title": "Confirmation de Commande | MYSHOP",
+        "meta_title": "Confirmation de Commande | Boutique Rewaq",
         "success_title": "Commande confirmée avec succès !",
         "success_desc": "Merci pour vos achats. Nous traiterons votre commande sous peu et notre livreur vous contactera.",
         "order_number": "Numéro de commande:",
@@ -699,7 +699,7 @@
         "meta_title": "Facture de commande - E-Store",
         "store_tagline": "Service d'achat fiable en Algérie",
         "store_contact": "Tél: 0550000000 | Email: contact@myshop.dz",
-        "title": "Facture | MYSHOP",
+        "title": "Facture | Boutique Rewaq",
         "invoice_num": "Numéro de facture:",
         "order_num": "Numéro de commande:",
         "date": "Date:",
@@ -914,7 +914,7 @@
         "WISHLIST_CHECK_FAILED": "Échec de vérification du statut des favoris"
     },
     "terms": {
-        "meta_title": "Conditions Générales | MYSHOP",
+        "meta_title": "Conditions Générales | Boutique Rewaq",
         "meta_description": "Découvrez les conditions générales régissant l'utilisation de notre boutique en ligne, les achats, la garantie, l'expédition et la livraison en Algérie.",
         "badge": "Document légal et réglementaire",
         "page_title": "Conditions Générales d'Utilisation et de Vente",
@@ -973,7 +973,7 @@
         "address_label": "Adresse :"
     },
     "privacy": {
-        "meta_title": "Politique de Confidentialité | MYSHOP",
+        "meta_title": "Politique de Confidentialité | Boutique Rewaq",
         "meta_description": "Découvrez comment vos données personnelles sont collectées, utilisées et protégées dans notre boutique selon les normes les plus strictes.",
         "badge": "Protection des données et confidentialité",
         "page_title": "Politique de Confidentialité et Protection des Données",

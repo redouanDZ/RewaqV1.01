@@ -1,6 +1,6 @@
-# 📦 حقيبة التسويق والبيع الشاملة — MYSHOP Pro Marketing & Sales Kit
+# 📦 حقيبة التسويق والبيع الشاملة — متجر رِواق برو Marketing & Sales Kit
 
-هذا الملف يحتوي على كافة النصوص والرسائل الإعلانية الجاهزة للنسخ واللصق فوراً للبدء في تسويق وبيع متجر **MYSHOP Pro** للتجار والمسوقين في الجزائر والوطن العربي.
+هذا الملف يحتوي على كافة النصوص والرسائل الإعلانية الجاهزة للنسخ واللصق فوراً للبدء في تسويق وبيع متجر **متجر رِواق برو** للتجار والمسوقين في الجزائر والوطن العربي.
 
 ---
 
@@ -22,7 +22,7 @@
 ```text
 🚀 حاب تضاعف مبيعاتك وتتخلص من مشاكل ووكومرس وشوبيفاي؟
 
-لكل تاجر ومسوق إلكتروني في الجزائر 🇩🇿، متجر MYSHOP Pro جاهز الآن ليمنحك تجربة بيع استثنائية وبدون أي اشتراكات شهرية! 💰
+لكل تاجر ومسوق إلكتروني في الجزائر 🇩🇿، متجر متجر رِواق برو جاهز الآن ليمنحك تجربة بيع استثنائية وبدون أي اشتراكات شهرية! 💰
 
 🔥 الميزات التي تجعل متجرك يتفوق على المنافسين:
 ✅ سرعة تحميل خيالية (أقل من ثانية) ترفع نسبة الشراء (Conversion Rate).
@@ -112,11 +112,11 @@ https://myshop-aa9v.onrender.com/admin/index.html
 ## 4️⃣ نص بيع الكود المصدري للمطورين والوكالات (English Listing Copy)
 
 **Title:**
-> MYSHOP Pro — Production-Ready E-Commerce Platform with Telegram Alerts, Chargily Pay, 58 Wilayas & Profit Tracker
+> متجر رِواق برو — Production-Ready E-Commerce Platform with Telegram Alerts, Chargily Pay, 58 Wilayas & Profit Tracker
 
 **Description:**
 ```text
-MYSHOP Pro is a high-performance, full-stack e-commerce web application built with Node.js, Express, and MySQL 8. Designed specifically for high conversion rates and Algerian / MENA market readiness.
+متجر رِواق برو is a high-performance, full-stack e-commerce web application built with Node.js, Express, and MySQL 8. Designed specifically for high conversion rates and Algerian / MENA market readiness.
 
 🚀 Key Technical Highlights:
 - Blazing Fast Performance (<1s load time, zero WordPress bloat).

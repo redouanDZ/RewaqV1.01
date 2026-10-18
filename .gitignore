@@ -17,3 +17,6 @@ Thumbs.db
 
 # tool-generated diff dumps
 diff_*.txt
+
+# pikalika presentation assets
+images/pikalika/
