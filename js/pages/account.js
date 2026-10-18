@@ -378,9 +378,6 @@
                                     <img ${index === 0 ? '' : 'loading="lazy"'} src="${window.escapeHtml(p.image_url || '/images/product-placeholder.jpg')}" alt="${safeName}">
                                 </a>
                                 <div class="product-info">
-                                    <div class="product-meta-top">
-                                        <span class="product-category">${safeCat}</span>
-                                    </div>
                                     <h3 class="product-name"><a href="product.html?id=${p.id}">${safeName}</a></h3>
                                     <div class="product-price-row">
                                         <div class="price-group">

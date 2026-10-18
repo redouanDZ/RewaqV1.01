@@ -379,19 +379,9 @@
             <img src="${product.image_url || '/images/product-placeholder.jpg'}" srcset="${product.image_url || '/images/product-placeholder.jpg'} 1x, ${product.image_url || '/images/product-placeholder.jpg'} 2x" width="400" height="400" alt="${safeName}" loading="lazy">
           </a>
           <div class="product-info">
-            <div class="product-meta-top">
-              <span class="product-category">${safeCat}</span>
-              ${getStockBadge(stockNum)}
-            </div>
             <h3 class="product-name">
               <a href="product.html?id=${product.id}" title="${safeName}">${safeName}</a>
             </h3>
-            <div class="product-rating">
-              <div class="rating-stars" aria-label="${Number(product.rating || 5).toFixed(1)} من 5 نجوم" title="${Number(product.rating || 5).toFixed(1)} من 5 نجوم">
-                ${renderStars(product.rating)}
-              </div>
-              <span class="rating-count">(${Number(product.rating || 5).toFixed(1)})</span>
-            </div>
             <div class="product-price-row">
               <div class="price-group">
                 <span class="product-price">${window.I18n ? window.I18n.formatNumber(product.price) : Number(product.price).toLocaleString()} <small data-i18n="common.currency">دج</small></span>

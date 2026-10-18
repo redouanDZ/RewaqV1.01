@@ -55,19 +55,9 @@ let homeProductsList = [];
                                 <img src="${p.image_url || '/images/product-placeholder.jpg'}" srcset="${p.image_url || '/images/product-placeholder.jpg'} 1x, ${p.image_url || '/images/product-placeholder.jpg'} 2x" width="400" height="400" alt="${safeName}" loading="lazy">
                             </a>
                             <div class="product-info">
-                                <div class="product-meta-top">
-                                    <span class="product-category">${safeCat}</span>
-                                    ${getStockBadge(p.stock)}
-                                </div>
                                 <h3 class="product-name">
                                     <a href="product.html?id=${p.id}" title="${safeName}">${safeName}</a>
                                 </h3>
-                                <div class="product-rating">
-                                    <div class="rating-stars" aria-label="${Number(p.rating || 5).toFixed(1)} من 5 نجوم" title="${Number(p.rating || 5).toFixed(1)} من 5 نجوم">
-                                        ${renderStars(p.rating)}
-                                    </div>
-                                    <span class="rating-count">(${Number(p.rating || 5).toFixed(1)})</span>
-                                </div>
                                 <div class="product-price-row">
                                     <div class="price-group">
                                         <span class="product-price">${Number(p.price).toLocaleString()} <small data-i18n="common.currency">دج</small></span>
@@ -112,19 +102,9 @@ let homeProductsList = [];
                                 <img src="${p.image_url || '/images/product-placeholder.jpg'}" srcset="${p.image_url || '/images/product-placeholder.jpg'} 1x, ${p.image_url || '/images/product-placeholder.jpg'} 2x" width="400" height="400" alt="${safeName}" loading="lazy">
                             </a>
                             <div class="product-info">
-                                <div class="product-meta-top">
-                                    <span class="product-category">${safeCat}</span>
-                                    ${getStockBadge(p.stock)}
-                                </div>
                                 <h3 class="product-name">
                                     <a href="product.html?id=${p.id}" title="${safeName}">${safeName}</a>
                                 </h3>
-                                <div class="product-rating">
-                                    <div class="rating-stars" aria-label="${Number(p.rating || 5).toFixed(1)} من 5 نجوم" title="${Number(p.rating || 5).toFixed(1)} من 5 نجوم">
-                                        ${renderStars(p.rating)}
-                                    </div>
-                                    <span class="rating-count">(${Number(p.rating || 5).toFixed(1)})</span>
-                                </div>
                                 <div class="product-price-row">
                                     <div class="price-group">
                                         <span class="product-price">${Number(p.price).toLocaleString()} <small data-i18n="common.currency">دج</small></span>

@@ -815,20 +815,7 @@ let currentProduct = null;
                             <img src="${p.image_url || '/images/product-placeholder.jpg'}" srcset="${p.image_url || '/images/product-placeholder.jpg'} 1x, ${p.image_url || '/images/product-placeholder.jpg'} 2x" width="400" height="400" alt="${safeName}" loading="lazy">
                         </a>
                         <div class="product-info">
-                            <div class="product-meta-top">
-                                <span class="product-category">${safeCat}</span>
-                                <span class="product-stock-note ${stockNum <= 0 ? 'is-out' : (stockNum <= 5 ? 'is-low' : '')}">
-                                    <i class="fas ${stockNum <= 0 ? 'fa-times-circle' : (stockNum <= 5 ? 'fa-fire-alt' : 'fa-check-circle')}"></i>
-                                    ${stockNum <= 0 ? (window.I18n ? window.I18n.t('product.out_of_stock', 'نفد المخزون') : 'نفد المخزون') : (stockNum <= 5 ? (window.I18n ? window.I18n.t('product.few_left', 'متبقي {count} قطع! ⚡').replace('{count}', stockNum) : `متبقي ${stockNum} قطع! ⚡`) : (window.I18n ? window.I18n.t('common.in_stock', 'متوفر') : 'متوفر'))}
-                                </span>
-                            </div>
                             <h3 class="product-name"><a href="product.html?id=${p.id}" title="${safeName}">${safeName}</a></h3>
-                            <div class="product-rating">
-                                <div class="rating-stars" aria-label="${Number(p.rating || 5).toFixed(1)} من 5 نجوم" title="${Number(p.rating || 5).toFixed(1)} من 5 نجوم">
-                                    ${renderStars(p.rating)}
-                                </div>
-                                <span class="rating-count">(${Number(p.rating || 5).toFixed(1)})</span>
-                            </div>
                             <div class="product-price-row">
                                 <div class="price-group">
                                     <span class="product-price">${Number(p.price).toLocaleString()} <small>${currency}</small></span>
