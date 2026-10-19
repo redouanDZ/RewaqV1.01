@@ -29,7 +29,7 @@
   "author": "",
   "license": "UNLICENSED",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
+    "bcryptjs": "^3.0.3",
     "compression": "^1.8.2",
     "cors": "^2.8.5",
     "dotenv": "^17.4.2",
