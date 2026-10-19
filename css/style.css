@@ -420,7 +420,9 @@ header#main-header, header {
     border: 1.5px solid var(--border-color);
     border-radius: var(--radius-full, 999px);
     overflow: hidden;
-    padding: 4px 6px 4px 14px;
+    padding: 4px 6px;
+    padding-inline-start: 16px;
+    padding-inline-end: 6px;
     gap: 10px;
     height: 44px;
     min-height: 44px;
@@ -5092,7 +5094,9 @@ body.dark-mode .mobile-nav-item.active {
 
     .header-search-form {
         width: 100% !important;
-        padding: 3px 4px 3px 12px !important;
+        padding: 3px 4px !important;
+        padding-inline-start: 14px !important;
+        padding-inline-end: 4px !important;
         border-radius: 999px !important;
         gap: 8px !important;
         box-sizing: border-box !important;
@@ -5669,7 +5673,9 @@ input[type="tel"] {
         max-width: 100% !important;
         min-height: 44px !important;
         border-radius: 999px !important;
-        padding: 3px 4px 3px 12px !important;
+        padding: 3px 4px !important;
+        padding-inline-start: 14px !important;
+        padding-inline-end: 4px !important;
         gap: 8px !important;
         box-sizing: border-box !important;
     }
@@ -6436,7 +6442,9 @@ input[type="tel"] {
         margin: 2px 0 0 0 !important;
     }
     .header-search-form {
-        padding: 2px 4px 2px 10px !important;
+        padding: 2px 4px !important;
+        padding-inline-start: 12px !important;
+        padding-inline-end: 4px !important;
         border-radius: 999px !important;
         gap: 6px !important;
     }
@@ -6774,7 +6782,9 @@ input[type="tel"] {
     overflow: hidden;
 }
 .header-search-form {
-    padding: 4px 6px 4px 14px;
+    padding: 4px 6px;
+    padding-inline-start: 16px;
+    padding-inline-end: 6px;
     gap: 10px;
 }
 [data-theme="dark"] .header-search-form input[type="text"],
