@@ -259,8 +259,8 @@
     // Sync counters
     syncCounters();
 
-    // Trigger i18n translation on newly injected layout elements
-    if (window.I18n && typeof window.I18n.translatePage === 'function') {
+    // Trigger i18n translation on newly injected layout elements only if language is not Arabic
+    if (window.I18n && typeof window.I18n.translatePage === 'function' && window.I18n.currentLang !== 'ar') {
       window.I18n.translatePage();
     }
   }

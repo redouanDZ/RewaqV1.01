@@ -94,7 +94,7 @@ let homeProductsList = [];
                             const remaining = products.slice(4);
                             const fragment = document.createRange().createContextualFragment(remaining.map(p => buildProductCardHtml(p, wishlistIds, false)).join(''));
                             featuredContainer.appendChild(fragment);
-                            if (window.I18n) window.I18n.translatePage(featuredContainer);
+                            if (window.I18n && window.I18n.currentLang !== 'ar') window.I18n.translatePage(featuredContainer);
                         });
                     }
                 }
@@ -114,10 +114,9 @@ let homeProductsList = [];
                     yieldToMain().then(() => {
                         const wishlistIds = window.getWishlist ? window.getWishlist() : [];
                         offersContainer.innerHTML = discountedProducts.slice(0, 8).map(p => buildProductCardHtml(p, wishlistIds, true)).join('');
-                        if (window.I18n) window.I18n.translatePage(offersContainer);
+                        if (window.I18n && window.I18n.currentLang !== 'ar') window.I18n.translatePage(offersContainer);
                     });
                 }
-                if (window.I18n) window.I18n.translatePage();
             } catch (error) {
                 // Silent error handling
             }
@@ -210,3 +209,28 @@ document.addEventListener('error', function(e) {
 window.handleHomeToggleWishlist = handleHomeToggleWishlist;
 window.quickAddToCart = quickAddToCart;
 window.loadHomeProducts = loadHomeProducts;
+
+// Schedule loading of secondary interactive modules on idle or first interaction to minimize TBT
+(function scheduleSecondaryModules() {
+    let loaded = false;
+    function loadModules() {
+        if (loaded) return;
+        loaded = true;
+        ['js/user-system.js', 'js/cart.js', 'js/wishlist.js'].forEach(src => {
+            const s = document.createElement('script');
+            s.src = src;
+            s.defer = true;
+            document.body.appendChild(s);
+        });
+    }
+
+    if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(loadModules, { timeout: 2000 });
+    } else {
+        setTimeout(loadModules, 600);
+    }
+
+    ['touchstart', 'mouseover', 'scroll', 'click', 'keydown'].forEach(evt => {
+        window.addEventListener(evt, loadModules, { once: true, passive: true });
+    });
+})();

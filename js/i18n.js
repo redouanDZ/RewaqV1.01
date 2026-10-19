@@ -95,13 +95,19 @@ window.I18n = {
                 const val = this.getValue(dict, key);
                 if (val !== null && val !== undefined) {
                     if (el.tagName === 'META') {
-                        el.setAttribute('content', val);
+                        if (el.getAttribute('content') !== val) el.setAttribute('content', val);
                     } else if (el.tagName === 'INPUT' && ('value' in el) && ['button', 'submit'].includes(el.type)) {
-                        el.value = val;
+                        if (el.value !== val) el.value = val;
                     } else if (el.tagName === 'IMG') {
-                        el.alt = val;
+                        if (el.alt !== val) el.alt = val;
                     } else {
-                        el.innerHTML = val;
+                        const strVal = String(val);
+                        // تجنب إعادة كتابة innerHTML إذا لم تتغير القيمة لمنع Layout Thrashing و Style recalculations
+                        if (strVal.includes('<')) {
+                            if (el.innerHTML !== strVal) el.innerHTML = strVal;
+                        } else {
+                            if (el.textContent !== strVal) el.textContent = strVal;
+                        }
                     }
                 }
             }
@@ -112,7 +118,7 @@ window.I18n = {
             const key = el.getAttribute('data-i18n-placeholder');
             if (key) {
                 const val = this.getValue(dict, key);
-                if (val !== null && val !== undefined) {
+                if (val !== null && val !== undefined && el.placeholder !== val) {
                     el.placeholder = val;
                 }
             }
@@ -123,7 +129,7 @@ window.I18n = {
             const key = el.getAttribute('data-i18n-title');
             if (key) {
                 const val = this.getValue(dict, key);
-                if (val !== null && val !== undefined) {
+                if (val !== null && val !== undefined && el.title !== val) {
                     el.title = val;
                 }
             }
@@ -132,7 +138,9 @@ window.I18n = {
         root.querySelectorAll('[data-i18n-aria-label]').forEach(el => {
             const key = el.getAttribute('data-i18n-aria-label');
             const val = key ? this.getValue(dict, key) : null;
-            if (val !== null && val !== undefined) el.setAttribute('aria-label', val);
+            if (val !== null && val !== undefined && el.getAttribute('aria-label') !== val) {
+                el.setAttribute('aria-label', val);
+            }
         });
     },
 
@@ -262,5 +270,7 @@ window.I18n = {
 // تشغيل التهيئة فور تحميل الـ DOM
 document.addEventListener('DOMContentLoaded', () => {
     window.I18n.setupLanguageSwitchers();
-    window.I18n.setLanguage(window.I18n.currentLang);
+    if (window.I18n.currentLang && window.I18n.currentLang !== 'ar') {
+        window.I18n.setLanguage(window.I18n.currentLang);
+    }
 });
