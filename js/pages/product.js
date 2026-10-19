@@ -1,5 +1,19 @@
 let currentProduct = null;
-        let selectedVariant = null;
+let selectedVariant = null;
+
+const urlParams = new URLSearchParams(window.location.search);
+const productId = urlParams.get('id') || 1;
+const initialProductFetch = fetch(`/api/products/${productId}`)
+    .then(r => r.ok ? r.json() : null)
+    .catch(() => null);
+
+function transformProductImage(url, width = 600, height = 600) {
+    if (!url) return '/images/product-placeholder.jpg';
+    if (url.includes('res.cloudinary.com') && url.includes('/upload/') && !url.includes('/upload/w_')) {
+        return url.replace('/upload/', `/upload/w_${width},h_${height},c_fill,f_auto,q_auto/`);
+    }
+    return url;
+}
 
         const demoProductTranslations = {
             1: {
@@ -253,19 +267,20 @@ let currentProduct = null;
             loadProductOptions(product);
             loadExpressWilayas();
             updateExpressCalculations();
-            if (window.I18n && typeof window.I18n.translatePage === 'function') {
+            if (window.I18n && typeof window.I18n.translatePage === 'function' && window.I18n.currentLang !== 'ar') {
                 window.I18n.translatePage();
             }
         }
 
         async function loadProductDetails() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const productId = urlParams.get('id') || 1;
-
             try {
-                const response = await fetch(`/api/products/${productId}`);
-                if (!response.ok) throw new Error(window.I18n ? window.I18n.t('messages.fetch_product_error', 'خطأ في جلب المنتج') : 'خطأ في جلب المنتج');
-                currentProduct = await response.json();
+                let product = await initialProductFetch;
+                if (!product) {
+                    const response = await fetch(`/api/products/${productId}`);
+                    if (!response.ok) throw new Error(window.I18n ? window.I18n.t('messages.fetch_product_error', 'خطأ في جلب المنتج') : 'خطأ في جلب المنتج');
+                    product = await response.json();
+                }
+                currentProduct = product;
 
                 const thumbnails = document.getElementById('thumbnail-images');
                 const mainImage = document.getElementById('main-image');
@@ -286,7 +301,8 @@ let currentProduct = null;
                 if (thumbnails) {
                     thumbnails.innerHTML = images.map((img, index) => {
                         const altText = window.I18n ? window.I18n.t('product.image_alt', 'صورة {index}').replace('{index}', index + 1) : `Image ${index + 1}`;
-                        return `<img src="${img}" srcset="${img} 1x, ${img} 2x" width="80" height="80" alt="${altText}" class="${index === 0 ? 'active' : ''}" data-action="switchImage" data-index="${index}" ${index === 0 ? '' : 'loading="lazy"'}>`;
+                        const thumbImg = transformProductImage(img, 120, 120);
+                        return `<img src="${thumbImg}" width="80" height="80" alt="${altText}" class="${index === 0 ? 'active' : ''}" data-action="switchImage" data-index="${index}" ${index === 0 ? '' : 'loading="lazy"'}>`;
                     }).join('');
                 }
                 if (mainImage) {
@@ -302,8 +318,8 @@ let currentProduct = null;
                         revealImage();
                     };
 
-                    mainImage.src = images[0];
-                    mainImage.srcset = `${images[0]} 1x, ${images[0]} 2x`;
+                    const mainImgSrc = transformProductImage(images[0], 600, 600);
+                    mainImage.src = mainImgSrc;
 
                     if (mainImage.complete && mainImage.naturalWidth > 0) {
                         revealImage();
@@ -313,7 +329,11 @@ let currentProduct = null;
                 renderProductUI(currentProduct, window.I18n ? window.I18n.currentLang : 'ar');
                 updateProductRating(currentProduct.rating || 5.0);
 
-                loadSimilarProducts(currentProduct.category);
+                if ('requestIdleCallback' in window) {
+                    window.requestIdleCallback(() => loadSimilarProducts(currentProduct.category), { timeout: 2000 });
+                } else {
+                    setTimeout(() => loadSimilarProducts(currentProduct.category), 300);
+                }
             } catch (error) {
                 console.error('Error loading product:', error);
                 const container = document.querySelector('.product-details .container');
@@ -683,6 +703,9 @@ let currentProduct = null;
 
         async function addToWishlist() {
             if (!currentProduct) return;
+            if (typeof loadSecondaryModules === 'function' && !window.WishlistManager) {
+                loadSecondaryModules();
+            }
             if (window.WishlistManager) {
                 const added = await window.WishlistManager.toggleItem(currentProduct);
                 const heartBtn = document.querySelector('.add-to-wishlist i');
@@ -691,7 +714,8 @@ let currentProduct = null;
                     heartBtn.style.color = added ? '#ef4444' : '';
                 }
             } else {
-                alert(window.I18n.t('messages.add_wishlist_success', 'تمت إضافة المنتج إلى قائمة الرغبات'));
+                if (window.showToast) window.showToast(window.I18n ? window.I18n.t('messages.add_wishlist_success', 'تمت إضافة المنتج إلى قائمة الرغبات') : 'تمت إضافة المنتج إلى قائمة الرغبات', 'success');
+                else alert(window.I18n.t('messages.add_wishlist_success', 'تمت إضافة المنتج إلى قائمة الرغبات'));
             }
         }
 
@@ -796,7 +820,9 @@ let currentProduct = null;
                 const currency = window.I18n ? window.I18n.t('common.currency', 'دج') : 'دج';
                 const viewDetailsText = window.I18n ? window.I18n.t('product.view_details', 'عرض التفاصيل') : 'عرض التفاصيل';
 
-                const wishlistIds = window.getWishlist ? window.getWishlist() : [];
+                const wishlistIds = (window.getWishlist && typeof window.getWishlist === 'function')
+                    ? window.getWishlist()
+                    : (() => { try { return JSON.parse(localStorage.getItem('wishlist') || '[]'); } catch(e) { return []; } })();
                 container.innerHTML = similar.map(p => {
                     const locP = getLocalizedProduct(p);
                     const safeName = window.escapeHtml ? window.escapeHtml(locP.name) : locP.name;
@@ -805,6 +831,7 @@ let currentProduct = null;
                     const discountPct = hasDiscount ? Math.round((1 - Number(p.price) / Number(p.old_price)) * 100) : null;
                     const stockNum = Number(p.stock) || 0;
                     const isFav = wishlistIds.includes(p.id);
+                    const simImg = transformProductImage(p.image_url || '/images/product-placeholder.jpg', 300, 300);
                     return `
                     <div class="product-card similar-product" id="similar-product-${p.id}" style="height: auto !important;">
                         ${hasDiscount ? `<span class="product-badge">-${discountPct}%</span>` : ''}
@@ -812,7 +839,7 @@ let currentProduct = null;
                             <i class="${isFav ? 'fas fa-heart text-danger' : 'far fa-heart'}"></i>
                         </button>
                         <a href="product.html?id=${p.id}" class="product-image">
-                            <img src="${p.image_url || '/images/product-placeholder.jpg'}" srcset="${p.image_url || '/images/product-placeholder.jpg'} 1x, ${p.image_url || '/images/product-placeholder.jpg'} 2x" width="400" height="400" alt="${safeName}" loading="lazy">
+                            <img src="${simImg}" width="400" height="400" alt="${safeName}" loading="lazy">
                         </a>
                         <div class="product-info">
                             <h3 class="product-name"><a href="product.html?id=${p.id}" title="${safeName}">${safeName}</a></h3>
@@ -828,7 +855,7 @@ let currentProduct = null;
                         </div>
                     </div>`;
                 }).join('');
-                if (window.I18n && typeof window.I18n.translatePage === 'function') {
+                if (window.I18n && typeof window.I18n.translatePage === 'function' && window.I18n.currentLang !== 'ar') {
                     window.I18n.translatePage(container);
                 }
             } catch (error) {
@@ -1120,3 +1147,30 @@ document.addEventListener('error', function(e) {
         }
     }
 }, true);
+
+// Schedule loading of secondary interactive modules on idle or first interaction to minimize TBT
+let secondaryModulesLoaded = false;
+function loadSecondaryModules() {
+    if (secondaryModulesLoaded) return;
+    secondaryModulesLoaded = true;
+    ['js/user-system.js', 'js/cart.js', 'js/wishlist.js'].forEach(src => {
+        if (!document.querySelector(`script[src="${src}"]`)) {
+            const s = document.createElement('script');
+            s.src = src;
+            s.defer = true;
+            document.body.appendChild(s);
+        }
+    });
+}
+window.loadSecondaryModules = loadSecondaryModules;
+
+if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(loadSecondaryModules, { timeout: 2000 });
+} else {
+    setTimeout(loadSecondaryModules, 600);
+}
+
+['touchstart', 'mouseover', 'scroll', 'click', 'keydown'].forEach(evt => {
+    window.addEventListener(evt, loadSecondaryModules, { once: true, passive: true });
+});
+
