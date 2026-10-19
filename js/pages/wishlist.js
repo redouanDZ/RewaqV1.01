@@ -1,83 +1,92 @@
 
-        let wishlistProducts = [];
+let wishlistProducts = [];
 
-        async function renderWishlist() {
-            const container = document.getElementById('wishlistContainer');
-            const headerCount = document.getElementById('wishlistHeaderCount');
+function transformProductImage(url) {
+    if (!url) return '/images/product-placeholder.jpg';
+    if (url.includes('res.cloudinary.com') && url.includes('/upload/') && !url.includes('/upload/w_')) {
+        return url.replace('/upload/', '/upload/w_400,h_400,c_fill,f_auto,q_auto/');
+    }
+    return url;
+}
 
-            // Ensure dictionary is loaded for current language before rendering dynamic texts
-            if (window.I18n && typeof window.I18n.loadDictionary === 'function') {
-                await window.I18n.loadDictionary(window.I18n.currentLang);
-            }
+async function renderWishlist() {
+    const container = document.getElementById('wishlistContainer');
+    const headerCount = document.getElementById('wishlistHeaderCount');
 
-            wishlistProducts = await window.WishlistManager.getItems();
+    // Ensure dictionary is loaded only if current language is not Arabic
+    if (window.I18n && typeof window.I18n.loadDictionary === 'function' && window.I18n.currentLang !== 'ar') {
+        await window.I18n.loadDictionary(window.I18n.currentLang);
+    }
 
-            const countText = window.I18n ? window.I18n.t('wishlist.products_count', 'منتجات') : 'منتجات';
-            if (headerCount) {
-                headerCount.innerHTML = `<span id="wishlistCountNum">${wishlistProducts.length}</span> <span data-i18n="wishlist.products_count">${countText}</span>`;
-            }
+    wishlistProducts = await window.WishlistManager.getItems();
 
-            if (!wishlistProducts.length) {
-                const emptyTitle = window.I18n ? window.I18n.t('wishlist.empty_title', 'قائمة الرغبات فارغة') : 'قائمة الرغبات فارغة';
-                const emptyMsg = window.I18n ? window.I18n.t('wishlist.empty_msg_alt', 'لم تقم بحفظ أي منتجات في المفضلة بعد. استكشف متجرنا وأضف المنتجات التي تنال إعجابك!') : 'لم تقم بحفظ أي منتجات في المفضلة بعد. استكشف متجرنا وأضف المنتجات التي تنال إعجابك!';
-                const emptyBtn = window.I18n ? window.I18n.t('wishlist.empty_btn', 'تصفح المنتجات الآن') : 'تصفح المنتجات الآن';
+    const countText = window.I18n ? window.I18n.t('wishlist.products_count', 'منتجات') : 'منتجات';
+    if (headerCount) {
+        headerCount.innerHTML = `<span id="wishlistCountNum">${wishlistProducts.length}</span> <span data-i18n="wishlist.products_count">${countText}</span>`;
+    }
 
-                container.innerHTML = `
-                    <div class="empty-wishlist">
-                        <i class="far fa-heart"></i>
-                        <h3><span data-i18n="wishlist.empty_title">${emptyTitle}</span></h3>
-                        <p><span data-i18n="wishlist.empty_msg_alt">${emptyMsg}</span></p>
-                        <a href="shop.html" class="btn-explore"><i class="fas fa-shopping-bag"></i> <span data-i18n="wishlist.empty_btn">${emptyBtn}</span></a>
+    if (!wishlistProducts.length) {
+        const emptyTitle = window.I18n ? window.I18n.t('wishlist.empty_title', 'قائمة الرغبات فارغة') : 'قائمة الرغبات فارغة';
+        const emptyMsg = window.I18n ? window.I18n.t('wishlist.empty_msg_alt', 'لم تقم بحفظ أي منتجات في المفضلة بعد. استكشف متجرنا وأضف المنتجات التي تنال إعجابك!') : 'لم تقم بحفظ أي منتجات في المفضلة بعد. استكشف متجرنا وأضف المنتجات التي تنال إعجابك!';
+        const emptyBtn = window.I18n ? window.I18n.t('wishlist.empty_btn', 'تصفح المنتجات الآن') : 'تصفح المنتجات الآن';
+
+        container.innerHTML = `
+            <div class="empty-wishlist">
+                <i class="far fa-heart"></i>
+                <h3><span data-i18n="wishlist.empty_title">${emptyTitle}</span></h3>
+                <p><span data-i18n="wishlist.empty_msg_alt">${emptyMsg}</span></p>
+                <a href="shop.html" class="btn-explore"><i class="fas fa-shopping-bag"></i> <span data-i18n="wishlist.empty_btn">${emptyBtn}</span></a>
+            </div>
+        `;
+        if (window.I18n && typeof window.I18n.translatePage === 'function' && window.I18n.currentLang !== 'ar') {
+            window.I18n.translatePage(container);
+        }
+        return;
+    }
+
+    const currencyText = window.I18n ? window.I18n.t("common.currency", "دج") : "دج";
+    const removeTitle = window.I18n ? window.I18n.t("wishlist.remove_btn", "حذف من المفضلة") : "حذف من المفضلة";
+    const generalCat = window.I18n ? window.I18n.t('categories.general', 'عام') : 'عام';
+    const outOfStockText = window.I18n ? window.I18n.t('product.out_of_stock', 'نفد المخزون') : 'نفد المخزون';
+    const addToCartText = window.I18n ? window.I18n.t('product.add_to_cart', 'أضف للسلة') : 'أضف للسلة';
+
+    container.innerHTML = `
+        <div class="wishlist-grid">
+            ${wishlistProducts.map((p, index) => {
+                const isOutOfStock = Number(p.stock) === 0;
+                const safeName = window.escapeHtml ? window.escapeHtml(p.name) : p.name;
+                const safeCat = window.escapeHtml ? window.escapeHtml(p.category || generalCat) : (p.category || generalCat);
+                const optimizedImg = transformProductImage(p.image_url || p.image);
+                return `
+                    <div class="wishlist-card" id="wishlist-card-${p.id}">
+                        <div class="card-img-wrapper">
+                            <img ${index === 0 ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'} decoding="async" width="300" height="200" src="${optimizedImg}" alt="${safeName}">
+                            <button class="btn-remove-wishlist" data-action="removeItem" data-args="${p.id}" data-i18n-title="wishlist.remove_btn" title="${removeTitle}" aria-label="${removeTitle}">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <span class="card-category">${safeCat}</span>
+                            <a href="product.html?id=${p.id}" style="text-decoration: none;">
+                                <h3 class="card-title">${safeName}</h3>
+                            </a>
+                            <div class="card-price">${Number(p.price).toLocaleString()} <span data-i18n="common.currency">${currencyText}</span></div>
+                            <div class="card-actions">
+                                <button class="btn-add-cart-card" ${isOutOfStock ? 'disabled' : ''} data-action="addToCartFromWishlist" data-args="${p.id}">
+                                    <i class="fas fa-cart-plus"></i> <span data-i18n="${isOutOfStock ? 'product.out_of_stock' : 'product.add_to_cart'}">${isOutOfStock ? outOfStockText : addToCartText}</span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 `;
-                if (window.I18n && typeof window.I18n.translatePage === 'function') {
-                    window.I18n.translatePage(container);
-                }
-                return;
-            }
+            }).join('')}
+        </div>
+    `;
 
-            const currencyText = window.I18n ? window.I18n.t("common.currency", "دج") : "دج";
-            const removeTitle = window.I18n ? window.I18n.t("wishlist.remove_btn", "حذف من المفضلة") : "حذف من المفضلة";
-            const generalCat = window.I18n ? window.I18n.t('categories.general', 'عام') : 'عام';
-            const outOfStockText = window.I18n ? window.I18n.t('product.out_of_stock', 'نفد المخزون') : 'نفد المخزون';
-            const addToCartText = window.I18n ? window.I18n.t('product.add_to_cart', 'أضف للسلة') : 'أضف للسلة';
-
-            container.innerHTML = `
-                <div class="wishlist-grid">
-                    ${wishlistProducts.map((p, index) => {
-                        const isOutOfStock = Number(p.stock) === 0;
-                        const safeName = window.escapeHtml ? window.escapeHtml(p.name) : p.name;
-                        const safeCat = window.escapeHtml ? window.escapeHtml(p.category || generalCat) : (p.category || generalCat);
-                        return `
-                            <div class="wishlist-card" id="wishlist-card-${p.id}" style="height: auto !important;">
-                                <div class="card-img-wrapper">
-                                    <img ${index === 0 ? '' : 'loading="lazy"'} src="${p.image_url || p.image || '/images/product-placeholder.jpg'}" alt="${safeName}">
-                                    <button class="btn-remove-wishlist" data-action="removeItem" data-args="${p.id}" data-i18n-title="wishlist.remove_btn" title="${removeTitle}">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                                <div class="card-body">
-                                    <span class="card-category">${safeCat}</span>
-                                    <a href="product.html?id=${p.id}" style="text-decoration: none;">
-                                        <h3 class="card-title">${safeName}</h3>
-                                    </a>
-                                    <div class="card-price">${Number(p.price).toLocaleString()} <span data-i18n="common.currency">${currencyText}</span></div>
-                                    <div class="card-actions">
-                                        <button class="btn-add-cart-card" ${isOutOfStock ? 'disabled' : ''} data-action="addToCartFromWishlist" data-args="${p.id}">
-                                            <i class="fas fa-cart-plus"></i> <span data-i18n="${isOutOfStock ? 'product.out_of_stock' : 'product.add_to_cart'}">${isOutOfStock ? outOfStockText : addToCartText}</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                    }).join('')}
-                </div>
-            `;
-
-            if (window.I18n && typeof window.I18n.translatePage === 'function') {
-                window.I18n.translatePage(container);
-            }
-        }
+    if (window.I18n && typeof window.I18n.translatePage === 'function' && window.I18n.currentLang !== 'ar') {
+        window.I18n.translatePage(container);
+    }
+}
 
         async function removeItem(productId) {
             await window.WishlistManager.removeItem(productId);
@@ -165,3 +174,28 @@ document.addEventListener('error', function(e) {
 window.renderWishlist = renderWishlist;
 window.removeItem = removeItem;
 window.addToCartFromWishlist = addToCartFromWishlist;
+
+// Schedule loading of secondary interactive modules on idle or first interaction to minimize TBT
+(function scheduleSecondaryModules() {
+    let loaded = false;
+    function loadModules() {
+        if (loaded) return;
+        loaded = true;
+        ['js/user-system.js', 'js/cart.js'].forEach(src => {
+            const s = document.createElement('script');
+            s.src = src;
+            s.defer = true;
+            document.body.appendChild(s);
+        });
+    }
+
+    if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(loadModules, { timeout: 2000 });
+    } else {
+        setTimeout(loadModules, 600);
+    }
+
+    ['touchstart', 'mouseover', 'scroll', 'click', 'keydown'].forEach(evt => {
+        window.addEventListener(evt, loadModules, { once: true, passive: true });
+    });
+})();

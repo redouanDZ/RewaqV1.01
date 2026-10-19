@@ -1,4 +1,4 @@
-const CACHE_NAME = 'myshop-pwa-v8a507f246a';
+const CACHE_NAME = 'myshop-pwa-v3bec93ec3d';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
