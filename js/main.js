@@ -326,13 +326,21 @@ function initBackToTop() {
     });
   }
 
+  let backToTopTicking = false;
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 300) {
-      btn.classList.add('visible');
-    } else {
-      btn.classList.remove('visible');
+    if (!backToTopTicking) {
+      window.requestAnimationFrame(() => {
+        const isPastThreshold = (window.scrollY || window.pageYOffset || 0) > 300;
+        if (isPastThreshold) {
+          if (!btn.classList.contains('visible')) btn.classList.add('visible');
+        } else {
+          if (btn.classList.contains('visible')) btn.classList.remove('visible');
+        }
+        backToTopTicking = false;
+      });
+      backToTopTicking = true;
     }
-  });
+  }, { passive: true });
 }
 
 /**
@@ -733,11 +741,20 @@ function applyGlobalStoreSettings(settings) {
   }
 
   // 2. Update Header Brand Name & Logo
+  const getOptimizedLogoUrl = (url) => {
+    if (!url || typeof url !== 'string') return url;
+    if (url.includes('res.cloudinary.com') && url.includes('/upload/') && !url.includes('/upload/w_')) {
+      return url.replace('/upload/', '/upload/w_64,h_64,c_fill,f_auto,q_auto/');
+    }
+    return url;
+  };
+
+  const optimizedLogoUrl = getOptimizedLogoUrl(settings.store_logo);
+
   document.querySelectorAll('.logo a').forEach(logoLink => {
     let content = '';
-    if (settings.store_logo) {
-      const altText = window.escapeHtml ? window.escapeHtml(localizedStoreName || '') || 'MYSHOP' : (localizedStoreName || 'MYSHOP');
-      content += `<img class="site-logo-img store-logo-custom" src="${settings.store_logo}" alt="${altText}">`;
+    if (optimizedLogoUrl) {
+      content += `<img class="site-logo-img store-logo-custom" src="${window.escapeHtml ? window.escapeHtml(optimizedLogoUrl) : optimizedLogoUrl}" alt="" width="38" height="38">`;
     }
     if (settings.store_name) {
       content += `<span class="logo-text store-name-text">${window.escapeHtml ? window.escapeHtml(localizedStoreName) : localizedStoreName}</span>`;
@@ -749,6 +766,16 @@ function applyGlobalStoreSettings(settings) {
         logoLink.style.alignItems = 'center';
     }
   });
+
+  // Keep footer logo in sync with the same optimized asset
+  if (optimizedLogoUrl) {
+    document.querySelectorAll('.footer-brand-lockup img').forEach(img => {
+      img.src = optimizedLogoUrl;
+      img.alt = '';
+      img.width = 32;
+      img.height = 32;
+    });
+  }
 
   // 3. Update Announcement Bar if present
   const announcementEl = document.querySelector('.top-announcement-bar') || document.getElementById('announcement-bar');
@@ -1003,7 +1030,7 @@ function bindSmartHeader(header) {
   if (!header || header._smartHeaderBound) return;
   header._smartHeaderBound = true;
 
-  let lastScrollY = Math.max(0, window.scrollY || 0);
+  let lastScrollY = Math.max(0, window.scrollY || window.pageYOffset || 0);
   let accumulatedDistance = 0;
   let activeDirection = 0;
   let ticking = false;
@@ -1013,9 +1040,14 @@ function bindSmartHeader(header) {
   const TOP_SAFE_ZONE = 60;
 
   const handleScroll = () => {
-    const currentScrollY = Math.max(0, window.scrollY || 0);
+    // Read phase: perform all DOM / window measurements together
+    const currentScrollY = Math.max(0, window.scrollY || window.pageYOffset || 0);
+    const isMobile = window.innerWidth <= 768;
+    const activeEl = document.activeElement;
+    const isSearchActive = !!(activeEl && activeEl.closest('.header-search'));
 
-    if (window.innerWidth > 768) {
+    // Write phase: mutate DOM classes without interleaved reads
+    if (!isMobile) {
       if (header.classList.contains('search-collapsed')) {
         header.classList.remove('search-collapsed');
       }
@@ -1024,8 +1056,7 @@ function bindSmartHeader(header) {
       return;
     }
 
-    const activeEl = document.activeElement;
-    if (activeEl && activeEl.closest('.header-search')) {
+    if (isSearchActive) {
       lastScrollY = currentScrollY;
       ticking = false;
       return;
@@ -1079,7 +1110,9 @@ function bindSmartHeader(header) {
 
   window.addEventListener('resize', () => {
     if (window.innerWidth > 768 && header.classList.contains('search-collapsed')) {
-      header.classList.remove('search-collapsed');
+      window.requestAnimationFrame(() => {
+        header.classList.remove('search-collapsed');
+      });
     }
   }, { passive: true });
 }
@@ -1170,6 +1203,7 @@ function optimizeImageLoading() {
 
 // Page Initialization
 document.addEventListener('DOMContentLoaded', () => {
+  // Phase 1: Critical visual initialization (theme & mobile smart header)
   try {
     const cached = localStorage.getItem('store_settings_cache');
     if (cached) {
@@ -1179,19 +1213,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   } catch(e) {}
 
-  optimizeImageLoading();
   initTheme();
   setupThemeToggleButtons();
   initMobileNavigation();
-  initMobileBottomBar();
   initMobileSmartHeader();
-  initBackToTop();
-  initNewsletter();
-  updateWishlistUI();
-  syncCartCounter();
-  initNetworkStatusWatcher();
-  registerPwaServiceWorker();
-  initMarketingPixels();
+
+  // Phase 2: Yield non-critical tasks to Idle / Next Frame to slash Total Blocking Time (TBT)
+  const scheduleTask = (task) => {
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(task, { timeout: 300 });
+    } else {
+      setTimeout(task, 16);
+    }
+  };
+
+  scheduleTask(() => {
+    initMobileBottomBar();
+    initBackToTop();
+    optimizeImageLoading();
+  });
+
+  scheduleTask(() => {
+    updateWishlistUI();
+    syncCartCounter();
+    initNewsletter();
+  });
+
+  scheduleTask(() => {
+    initNetworkStatusWatcher();
+    registerPwaServiceWorker();
+    initMarketingPixels();
+  });
+
   document.addEventListener('languageChanged', () => {
     if (window.storeSettings) applyGlobalStoreSettings(window.storeSettings);
   });

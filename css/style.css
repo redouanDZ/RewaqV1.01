@@ -71,9 +71,9 @@
     --box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.08);
     --box-shadow-hover: 0 20px 40px -12px rgba(79, 70, 229, 0.22);
 
-    /* Animation & Transitions */
-    --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    --transition-fast: all 0.15s ease;
+    /* Animation & Transitions (Composited properties to prevent layout recalculation) */
+    --transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease, box-shadow 0.25s ease, border-color 0.2s ease;
+    --transition-fast: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
 }
 
 [data-theme="dark"],
@@ -134,7 +134,7 @@ html[data-theme="light"] {
 }
 
 body {
-    font-family: 'Cairo', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    font-family: 'Cairo', 'Cairo-Fallback', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     line-height: 1.6;
     color: var(--text-color);
     background-color: var(--light-color);
@@ -143,16 +143,14 @@ body {
     overflow-x: hidden;
 }
 
-section,
-.product-card,
-.category-card,
-.trust-card,
-.feature-card,
-.collection-card,
+/* Below-the-fold content optimization: reserve reasonable height without inflating CLS */
+.featured-products,
+.special-offers,
 .newsletter-section,
-.testimonials-section {
+.testimonials-section,
+#main-footer {
     content-visibility: auto;
-    contain-intrinsic-size: 400px 900px;
+    contain-intrinsic-size: auto 550px;
 }
 
 body.theme-transitioning {
@@ -414,7 +412,10 @@ header#main-header, header {
     overflow: hidden;
     padding: 4px 6px 4px 14px;
     gap: 10px;
-    transition: var(--transition);
+    height: 44px;
+    min-height: 44px;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
     box-shadow: var(--shadow-xs);
 }
 
@@ -427,6 +428,12 @@ header#main-header, header {
     color: var(--muted-text);
     font-size: 0.95rem;
     margin-inline-end: 6px;
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     flex-shrink: 0;
 }
 
@@ -457,10 +464,11 @@ body.dark-mode .header-search-form input {
     font-weight: 700;
     font-size: 0.88rem;
     cursor: pointer;
-    transition: var(--transition);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     white-space: nowrap;
     flex-shrink: 0;
     margin: 2px;
+    min-height: 36px;
     box-shadow: 0 2px 6px rgba(79, 70, 229, 0.25);
 }
 
@@ -676,14 +684,16 @@ body.dark-mode .header-search-form input {
     background: #f1f5f9;
     border: 1px solid var(--border-color);
     border-radius: 10px;
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
     align-items: center;
     justify-content: center;
     font-size: 1.25rem;
     color: var(--dark-color);
     cursor: pointer;
-    transition: var(--transition);
+    transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
 }
 
 .mobile-menu-btn:hover {
@@ -1110,7 +1120,7 @@ body.dark-mode .search-bar input[type="text"] {
     justify-content: center;
     gap: 16px;
     box-shadow: var(--shadow-sm);
-    transition: var(--transition);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.2s ease;
 }
 
 .trust-card:hover {
@@ -1130,12 +1140,13 @@ body.dark-mode .search-bar input[type="text"] {
     justify-content: center;
     font-size: 1.35rem;
     flex-shrink: 0;
-    transition: var(--transition);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease, color 0.2s ease;
 }
 
 .trust-card:hover .trust-icon-box {
     background: var(--primary-gradient);
     color: white;
+    transform: scale(1.05);
 }
 
 .trust-info h2 {
@@ -1194,12 +1205,20 @@ body.dark-mode .search-bar input[type="text"] {
     gap: 6px;
     font-size: 0.92rem;
     text-decoration: none;
-    transition: var(--transition);
+    min-height: 44px;
+    padding: 6px 14px;
+    border-radius: var(--radius-sm, 8px);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
 }
 
 .section-link:hover {
     color: var(--primary-hover);
     transform: translateX(-4px);
+}
+
+.categories-section {
+    min-height: 240px;
+    contain-intrinsic-size: auto 260px;
 }
 
 .categories-cards-grid {
@@ -1212,10 +1231,10 @@ body.dark-mode .search-bar input[type="text"] {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md, 14px);
-    padding: 24px 16px !important;
+    padding: 24px 16px;
     text-align: center;
     text-decoration: none;
-    transition: var(--transition);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.2s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1224,8 +1243,8 @@ body.dark-mode .search-bar input[type="text"] {
     box-shadow: var(--shadow-sm);
     position: relative;
     overflow: hidden;
-    height: auto !important;
-    min-height: unset !important;
+    min-height: 130px;
+    aspect-ratio: 1 / 0.85;
 }
 
 .category-card:hover {
@@ -1244,7 +1263,8 @@ body.dark-mode .search-bar input[type="text"] {
     align-items: center;
     justify-content: center;
     font-size: 1.55rem;
-    transition: var(--transition);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease, color 0.2s ease;
+    will-change: transform;
 }
 
 .category-card:hover .category-card-icon {
@@ -1286,8 +1306,16 @@ body.dark-mode .search-bar input[type="text"] {
     align-items: center;
     gap: 10px;
     overflow-x: auto;
-    padding-bottom: 8px;
-    scrollbar-width: thin;
+    overflow-y: hidden;
+    max-width: 100%;
+    padding: 8px 4px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+}
+.category-pills-wrap::-webkit-scrollbar {
+    display: none;
 }
 
 .category-pill {
@@ -1300,18 +1328,22 @@ body.dark-mode .search-bar input[type="text"] {
     font-weight: 700;
     white-space: nowrap;
     cursor: pointer;
-    transition: var(--transition);
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
     display: inline-flex;
     align-items: center;
     gap: 8px;
     text-decoration: none;
     box-shadow: var(--shadow-xs);
+    min-height: 44px;
+    scroll-snap-align: start;
+    flex-shrink: 0;
 }
 
 .category-pill:hover, .category-pill.active {
     background: var(--primary-gradient);
     color: white;
     border-color: transparent;
+    transform: translateY(-2px);
     box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
 }
 
@@ -2181,14 +2213,16 @@ html[dir="ltr"] .footer-col ul li a:hover i,
 }
 
 .social-links a {
-    width: 35px;
-    height: 35px;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
     background-color: rgba(255,255,255,0.1);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: var(--transition);
+    transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
 .social-links a:hover {
@@ -8551,7 +8585,7 @@ body.dark-mode .empty-cart-box .empty-state-icon i {
     display: inline-flex;
     align-items: center;
     background: #ecfdf5;
-    color: var(--success-color);
+    color: #047857; /* High contrast >= 4.5:1 on #ecfdf5 for WCAG AA */
     border: 1px solid #a7f3d0;
     font-size: 0.72rem;
     font-weight: 700;
@@ -8559,6 +8593,9 @@ body.dark-mode .empty-cart-box .empty-state-icon i {
     border-radius: var(--radius-xs, 6px);
     line-height: 1.4;
     white-space: nowrap;
+}
+.payment-badge span {
+    color: #047857;
 }
 [data-theme="dark"] .payment-option {
     background: var(--card-bg);
@@ -8575,7 +8612,8 @@ body.dark-mode .empty-cart-box .empty-state-icon i {
 [data-theme="dark"] .payment-option-header strong {
     color: #f1f5f9;
 }
-[data-theme="dark"] .payment-badge {
+[data-theme="dark"] .payment-badge,
+[data-theme="dark"] .payment-badge span {
     background: rgba(16, 185, 129, 0.15);
     color: #34d399;
     border-color: rgba(16, 185, 129, 0.3);
@@ -9939,22 +9977,27 @@ body.dark-mode .empty-cart-box .empty-state-icon i {
         width: 100% !important;
         max-width: 100% !important;
         margin: 6px 0 0 0 !important;
-        max-height: 56px !important;
         opacity: 1 !important;
+        visibility: visible !important;
         overflow: hidden !important;
         display: block !important;
-        transform: none !important;
-        transition: max-height 0.28s cubic-bezier(0.25, 1, 0.5, 1),
-                    opacity 0.22s ease,
-                    margin 0.28s cubic-bezier(0.25, 1, 0.5, 1) !important;
+        transform: translateY(0) !important;
+        transform-origin: top center !important;
+        transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+                    opacity 0.2s ease,
+                    visibility 0.25s ease !important;
+        will-change: transform, opacity;
     }
 
     #main-header.search-collapsed .header-search {
-        max-height: 0 !important;
         opacity: 0 !important;
-        margin-top: 0 !important;
-        margin-bottom: 0 !important;
+        visibility: hidden !important;
+        transform: translateY(-8px) scaleY(0.95) !important;
         pointer-events: none !important;
+        height: 0 !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 }
 

@@ -47,7 +47,7 @@
         <!-- Logo Zone -->
         <div class="logo">
           <a href="index.html" class="logo-link">
-            <img src="/images/logo.png" alt="Logo" class="site-logo-img" width="38" height="38">
+            <img src="/images/logo-32.webp" srcset="/images/logo-32.webp 1x, /images/logo-64.webp 2x" alt="" class="site-logo-img" width="38" height="38" fetchpriority="high">
             <span class="logo-text" data-i18n="common.store_name">متجر رِواق</span>
           </a>
         </div>
@@ -113,7 +113,7 @@
           <!-- Store Description -->
           <div class="footer-col">
             <div class="footer-brand-lockup">
-              <img src="/images/logo.png" alt="Logo" class="site-logo-img" width="32" height="32" style="border-radius: 8px; vertical-align: middle;">
+              <img src="/images/logo-32.webp" srcset="/images/logo-32.webp 1x, /images/logo-64.webp 2x" alt="" class="site-logo-img" width="32" height="32" style="border-radius: 8px; vertical-align: middle;" loading="lazy">
               <span class="footer-brand dynamic-store-name" data-i18n="footer.brand">المتجر الإلكتروني</span>
             </div>
             <p class="footer-tagline" data-i18n="footer.tagline">وجهتك الموثوقة للتسوق الإلكتروني في الجزائر، منتجات عالية الجودة، شحن سريع لـ 58 ولاية، وضمان الدفع عند الاستلام.</p>

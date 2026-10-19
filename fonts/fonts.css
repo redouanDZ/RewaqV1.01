@@ -1,3 +1,13 @@
+/* Cairo Fallback Font Definition to eliminate CLS during webfont loading */
+@font-face {
+  font-family: 'Cairo-Fallback';
+  src: local('Tahoma'), local('Arial');
+  ascent-override: 112%;
+  descent-override: 36%;
+  line-gap-override: 0%;
+  size-adjust: 100%;
+}
+
 /* arabic */
 @font-face {
   font-family: 'Cairo';

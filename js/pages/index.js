@@ -35,43 +35,68 @@ let homeProductsList = [];
                 homeProductsList = products;
                 
                 const featuredContainer = document.getElementById('featured-products');
-                const offersContainer = document.getElementById('special-offers');
+                const yieldToMain = () => new Promise(resolve => {
+                    if (window.scheduler && typeof window.scheduler.yield === 'function') {
+                        window.scheduler.yield().then(resolve);
+                    } else {
+                        setTimeout(resolve, 0);
+                    }
+                });
+
+                const buildProductCardHtml = (p, wishlistIds, isOffer = false) => {
+                    const isFav = wishlistIds.includes(p.id);
+                    const safeName = window.escapeHtml ? window.escapeHtml(p.name) : p.name;
+                    const hasDiscount = p.old_price && Number(p.old_price) > Number(p.price);
+                    const discountPct = hasDiscount ? Math.round((1 - Number(p.price) / Number(p.old_price)) * 100) : null;
+                    const cardClass = isOffer ? 'product-card offer-card' : 'product-card';
+                    const cardId = isOffer ? `offer-card-${p.id}` : `product-card-${p.id}`;
+                    const btnTextKey = isOffer ? 'product.order_now_offer' : 'product.add_to_cart';
+                    const btnDefaultText = isOffer ? 'أضف للسلة الآن' : 'أضف للسلة';
+                    const btnAria = window.escapeHtml ? window.escapeHtml(window.I18n ? window.I18n.t(btnTextKey, btnDefaultText) : btnDefaultText) : btnDefaultText;
+
+                    return `
+                    <div class="${cardClass}" id="${cardId}">
+                        ${hasDiscount ? `<span class="product-badge">-${discountPct}%</span>` : ''}
+                        <button type="button" class="product-wishlist ${isFav ? 'active' : ''}" data-wishlist-id="${p.id}" data-action="handleHomeToggleWishlist" data-id="${p.id}" data-i18n-title="common.wishlist" data-i18n-aria-label="common.wishlist" aria-label="المفضلة">
+                            <i class="${isFav ? 'fas fa-heart text-danger' : 'far fa-heart'}"></i>
+                        </button>
+                        <a href="product.html?id=${p.id}" class="product-image">
+                            <img src="${p.image_url || '/images/product-placeholder.jpg'}" srcset="${p.image_url || '/images/product-placeholder.jpg'} 1x, ${p.image_url || '/images/product-placeholder.jpg'} 2x" width="400" height="400" alt="${safeName}" loading="lazy" decoding="async">
+                        </a>
+                        <div class="product-info">
+                            <h3 class="product-name">
+                                <a href="product.html?id=${p.id}" title="${safeName}">${safeName}</a>
+                            </h3>
+                            <div class="product-price-row">
+                                <div class="price-group">
+                                    <span class="product-price">${Number(p.price).toLocaleString()} <small data-i18n="common.currency">دج</small></span>
+                                    ${hasDiscount ? `<span class="product-old-price">${Number(p.old_price).toLocaleString()} <small data-i18n="common.currency">دج</small></span>` : ''}
+                                </div>
+                            </div>
+                            <div class="product-card-actions">
+                                <button type="button" data-action="quickAddToCart" data-id="${p.id}" aria-label="${btnAria} ${safeName}" class="btn btn-primary" ${p.stock <= 0 ? 'disabled' : ''}>
+                                    <i class="fas fa-cart-plus"></i> <span data-i18n="${btnTextKey}">${btnDefaultText}</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>`;
+                };
 
                 if (featuredContainer && Array.isArray(products) && products.length > 0) {
                     const wishlistIds = window.getWishlist ? window.getWishlist() : [];
-                    featuredContainer.innerHTML = products.map(p => {
-                        const isFav = wishlistIds.includes(p.id);
-                        const safeName = window.escapeHtml ? window.escapeHtml(p.name) : p.name;
-                        const safeCat = window.escapeHtml ? window.escapeHtml(p.category || 'عام') : (p.category || 'عام');
-                        const hasDiscount = p.old_price && Number(p.old_price) > Number(p.price);
-                        const discountPct = hasDiscount ? Math.round((1 - Number(p.price) / Number(p.old_price)) * 100) : null;
-                        return `
-                        <div class="product-card" id="product-card-${p.id}" style="height: auto !important;">
-                            ${hasDiscount ? `<span class="product-badge">-${discountPct}%</span>` : ''}
-                            <button type="button" class="product-wishlist ${isFav ? 'active' : ''}" data-wishlist-id="${p.id}" data-action="handleHomeToggleWishlist" data-id="${p.id}" data-i18n-title="common.wishlist" data-i18n-aria-label="common.wishlist" aria-label="المفضلة">
-                                <i class="${isFav ? 'fas fa-heart text-danger' : 'far fa-heart'}"></i>
-                            </button>
-                            <a href="product.html?id=${p.id}" class="product-image">
-                                <img src="${p.image_url || '/images/product-placeholder.jpg'}" srcset="${p.image_url || '/images/product-placeholder.jpg'} 1x, ${p.image_url || '/images/product-placeholder.jpg'} 2x" width="400" height="400" alt="${safeName}" loading="lazy">
-                            </a>
-                            <div class="product-info">
-                                <h3 class="product-name">
-                                    <a href="product.html?id=${p.id}" title="${safeName}">${safeName}</a>
-                                </h3>
-                                <div class="product-price-row">
-                                    <div class="price-group">
-                                        <span class="product-price">${Number(p.price).toLocaleString()} <small data-i18n="common.currency">دج</small></span>
-                                        ${hasDiscount ? `<span class="product-old-price">${Number(p.old_price).toLocaleString()} <small data-i18n="common.currency">دج</small></span>` : ''}
-                                    </div>
-                                </div>
-                                <div class="product-card-actions">
-                                    <button type="button" data-action="quickAddToCart" data-id="${p.id}" aria-label="${window.escapeHtml ? window.escapeHtml(window.I18n.t('product.add_to_cart', 'أضف للسلة')) : 'أضف للسلة'} ${safeName}" class="btn btn-primary" ${p.stock <= 0 ? 'disabled' : ''}>
-                                        <i class="fas fa-cart-plus"></i> <span data-i18n="product.add_to_cart">أضف للسلة</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    `}).join('');
+                    // Render first 4 products immediately to satisfy first contentful viewport
+                    const initialBatch = products.slice(0, 4);
+                    featuredContainer.innerHTML = initialBatch.map(p => buildProductCardHtml(p, wishlistIds, false)).join('');
+
+                    if (products.length > 4) {
+                        // Yield to main thread to prevent Long Tasks (TBT)
+                        yieldToMain().then(() => {
+                            const remaining = products.slice(4);
+                            const fragment = document.createRange().createContextualFragment(remaining.map(p => buildProductCardHtml(p, wishlistIds, false)).join(''));
+                            featuredContainer.appendChild(fragment);
+                            if (window.I18n) window.I18n.translatePage(featuredContainer);
+                        });
+                    }
                 }
 
                 const discountedProducts = products.filter(p => p.old_price && Number(p.old_price) > Number(p.price));
@@ -86,39 +111,11 @@ let homeProductsList = [];
                 }
 
                 if (offersContainer && discountedProducts.length >= 2) {
-                    const wishlistIds = window.getWishlist ? window.getWishlist() : [];
-                    offersContainer.innerHTML = discountedProducts.slice(0, 8).map(p => {
-                        const isFav = wishlistIds.includes(p.id);
-                        const safeName = window.escapeHtml ? window.escapeHtml(p.name) : p.name;
-                        const safeCat = window.escapeHtml ? window.escapeHtml(p.category || 'عرض خاص') : (p.category || 'عرض خاص');
-                        const discountPct = Math.round((1 - Number(p.price) / Number(p.old_price)) * 100);
-                        return `
-                        <div class="product-card offer-card" id="offer-card-${p.id}" style="height: auto !important;">
-                            <span class="product-badge">-${discountPct}%</span>
-                            <button type="button" class="product-wishlist ${isFav ? 'active' : ''}" data-wishlist-id="${p.id}" data-action="handleHomeToggleWishlist" data-id="${p.id}" data-i18n-title="common.wishlist" data-i18n-aria-label="common.wishlist" aria-label="المفضلة">
-                                <i class="${isFav ? 'fas fa-heart text-danger' : 'far fa-heart'}"></i>
-                            </button>
-                            <a href="product.html?id=${p.id}" class="product-image">
-                                <img src="${p.image_url || '/images/product-placeholder.jpg'}" srcset="${p.image_url || '/images/product-placeholder.jpg'} 1x, ${p.image_url || '/images/product-placeholder.jpg'} 2x" width="400" height="400" alt="${safeName}" loading="lazy">
-                            </a>
-                            <div class="product-info">
-                                <h3 class="product-name">
-                                    <a href="product.html?id=${p.id}" title="${safeName}">${safeName}</a>
-                                </h3>
-                                <div class="product-price-row">
-                                    <div class="price-group">
-                                        <span class="product-price">${Number(p.price).toLocaleString()} <small data-i18n="common.currency">دج</small></span>
-                                        <span class="product-old-price">${Number(p.old_price).toLocaleString()} <small data-i18n="common.currency">دج</small></span>
-                                    </div>
-                                </div>
-                                <div class="product-card-actions">
-                                    <button type="button" data-action="quickAddToCart" data-id="${p.id}" class="btn btn-primary" ${p.stock <= 0 ? 'disabled' : ''}>
-                                        <i class="fas fa-cart-plus"></i> <span data-i18n="product.order_now_offer">أضف للسلة الآن</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    `}).join('');
+                    yieldToMain().then(() => {
+                        const wishlistIds = window.getWishlist ? window.getWishlist() : [];
+                        offersContainer.innerHTML = discountedProducts.slice(0, 8).map(p => buildProductCardHtml(p, wishlistIds, true)).join('');
+                        if (window.I18n) window.I18n.translatePage(offersContainer);
+                    });
                 }
                 if (window.I18n) window.I18n.translatePage();
             } catch (error) {
