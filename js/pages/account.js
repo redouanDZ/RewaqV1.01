@@ -66,7 +66,13 @@
                 const emailEl = document.getElementById('sidebar-user-email');
                 if (nameEl)  nameEl.textContent  = t('account.user_default', '...');
                 if (emailEl) emailEl.textContent = t('account.not_logged_in', '...');
-                if (window.showLoginForm) window.showLoginForm();
+                if (window.showLoginForm) {
+                    if ('requestIdleCallback' in window) {
+                        window.requestIdleCallback(() => window.showLoginForm(), { timeout: 1000 });
+                    } else {
+                        setTimeout(() => window.showLoginForm(), 250);
+                    }
+                }
             }
 
             // Tab Switching Logic
@@ -92,7 +98,10 @@
 
                 if (tabId === 'addresses') loadAddresses();
                 if (tabId === 'orders') loadUserOrders();
-                if (tabId === 'wishlist') loadUserWishlist();
+                if (tabId === 'wishlist') {
+                    if (typeof loadSecondaryModules === 'function') loadSecondaryModules();
+                    loadUserWishlist();
+                }
             }
 
             navButtons.forEach(btn => {
@@ -342,11 +351,21 @@
                 }
             }
 
+            function transformProductImage(url) {
+                if (!url) return '/images/product-placeholder.jpg';
+                if (url.includes('res.cloudinary.com') && url.includes('/upload/') && !url.includes('/upload/w_')) {
+                    return url.replace('/upload/', '/upload/w_400,h_400,c_fill,f_auto,q_auto/');
+                }
+                return url;
+            }
+
             // Load Wishlist Items
             async function loadUserWishlist() {
                 const container = document.getElementById('wishlist-container');
                 if (!container) return;
-                const wishlistIds = window.getWishlist ? window.getWishlist() : [];
+                const wishlistIds = (window.getWishlist && typeof window.getWishlist === 'function')
+                    ? window.getWishlist()
+                    : (() => { try { return JSON.parse(localStorage.getItem('wishlist') || '[]'); } catch(e) { return []; } })();
 
                 if (wishlistIds.length === 0) {
                     container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--light-text);"><i class="fas fa-heart-broken" style="font-size: 2.5rem; margin-bottom: 12px; display: block; color: var(--border-color);"></i><span>${window.I18n ? window.I18n.t('wishlist.empty_msg', 'قائمة المفضلة فارغة حالياً.') : 'قائمة المفضلة فارغة حالياً.'}</span></div>`;
@@ -372,10 +391,11 @@
                             const currency = window.I18n ? window.I18n.t('common.currency', 'دج') : 'دج';
                             const addText = window.I18n ? window.I18n.t('common.add_to_cart', 'أضف للسلة') : 'أضف للسلة';
                             const removeText = window.I18n ? window.I18n.t('wishlist.remove_btn', 'حذف من المفضلة') : 'حذف';
+                            const optImg = transformProductImage(p.image_url || '/images/product-placeholder.jpg');
                             return `
                             <div class="product-card" id="account-wishlist-${p.id}">
                                 <a href="product.html?id=${p.id}" class="product-image">
-                                    <img ${index === 0 ? '' : 'loading="lazy"'} src="${window.escapeHtml(p.image_url || '/images/product-placeholder.jpg')}" alt="${safeName}">
+                                    <img ${index === 0 ? '' : 'loading="lazy"'} src="${window.escapeHtml(optImg)}" alt="${safeName}">
                                 </a>
                                 <div class="product-info">
                                     <h3 class="product-name"><a href="product.html?id=${p.id}">${safeName}</a></h3>
@@ -386,7 +406,7 @@
                                     </div>
                                     <div class="product-card-actions" style="gap: 8px;">
                                         <button class="btn btn-primary" style="flex: 1; min-height: 40px; font-size: 0.85rem;" data-action="accountAddToCart" data-args="${p.id}">
-                                            <i class="fas fa-cart-plus"></i> <span>${addText}</span>
+                                             <i class="fas fa-cart-plus"></i> <span>${addText}</span>
                                         </button>
                                         <button class="btn-sm-danger" style="width: 40px; min-height: 40px; border-radius: var(--radius-sm, 8px); border: 1px solid rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.08); color: var(--danger-color); cursor: pointer; display: flex; align-items: center; justify-content: center;" data-action="removeFromWishlist" data-args="${p.id}" title="${removeText}" aria-label="${removeText}">
                                             <i class="fas fa-trash-alt"></i>
@@ -404,6 +424,13 @@
                 if (!p) return;
                 if (window.addToCart) {
                     window.addToCart({ id: p.id, name: p.name, category: p.category || '', price: p.price, image: p.image_url });
+                } else if (typeof loadSecondaryModules === 'function') {
+                    loadSecondaryModules();
+                    setTimeout(() => {
+                        if (window.addToCart) {
+                            window.addToCart({ id: p.id, name: p.name, category: p.category || '', price: p.price, image: p.image_url });
+                        }
+                    }, 200);
                 }
             };
 
@@ -413,6 +440,14 @@
                 if (window.toggleWishlist) {
                     window.toggleWishlist(id, targetName);
                     loadUserWishlist();
+                } else if (typeof loadSecondaryModules === 'function') {
+                    loadSecondaryModules();
+                    setTimeout(() => {
+                        if (window.toggleWishlist) {
+                            window.toggleWishlist(id, targetName);
+                            loadUserWishlist();
+                        }
+                    }, 200);
                 }
             };
 
@@ -512,3 +547,30 @@ document.addEventListener('error', function(e) {
         }
     }
 }, true);
+
+// Schedule loading of secondary interactive modules on idle or first interaction to minimize TBT
+let secondaryModulesLoaded = false;
+function loadSecondaryModules() {
+    if (secondaryModulesLoaded) return;
+    secondaryModulesLoaded = true;
+    ['js/cart.js', 'js/wishlist.js'].forEach(src => {
+        if (!document.querySelector(`script[src="${src}"]`)) {
+            const s = document.createElement('script');
+            s.src = src;
+            s.defer = true;
+            document.body.appendChild(s);
+        }
+    });
+}
+window.loadSecondaryModules = loadSecondaryModules;
+
+if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(loadSecondaryModules, { timeout: 2000 });
+} else {
+    setTimeout(loadSecondaryModules, 600);
+}
+
+['touchstart', 'mouseover', 'scroll', 'click', 'keydown'].forEach(evt => {
+    window.addEventListener(evt, loadSecondaryModules, { once: true, passive: true });
+});
+

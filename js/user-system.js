@@ -277,7 +277,7 @@ function initSignupForm() {
 function openAuthModalElement(modal) {
     if (!modal) modal = document.getElementById('auth-modal');
     if (!modal) return;
-    if (window.I18n && typeof window.I18n.translatePage === 'function') {
+    if (window.I18n && typeof window.I18n.translatePage === 'function' && window.I18n.currentLang !== 'ar') {
         window.I18n.translatePage(modal);
     }
     modal.classList.add('active');
@@ -378,9 +378,6 @@ function showLoginForm() {
         }
     };
 
-    if (window.I18n && typeof window.I18n.translatePage === 'function') {
-        window.I18n.translatePage(modal);
-    }
 
     // إضافة مستمعي الأحداث
     const closeModalBtn = modal.querySelector('.close-modal');
@@ -509,9 +506,6 @@ function showSignupForm() {
         }
     };
 
-    if (window.I18n && typeof window.I18n.translatePage === 'function') {
-        window.I18n.translatePage(modal);
-    }
 
     const closeModalBtn = modal.querySelector('.close-modal');
     const showLoginLink = modal.querySelector('#show-login');
@@ -583,9 +577,6 @@ function showForgotPasswordForm() {
         }
     };
 
-    if (window.I18n && typeof window.I18n.translatePage === 'function') {
-        window.I18n.translatePage(modal);
-    }
 
     const closeModalBtn = modal.querySelector('.close-modal');
     if (closeModalBtn) closeModalBtn.addEventListener('click', () => closeAuthModalElement(modal));
@@ -692,9 +683,6 @@ function showResetPasswordForm(prefilledToken = '', userEmail = '') {
         }
     };
 
-    if (window.I18n && typeof window.I18n.translatePage === 'function') {
-        window.I18n.translatePage(modal);
-    }
 
     const closeModalBtn = modal.querySelector('.close-modal');
     if (closeModalBtn) closeModalBtn.addEventListener('click', () => closeAuthModalElement(modal));
