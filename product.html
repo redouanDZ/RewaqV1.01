@@ -105,7 +105,7 @@
                                 <input type="tel" id="express-phone" required placeholder="05 / 06 / 07 XX XX XX XX" style="width: 100%; padding: 10px 14px; border: 1px solid var(--border-color, #cbd5e1); border-radius: 8px; font-size: 0.95rem; background: var(--card-bg, #fff);" dir="ltr">
                             </div>
 
-                            <div class="express-grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <div class="express-grid-2">
                                 <div>
                                     <label style="display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 4px; color: var(--text-color, #334155);"><span data-i18n="checkout.wilaya">الولاية</span> <span style="color:var(--danger-color);">*</span></label>
                                     <select id="express-wilaya" required data-action="onExpressWilayaChange" style="width: 100%; padding: 10px 10px; border: 1px solid var(--border-color, #cbd5e1); border-radius: 8px; font-size: 0.9rem; background: var(--card-bg, #fff);">
@@ -120,7 +120,7 @@
 
                             <div>
                                 <label style="display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 4px; color: var(--text-color, #334155);" data-i18n="product.delivery_type">نوع التوصيل</label>
-                                <div class="express-grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                                <div class="express-grid-2">
                                     <label style="display: flex; align-items: center; gap: 6px; background: var(--card-bg, #fff); padding: 8px 10px; border: 1px solid var(--border-color, #cbd5e1); border-radius: 8px; cursor: pointer; font-size: 0.84rem;">
                                         <input type="radio" name="express-delivery" value="home" checked data-action="updateExpressCalculations">
                                         <span>🏠 <span data-i18n="product.home_delivery">للمنزل</span> (<span id="express-home-price">500</span> <span data-i18n="common.currency">دج</span>)</span>

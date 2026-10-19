@@ -421,9 +421,9 @@ header#main-header, header {
     border-radius: var(--radius-full, 999px);
     overflow: hidden;
     padding: 4px 6px;
-    padding-inline-start: 16px;
+    padding-inline-start: 18px;
     padding-inline-end: 6px;
-    gap: 10px;
+    gap: 0;
     height: 44px;
     min-height: 44px;
     box-sizing: border-box;
@@ -438,18 +438,21 @@ header#main-header, header {
 
 .header-search-icon {
     color: var(--muted-text);
-    font-size: 0.95rem;
-    margin-inline-end: 6px;
-    width: 18px;
-    height: 18px;
-    min-width: 18px;
+    font-size: 1rem;
+    margin-inline-start: 2px;
+    margin-inline-end: 12px;
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    pointer-events: none;
 }
 
 .header-search-form input,
+.header-search-form input[type="text"],
 [data-theme="dark"] .header-search-form input,
 body.dark-mode .header-search-form input {
     flex: 1;
@@ -458,11 +461,13 @@ body.dark-mode .header-search-form input {
     background: transparent !important;
     background-color: transparent !important;
     color: var(--text-color) !important;
-    font-size: 0.92rem;
+    font-size: 0.94rem;
     font-family: inherit;
     font-weight: 500;
     min-width: 0;
-    padding-inline: 4px 8px;
+    padding-inline-start: 8px !important;
+    padding-inline-end: 12px !important;
+    padding-block: 8px !important;
     box-shadow: none !important;
     border-radius: 0 !important;
 }
@@ -1541,13 +1546,16 @@ body.dark-mode .search-bar input[type="text"] {
     font-weight: 700;
     margin-bottom: 10px !important;
     color: var(--dark-color);
-    line-height: 1.4 !important;
-    white-space: nowrap !important;
+    line-height: 1.45 !important;
+    white-space: normal !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
     overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    display: block !important;
+    word-break: break-word !important;
     height: auto !important;
-    min-height: unset !important;
+    min-height: 2.9em !important;
 }
 
 .product-name a,
@@ -1555,11 +1563,14 @@ body.dark-mode .search-bar input[type="text"] {
     color: inherit;
     text-decoration: none;
     transition: color 0.2s;
-    white-space: nowrap !important;
+    white-space: normal !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
     overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    display: block !important;
-    line-height: 1.4 !important;
+    word-break: break-word !important;
+    line-height: 1.45 !important;
 }
 
 .product-name a:hover {
@@ -1638,6 +1649,7 @@ body.dark-mode .search-bar input[type="text"] {
     display: flex;
     gap: 8px;
     width: 100%;
+    margin-top: auto;
 }
 
 .product-card-actions .btn {
@@ -4004,7 +4016,7 @@ body.dark-mode .review-content p {
 
     .checkout-steps:before {
         display: block;
-        top: 21px;
+        top: 14px;
         left: 14%;
         right: 14%;
     }
@@ -5098,15 +5110,21 @@ body.dark-mode .mobile-nav-item.active {
         padding-inline-start: 14px !important;
         padding-inline-end: 4px !important;
         border-radius: 999px !important;
-        gap: 8px !important;
+        gap: 0 !important;
         box-sizing: border-box !important;
+    }
+
+    .header-search-form .header-search-icon {
+        margin-inline-start: 2px !important;
+        margin-inline-end: 10px !important;
     }
 
     .header-search-form input {
         min-width: 0 !important;
         width: 100% !important;
         font-size: 0.88rem !important;
-        padding-inline: 4px 6px !important;
+        padding-inline-start: 8px !important;
+        padding-inline-end: 8px !important;
     }
 
     .header-search-btn {
@@ -5676,8 +5694,12 @@ input[type="tel"] {
         padding: 3px 4px !important;
         padding-inline-start: 14px !important;
         padding-inline-end: 4px !important;
-        gap: 8px !important;
+        gap: 0 !important;
         box-sizing: border-box !important;
+    }
+    .header-search-form .header-search-icon {
+        margin-inline-start: 2px !important;
+        margin-inline-end: 8px !important;
     }
     .header-search-form input {
         flex: 1 1 auto !important;
@@ -5686,7 +5708,9 @@ input[type="tel"] {
         height: 38px !important;
         min-height: 38px !important;
         font-size: 0.88rem !important;
-        padding: 4px 8px !important;
+        padding-inline-start: 6px !important;
+        padding-inline-end: 6px !important;
+        padding-block: 4px !important;
     }
     .header-search-btn {
         flex: 0 0 auto !important;
@@ -6113,26 +6137,31 @@ input[type="tel"] {
 .product-card .product-info { padding: 16px 18px; }
 .product-card .product-category { display: none !important; }
 .product-card .product-name {
-    margin: 0 0 10px;
+    margin: 0 0 10px !important;
     font-size: 1rem;
     font-weight: 700;
-    line-height: 1.4 !important;
-    white-space: nowrap !important;
+    line-height: 1.45 !important;
+    white-space: normal !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
     overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    display: block !important;
+    word-break: break-word !important;
     height: auto !important;
-    min-height: unset !important;
-    margin: 0 0 10px !important;
+    min-height: 2.9em !important;
 }
 .product-card .product-name a {
     color: inherit;
     text-decoration: none;
-    white-space: nowrap !important;
+    white-space: normal !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
     overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    display: block !important;
-    line-height: 1.4 !important;
+    word-break: break-word !important;
+    line-height: 1.45 !important;
 }
 .product-card .product-rating { display: none !important; }
 .product-card .product-price-row {
@@ -6236,11 +6265,15 @@ input[type="tel"] {
 @media (max-width: 768px) {
     .product-card .product-name {
         height: auto !important;
-        min-height: unset !important;
-        white-space: nowrap !important;
+        min-height: 2.8em !important;
+        white-space: normal !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
         overflow: hidden !important;
-        text-overflow: ellipsis !important;
-        display: block !important;
+        word-break: break-word !important;
+        line-height: 1.4 !important;
     }
 }
 
@@ -6251,6 +6284,12 @@ input[type="tel"] {
     .reset-filters-btn { min-height: 44px; padding: 10px 8px; display: inline-flex; align-items: center; }
     .continue-shopping, .breadcrumb a { display: inline-flex; align-items: center; min-height: 44px; padding: 6px 0; }
     .footer-col ul li a { display: inline-flex; align-items: center; min-height: 44px; padding: 6px 0; }
+}
+
+.express-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
 }
 
 @media (max-width: 480px) {
@@ -6783,9 +6822,13 @@ input[type="tel"] {
 }
 .header-search-form {
     padding: 4px 6px;
-    padding-inline-start: 16px;
+    padding-inline-start: 18px;
     padding-inline-end: 6px;
-    gap: 10px;
+    gap: 0;
+}
+.header-search-form .header-search-icon {
+    margin-inline-start: 2px;
+    margin-inline-end: 12px;
 }
 [data-theme="dark"] .header-search-form input[type="text"],
 [data-theme="dark"] .search-bar input[type="text"],
@@ -6804,7 +6847,10 @@ body.dark-mode .search-bar input[type="text"],
     border-radius: 999px !important;
     margin: 2px;
 }
-.header-search-form input[type="text"] { padding-inline: 4px 8px; }
+.header-search-form input[type="text"] {
+    padding-inline-start: 8px !important;
+    padding-inline-end: 12px !important;
+}
 
 /* 2) Quantity stepper: one fixed layout (− value +) in every direction/theme,
       identical button sizes, a single outer radius that clips the children. */
@@ -7406,27 +7452,47 @@ input[type="checkbox"]:checked { border-color: var(--primary-color) !important; 
 .search-box input {
   width: 100%;
   min-height: 44px;
-  padding: 10px 42px;
+  padding-block: 10px;
+  padding-inline-start: 48px !important;
+  padding-inline-end: 44px !important;
   border: 1px solid var(--border-color, #cbd5e1);
   border-radius: var(--radius-sm, 8px);
   font-family: inherit;
   font-size: 0.95rem;
   background: var(--light-color, #f8fafc);
   transition: border-color 0.2s, background-color 0.2s;
+  box-sizing: border-box;
 }
 .search-box input:focus {
   background: var(--card-bg, #ffffff);
   border-color: var(--primary-color);
   outline: none;
 }
-.search-box i.fa-search {
+.search-box i.fa-search,
+.search-box i.search-icon,
+.search-box > i {
   position: absolute;
-  inset-inline-start: 14px;
   top: 50%;
   transform: translateY(-50%);
   color: var(--light-text, #94a3b8);
   pointer-events: none;
   z-index: 2;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+[dir="rtl"] .search-box i.fa-search,
+[dir="rtl"] .search-box i.search-icon,
+[dir="rtl"] .search-box > i {
+  right: 18px !important;
+  left: auto !important;
+}
+
+[dir="ltr"] .search-box i.fa-search,
+[dir="ltr"] .search-box i.search-icon,
+[dir="ltr"] .search-box > i {
+  left: 18px !important;
+  right: auto !important;
 }
 #clearSearchBtn {
   position: absolute;
@@ -7741,9 +7807,12 @@ input[type="checkbox"]:checked { border-color: var(--primary-color) !important; 
     gap: 10px;
     margin-top: 14px;
     overflow-x: auto;
+    flex-wrap: nowrap;
     padding-bottom: 6px;
+    scrollbar-width: thin;
 }
 .thumbnail-images img {
+    flex-shrink: 0;
     width: 72px;
     height: 72px;
     object-fit: cover;
