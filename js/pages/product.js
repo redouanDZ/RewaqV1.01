@@ -806,7 +806,7 @@ let currentProduct = null;
                     const stockNum = Number(p.stock) || 0;
                     const isFav = wishlistIds.includes(p.id);
                     return `
-                    <div class="product-card similar-product" id="similar-product-${p.id}">
+                    <div class="product-card similar-product" id="similar-product-${p.id}" style="height: auto !important;">
                         ${hasDiscount ? `<span class="product-badge">-${discountPct}%</span>` : ''}
                         <button type="button" class="product-wishlist ${isFav ? 'active' : ''}" data-wishlist-id="${p.id}" data-action="toggleWishlist" data-args="${p.id}" data-i18n-title="common.wishlist" aria-label="${window.I18n ? window.I18n.t('common.wishlist', 'المفضلة') : 'المفضلة'}">
                             <i class="${isFav ? 'fas fa-heart text-danger' : 'far fa-heart'}"></i>

@@ -46,7 +46,7 @@ let homeProductsList = [];
                         const hasDiscount = p.old_price && Number(p.old_price) > Number(p.price);
                         const discountPct = hasDiscount ? Math.round((1 - Number(p.price) / Number(p.old_price)) * 100) : null;
                         return `
-                        <div class="product-card" id="product-card-${p.id}">
+                        <div class="product-card" id="product-card-${p.id}" style="height: auto !important;">
                             ${hasDiscount ? `<span class="product-badge">-${discountPct}%</span>` : ''}
                             <button type="button" class="product-wishlist ${isFav ? 'active' : ''}" data-wishlist-id="${p.id}" data-action="handleHomeToggleWishlist" data-id="${p.id}" data-i18n-title="common.wishlist" data-i18n-aria-label="common.wishlist" aria-label="المفضلة">
                                 <i class="${isFav ? 'fas fa-heart text-danger' : 'far fa-heart'}"></i>
@@ -93,7 +93,7 @@ let homeProductsList = [];
                         const safeCat = window.escapeHtml ? window.escapeHtml(p.category || 'عرض خاص') : (p.category || 'عرض خاص');
                         const discountPct = Math.round((1 - Number(p.price) / Number(p.old_price)) * 100);
                         return `
-                        <div class="product-card offer-card" id="offer-card-${p.id}">
+                        <div class="product-card offer-card" id="offer-card-${p.id}" style="height: auto !important;">
                             <span class="product-badge">-${discountPct}%</span>
                             <button type="button" class="product-wishlist ${isFav ? 'active' : ''}" data-wishlist-id="${p.id}" data-action="handleHomeToggleWishlist" data-id="${p.id}" data-i18n-title="common.wishlist" data-i18n-aria-label="common.wishlist" aria-label="المفضلة">
                                 <i class="${isFav ? 'fas fa-heart text-danger' : 'far fa-heart'}"></i>

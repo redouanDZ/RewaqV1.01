@@ -370,7 +370,7 @@
         const hasDiscount = product.old_price && Number(product.old_price) > Number(product.price);
         const discountPct = hasDiscount ? Math.round((1 - Number(product.price) / Number(product.old_price)) * 100) : null;
         return `
-        <div class="product-card" id="shop-product-${product.id}">
+        <div class="product-card" id="shop-product-${product.id}" style="height: auto !important;">
           ${hasDiscount ? `<span class="product-badge">-${discountPct}%</span>` : ''}
           <button type="button" class="product-wishlist ${isFav ? 'active' : ''}" data-wishlist-id="${product.id}" data-action="handleToggleWishlist" data-args="${product.id}" data-i18n-title="common.wishlist" aria-label="${window.I18n ? window.I18n.t('common.wishlist', 'المفضلة') : 'المفضلة'}" data-i18n-aria-label="common.wishlist">
             <i class="${isFav ? 'fas fa-heart text-danger' : 'far fa-heart'}"></i>

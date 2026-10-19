@@ -49,7 +49,7 @@
                         const safeName = window.escapeHtml ? window.escapeHtml(p.name) : p.name;
                         const safeCat = window.escapeHtml ? window.escapeHtml(p.category || generalCat) : (p.category || generalCat);
                         return `
-                            <div class="wishlist-card" id="wishlist-card-${p.id}">
+                            <div class="wishlist-card" id="wishlist-card-${p.id}" style="height: auto !important;">
                                 <div class="card-img-wrapper">
                                     <img ${index === 0 ? '' : 'loading="lazy"'} src="${p.image_url || p.image || '/images/product-placeholder.jpg'}" alt="${safeName}">
                                     <button class="btn-remove-wishlist" data-action="removeItem" data-args="${p.id}" data-i18n-title="wishlist.remove_btn" title="${removeTitle}">
