@@ -84,7 +84,19 @@ async function loadCart() {
   renderCart();
   updateSummary();
   updateHeaderCount();
-  syncCartProductsMetadata();
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(() => syncCartProductsMetadata(), { timeout: 3000 });
+  } else {
+    setTimeout(() => syncCartProductsMetadata(), 1200);
+  }
+}
+
+function transformCartImage(url) {
+  if (!url) return '/images/product-placeholder.jpg';
+  if (url.includes('res.cloudinary.com') && url.includes('/upload/') && !url.includes('/upload/w_')) {
+    return url.replace('/upload/', '/upload/w_180,h_180,c_fill,f_auto,q_auto/');
+  }
+  return url;
 }
 
 function loadCartFromLocalStorage() {
@@ -198,10 +210,11 @@ function renderCart() {
     const qtyNum = Number(item.quantity) || 1;
     const lineTotal = (priceNum * qtyNum).toLocaleString();
 
+    const optimizedImg = transformCartImage(safeImg);
     return `
     <div class="cart-item" id="cart-item-${itemKey}" data-id="${prodId}" data-key="${itemKey}">
       <a href="product.html?id=${prodId}" class="cart-item-img-wrap" title="${safeName}">
-        <img ${index === 0 ? '' : 'loading="lazy"'} src="${safeImg}" alt="${safeName}">
+        <img ${index === 0 ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'} decoding="async" width="85" height="85" src="${optimizedImg}" alt="${safeName}">
       </a>
       <div class="item-details">
         <a href="product.html?id=${prodId}" class="item-title-link">
@@ -225,8 +238,8 @@ function renderCart() {
     `;
   }).join('');
 
-  if (window.I18n && typeof window.I18n.translatePage === 'function') {
-    window.I18n.translatePage();
+  if (window.I18n && typeof window.I18n.translatePage === 'function' && window.I18n.currentLang !== 'ar') {
+    window.I18n.translatePage(grid);
   }
 }
 
@@ -409,7 +422,7 @@ function updateSummary() {
         </span>
         <span style="display: inline-flex; align-items: center; gap: 8px;">
           <span>-${discount.toLocaleString()} ${currency}</span>
-          <button type="button" data-action="remove-promo" style="background:transparent; border:none; color:var(--danger-color, #ef4444); cursor:pointer; font-size:0.95rem; padding:0;" title="${window.I18n ? window.I18n.t('cart.remove_promo', 'إلغاء الخصم') : 'إلغاء الخصم'}">
+          <button type="button" data-action="remove-promo" style="background:transparent; border:none; color:var(--danger-color, #ef4444); cursor:pointer; font-size:0.95rem; min-width:32px; min-height:32px; display:inline-flex; align-items:center; justify-content:center; padding:0;" title="${window.I18n ? window.I18n.t('cart.remove_promo', 'إلغاء الخصم') : 'إلغاء الخصم'}" aria-label="${window.I18n ? window.I18n.t('cart.remove_promo', 'إلغاء الخصم') : 'إلغاء الخصم'}">
             <i class="fas fa-times-circle"></i>
           </button>
         </span>
@@ -445,8 +458,8 @@ function updateSummary() {
     </a>
   `;
 
-  if (window.I18n && typeof window.I18n.translatePage === 'function') {
-    window.I18n.translatePage();
+  if (window.I18n && typeof window.I18n.translatePage === 'function' && window.I18n.currentLang !== 'ar') {
+    window.I18n.translatePage(summaryBox);
   }
 }
 
@@ -584,3 +597,28 @@ window.updateSummary = updateSummary;
 window.applyPromoCode = applyPromoCode;
 window.removePromoCode = removePromoCode;
 window.proceedToCheckout = proceedToCheckout;
+
+// Schedule loading of secondary interactive modules on idle or first interaction to minimize TBT
+(function scheduleSecondaryModules() {
+    let loaded = false;
+    function loadModules() {
+        if (loaded) return;
+        loaded = true;
+        ['js/user-system.js', 'js/wishlist.js'].forEach(src => {
+            const s = document.createElement('script');
+            s.src = src;
+            s.defer = true;
+            document.body.appendChild(s);
+        });
+    }
+
+    if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(loadModules, { timeout: 2000 });
+    } else {
+        setTimeout(loadModules, 600);
+    }
+
+    ['touchstart', 'mouseover', 'scroll', 'click', 'keydown'].forEach(evt => {
+        window.addEventListener(evt, loadModules, { once: true, passive: true });
+    });
+})();

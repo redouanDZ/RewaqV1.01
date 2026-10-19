@@ -12,16 +12,27 @@ window.I18n = {
     async loadDictionary(lang) {
         const targetLang = lang || this.currentLang || 'ar';
         if (this.cache[targetLang]) return this.cache[targetLang];
-        try {
-            const res = await fetch(`/locales/${targetLang}.json`);
-            if (!res.ok) throw new Error(`HTTP ${res.status}`);
-            const dict = await res.json();
-            this.cache[targetLang] = dict;
-            return dict;
-        } catch (err) {
-            console.warn(`Could not load /locales/${targetLang}.json:`, err);
-            return null;
+        if (this._loadingPromises && this._loadingPromises[targetLang]) {
+            return this._loadingPromises[targetLang];
         }
+        if (!this._loadingPromises) this._loadingPromises = {};
+
+        this._loadingPromises[targetLang] = (async () => {
+            try {
+                const res = await fetch(`/locales/${targetLang}.json`);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const dict = await res.json();
+                this.cache[targetLang] = dict;
+                return dict;
+            } catch (err) {
+                console.warn(`Could not load /locales/${targetLang}.json:`, err);
+                return null;
+            } finally {
+                delete this._loadingPromises[targetLang];
+            }
+        })();
+
+        return this._loadingPromises[targetLang];
     },
 
     /**

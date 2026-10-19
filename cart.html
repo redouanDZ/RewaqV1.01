@@ -8,10 +8,34 @@
   <!-- Preload Primary Font for LCP / Text Performance -->
   <link rel="preload" href="/fonts/font-1.woff2" as="font" type="font/woff2" crossorigin>
 
-  <!-- Local Fonts & Icons -->
+  <!-- Critical CSS for Instant Paint and Zero CLS -->
+  <style>
+    :root{--primary-color:#4f46e5;--dark-color:#0f172a;--border-color:#e2e8f0;--card-bg:#ffffff;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Cairo',system-ui,-apple-system,sans-serif;color:#1e293b;background-color:#f8fafc;line-height:1.6;}
+    .container{width:100%;max-width:1240px;margin:0 auto;padding:0 16px;}
+    #site-header{display:block;min-height:154px;}
+    .page-title{background:linear-gradient(135deg,#1e1b4b 0%,#312e81 100%);color:#fff;padding:24px 0;min-height:88px;}
+    .page-title h1{font-size:1.5rem;font-weight:800;margin-bottom:6px;}
+    .breadcrumb{font-size:0.85rem;color:rgba(255,255,255,0.75);display:flex;align-items:center;gap:8px;}
+    .breadcrumb a{color:#fff;text-decoration:none;}
+    .cart-section{padding:30px 0 60px;min-height:500px;}
+    .cart-container{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:32px;align-items:start;margin-top:24px;}
+    .cart-item-img-wrap{display:block;width:85px;height:85px;border-radius:10px;overflow:hidden;flex-shrink:0;}
+    @media(max-width:992px){
+      .cart-container{grid-template-columns:1fr;gap:24px;}
+    }
+    @media(max-width:768px){
+      #site-header{min-height:144px;}
+    }
+  </style>
+
+  <!-- Asynchronous Non-blocking Stylesheets -->
   <link rel="stylesheet" href="/fonts/fonts.css">
-  <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css">
-  <link rel="stylesheet" href="css/style.min.css">
+  <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css"></noscript>
+  <link rel="stylesheet" href="css/style.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="css/style.min.css"></noscript>
 
   <meta name="theme-color" content="#2563eb">
   <link rel="manifest" href="/manifest.json">
@@ -68,11 +92,10 @@
   <!-- التذييل الموحد -->
   <footer id="site-footer"></footer>
 
+  <!-- Main Deferred Scripts -->
   <script src="js/layout.js" defer></script>
   <script src="js/api-client.js" defer></script>
   <script src="js/main.js" defer></script>
-  <script src="js/user-system.js" defer></script>
-  <script src="js/wishlist.js" defer></script>
   <script src="js/i18n.js" defer></script>
   <script src="js/pages/cart.js" defer></script>
 </body>
