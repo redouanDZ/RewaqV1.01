@@ -8,17 +8,39 @@
   <!-- Preload Primary Font for LCP / Text Performance -->
   <link rel="preload" href="/fonts/font-1.woff2" as="font" type="font/woff2" crossorigin>
 
-  <!-- Local Fonts & Icons -->
+  <!-- Critical CSS for Instant Paint and Zero CLS -->
+  <style>
+    :root{--primary-color:#4f46e5;--dark-color:#0f172a;--border-color:#e2e8f0;--card-bg:#ffffff;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Cairo',system-ui,-apple-system,sans-serif;color:#1e293b;background-color:#f8fafc;line-height:1.6;}
+    .container{width:100%;max-width:1240px;margin:0 auto;padding:0 16px;}
+    #site-header{display:block;min-height:154px;}
+    .page-title{background:linear-gradient(135deg,#1e1b4b 0%,#312e81 100%);color:#fff;padding:24px 0;min-height:88px;}
+    .page-title h1{font-size:1.5rem;font-weight:800;margin-bottom:6px;}
+    .breadcrumb{font-size:0.85rem;color:rgba(255,255,255,0.75);display:flex;align-items:center;gap:8px;}
+    .breadcrumb a{color:#fff;text-decoration:none;}
+    .shop-section{padding:24px 0;min-height:600px;}
+    .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;}
+    .product-skeleton-card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:14px;min-height:360px;}
+    @media(max-width:768px){
+      #site-header{min-height:144px;}
+      .products-grid{grid-template-columns:repeat(2,1fr);gap:12px;}
+    }
+  </style>
+
+  <!-- Asynchronous Non-blocking Stylesheets -->
   <link rel="stylesheet" href="/fonts/fonts.css">
-  <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css">
-  <link rel="stylesheet" href="css/style.min.css">
+  <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css"></noscript>
+  <link rel="stylesheet" href="css/style.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="css/style.min.css"></noscript>
 
   <meta name="theme-color" content="#2563eb">
   <link rel="manifest" href="/manifest.json">
-      <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
-    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
-    <link rel="shortcut icon" href="/favicon.ico">
-    <link rel="apple-touch-icon" href="/images/logo.png">
+  <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/images/logo.png">
 
 </head>
 <body>
@@ -222,12 +244,10 @@
   <!-- التذييل الموحد -->
   <footer id="site-footer"></footer>
 
-<script src="js/layout.js" defer></script>
+  <!-- Main Deferred Scripts -->
+  <script src="js/layout.js" defer></script>
   <script src="js/api-client.js" defer></script>
   <script src="js/main.js" defer></script>
-  <script src="js/user-system.js" defer></script>
-  <script src="js/cart.js" defer></script>
-  <script src="js/wishlist.js" defer></script>
   <script src="js/i18n.js" defer></script>
   <script src="js/pages/shop.js" defer></script>
 </body>

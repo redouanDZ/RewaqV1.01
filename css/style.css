@@ -356,6 +356,16 @@ ul {
 }
 
 /* رأس الموقع الزجاجي الاحترافي */
+#site-header {
+    display: block;
+    min-height: 154px;
+}
+@media (max-width: 768px) {
+    #site-header {
+        min-height: 144px;
+    }
+}
+
 header#main-header, header {
     background: var(--header-solid-bg, #ffffff);   /* opaque: page content must never show through */
     border-bottom: 1px solid var(--border-color);

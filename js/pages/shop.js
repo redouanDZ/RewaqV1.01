@@ -362,21 +362,29 @@
 
       const wishlistIds = window.getWishlist ? window.getWishlist() : [];
 
-      container.innerHTML = pageProducts.map(product => {
+      const transformProductImage = (url) => {
+        if (!url) return '/images/product-placeholder.jpg';
+        if (url.includes('res.cloudinary.com') && url.includes('/upload/')) {
+          return url.replace('/upload/', '/upload/w_400,h_400,c_fill,f_auto,q_auto/');
+        }
+        return url;
+      };
+
+      const buildShopProductCard = (product) => {
         const isFav = wishlistIds.includes(product.id);
         const stockNum = Number(product.stock) || 0;
         const safeName = window.escapeHtml ? window.escapeHtml(product.name) : product.name;
-        const safeCat = window.escapeHtml ? window.escapeHtml(product.category || 'عام') : (product.category || 'عام');
         const hasDiscount = product.old_price && Number(product.old_price) > Number(product.price);
         const discountPct = hasDiscount ? Math.round((1 - Number(product.price) / Number(product.old_price)) * 100) : null;
+        const imgUrl = transformProductImage(product.image_url);
         return `
-        <div class="product-card" id="shop-product-${product.id}" style="height: auto !important;">
+        <div class="product-card" id="shop-product-${product.id}">
           ${hasDiscount ? `<span class="product-badge">-${discountPct}%</span>` : ''}
           <button type="button" class="product-wishlist ${isFav ? 'active' : ''}" data-wishlist-id="${product.id}" data-action="handleToggleWishlist" data-args="${product.id}" data-i18n-title="common.wishlist" aria-label="${window.I18n ? window.I18n.t('common.wishlist', 'المفضلة') : 'المفضلة'}" data-i18n-aria-label="common.wishlist">
             <i class="${isFav ? 'fas fa-heart text-danger' : 'far fa-heart'}"></i>
           </button>
           <a href="product.html?id=${product.id}" class="product-image">
-            <img src="${product.image_url || '/images/product-placeholder.jpg'}" srcset="${product.image_url || '/images/product-placeholder.jpg'} 1x, ${product.image_url || '/images/product-placeholder.jpg'} 2x" width="400" height="400" alt="${safeName}" loading="lazy">
+            <img src="${imgUrl}" width="400" height="400" alt="${safeName}" loading="lazy" decoding="async">
           </a>
           <div class="product-info">
             <h3 class="product-name">
@@ -395,8 +403,31 @@
             </div>
           </div>
         </div>
-      `}).join('');
-      if (window.I18n) window.I18n.translatePage();
+      `;
+      };
+
+      // Chunk rendering: render first 4 immediately, then remainder to eliminate long tasks
+      const firstBatch = pageProducts.slice(0, 4);
+      container.innerHTML = firstBatch.map(buildShopProductCard).join('');
+
+      if (pageProducts.length > 4) {
+        const yieldToMain = () => {
+          if ('scheduler' in window && typeof window.scheduler.yield === 'function') {
+            return window.scheduler.yield();
+          }
+          return new Promise(resolve => setTimeout(resolve, 0));
+        };
+        yieldToMain().then(() => {
+          const secondBatch = pageProducts.slice(4);
+          const fragment = document.createRange().createContextualFragment(secondBatch.map(buildShopProductCard).join(''));
+          container.appendChild(fragment);
+          if (window.I18n && window.I18n.currentLang !== 'ar') {
+            window.I18n.translatePage(container);
+          }
+        });
+      } else if (window.I18n && window.I18n.currentLang !== 'ar') {
+        window.I18n.translatePage(container);
+      }
     }
 
     function renderPagination() {
@@ -835,5 +866,30 @@ window.handleToggleWishlist = handleToggleWishlist;
             new MutationObserver(refresh).observe(countEl, { childList: true, characterData: true, subtree: true });
         }
         refresh();
+    });
+})();
+
+// Schedule loading of secondary interactive modules on idle or first interaction to minimize TBT
+(function scheduleSecondaryModules() {
+    let loaded = false;
+    function loadModules() {
+        if (loaded) return;
+        loaded = true;
+        ['js/user-system.js', 'js/cart.js', 'js/wishlist.js'].forEach(src => {
+            const s = document.createElement('script');
+            s.src = src;
+            s.defer = true;
+            document.body.appendChild(s);
+        });
+    }
+
+    if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(loadModules, { timeout: 2000 });
+    } else {
+        setTimeout(loadModules, 600);
+    }
+
+    ['touchstart', 'mouseover', 'scroll', 'click', 'keydown'].forEach(evt => {
+        window.addEventListener(evt, loadModules, { once: true, passive: true });
     });
 })();
