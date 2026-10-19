@@ -35,6 +35,7 @@ let homeProductsList = [];
                 homeProductsList = products;
                 
                 const featuredContainer = document.getElementById('featured-products');
+                const offersContainer = document.getElementById('special-offers');
                 const yieldToMain = () => new Promise(resolve => {
                     if (window.scheduler && typeof window.scheduler.yield === 'function') {
                         window.scheduler.yield().then(resolve);
