@@ -374,22 +374,34 @@
         const isFav = wishlistIds.includes(product.id);
         const stockNum = Number(product.stock) || 0;
         const safeName = window.escapeHtml ? window.escapeHtml(product.name) : product.name;
+        const safeCat = window.escapeHtml ? window.escapeHtml(product.category || product.category_name || '') : (product.category || product.category_name || '');
         const hasDiscount = product.old_price && Number(product.old_price) > Number(product.price);
         const discountPct = hasDiscount ? Math.round((1 - Number(product.price) / Number(product.old_price)) * 100) : null;
         const imgUrl = transformProductImage(product.image_url);
+        const rating = Number(product.rating) || 5;
+        const fullStars = Math.min(5, Math.max(1, Math.round(rating)));
+        const starsHtml = '<i class="fas fa-star"></i>'.repeat(fullStars) + '<i class="far fa-star"></i>'.repeat(5 - fullStars);
+
         return `
         <div class="product-card" id="shop-product-${product.id}">
-          ${hasDiscount ? `<span class="product-badge">-${discountPct}%</span>` : ''}
-          <button type="button" class="product-wishlist ${isFav ? 'active' : ''}" data-wishlist-id="${product.id}" data-action="handleToggleWishlist" data-args="${product.id}" data-i18n-title="common.wishlist" aria-label="${window.I18n ? window.I18n.t('common.wishlist', 'المفضلة') : 'المفضلة'}" data-i18n-aria-label="common.wishlist">
-            <i class="${isFav ? 'fas fa-heart text-danger' : 'far fa-heart'}"></i>
-          </button>
-          <a href="product.html?id=${product.id}" class="product-image">
-            <img src="${imgUrl}" width="400" height="400" alt="${safeName}" loading="lazy" decoding="async">
-          </a>
+          <div class="product-image-container">
+            ${hasDiscount ? `<span class="product-badge">-${discountPct}%</span>` : ''}
+            <button type="button" class="product-wishlist ${isFav ? 'active' : ''}" data-wishlist-id="${product.id}" data-action="handleToggleWishlist" data-args="${product.id}" data-i18n-title="common.wishlist" aria-label="${window.I18n ? window.I18n.t('common.wishlist', 'المفضلة') : 'المفضلة'}" data-i18n-aria-label="common.wishlist">
+              <i class="${isFav ? 'fas fa-heart text-danger' : 'far fa-heart'}"></i>
+            </button>
+            <a href="product.html?id=${product.id}" class="product-image">
+              <img src="${imgUrl}" width="400" height="400" alt="${safeName}" loading="lazy" decoding="async">
+            </a>
+          </div>
           <div class="product-info">
+            ${safeCat ? `<span class="product-category">${safeCat}</span>` : ''}
             <h3 class="product-name">
               <a href="product.html?id=${product.id}" title="${safeName}">${safeName}</a>
             </h3>
+            <div class="product-rating" aria-label="${rating} / 5">
+              <div class="rating-stars">${starsHtml}</div>
+              <span class="rating-count">(${rating.toFixed(1)})</span>
+            </div>
             <div class="product-price-row">
               <div class="price-group">
                 <span class="product-price">${window.I18n ? window.I18n.formatNumber(product.price) : Number(product.price).toLocaleString()} <small data-i18n="common.currency">دج</small></span>

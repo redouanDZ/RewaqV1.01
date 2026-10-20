@@ -47,6 +47,7 @@ let homeProductsList = [];
                 const buildProductCardHtml = (p, wishlistIds, isOffer = false) => {
                     const isFav = wishlistIds.includes(p.id);
                     const safeName = window.escapeHtml ? window.escapeHtml(p.name) : p.name;
+                    const safeCat = window.escapeHtml ? window.escapeHtml(p.category || p.category_name || '') : (p.category || p.category_name || '');
                     const hasDiscount = p.old_price && Number(p.old_price) > Number(p.price);
                     const discountPct = hasDiscount ? Math.round((1 - Number(p.price) / Number(p.old_price)) * 100) : null;
                     const cardClass = isOffer ? 'product-card offer-card' : 'product-card';
@@ -54,20 +55,30 @@ let homeProductsList = [];
                     const btnTextKey = isOffer ? 'product.order_now_offer' : 'product.add_to_cart';
                     const btnDefaultText = isOffer ? 'أضف للسلة الآن' : 'أضف للسلة';
                     const btnAria = window.escapeHtml ? window.escapeHtml(window.I18n ? window.I18n.t(btnTextKey, btnDefaultText) : btnDefaultText) : btnDefaultText;
+                    const rating = Number(p.rating) || 5;
+                    const fullStars = Math.min(5, Math.max(1, Math.round(rating)));
+                    const starsHtml = '<i class="fas fa-star"></i>'.repeat(fullStars) + '<i class="far fa-star"></i>'.repeat(5 - fullStars);
 
                     return `
                     <div class="${cardClass}" id="${cardId}">
-                        ${hasDiscount ? `<span class="product-badge">-${discountPct}%</span>` : ''}
-                        <button type="button" class="product-wishlist ${isFav ? 'active' : ''}" data-wishlist-id="${p.id}" data-action="handleHomeToggleWishlist" data-id="${p.id}" data-i18n-title="common.wishlist" data-i18n-aria-label="common.wishlist" aria-label="المفضلة">
-                            <i class="${isFav ? 'fas fa-heart text-danger' : 'far fa-heart'}"></i>
-                        </button>
-                        <a href="product.html?id=${p.id}" class="product-image">
-                            <img src="${p.image_url || '/images/product-placeholder.jpg'}" srcset="${p.image_url || '/images/product-placeholder.jpg'} 1x, ${p.image_url || '/images/product-placeholder.jpg'} 2x" width="400" height="400" alt="${safeName}" loading="lazy" decoding="async">
-                        </a>
+                        <div class="product-image-container">
+                            ${hasDiscount ? `<span class="product-badge">-${discountPct}%</span>` : ''}
+                            <button type="button" class="product-wishlist ${isFav ? 'active' : ''}" data-wishlist-id="${p.id}" data-action="handleHomeToggleWishlist" data-id="${p.id}" data-i18n-title="common.wishlist" data-i18n-aria-label="common.wishlist" aria-label="المفضلة">
+                                <i class="${isFav ? 'fas fa-heart text-danger' : 'far fa-heart'}"></i>
+                            </button>
+                            <a href="product.html?id=${p.id}" class="product-image">
+                                <img src="${p.image_url || '/images/product-placeholder.jpg'}" srcset="${p.image_url || '/images/product-placeholder.jpg'} 1x, ${p.image_url || '/images/product-placeholder.jpg'} 2x" width="400" height="400" alt="${safeName}" loading="lazy" decoding="async">
+                            </a>
+                        </div>
                         <div class="product-info">
+                            ${safeCat ? `<span class="product-category">${safeCat}</span>` : ''}
                             <h3 class="product-name">
                                 <a href="product.html?id=${p.id}" title="${safeName}">${safeName}</a>
                             </h3>
+                            <div class="product-rating" aria-label="${rating} / 5">
+                                <div class="rating-stars">${starsHtml}</div>
+                                <span class="rating-count">(${rating.toFixed(1)})</span>
+                            </div>
                             <div class="product-price-row">
                                 <div class="price-group">
                                     <span class="product-price">${Number(p.price).toLocaleString()} <small data-i18n="common.currency">دج</small></span>

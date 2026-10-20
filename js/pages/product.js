@@ -832,17 +832,28 @@ function transformProductImage(url, width = 600, height = 600) {
                     const stockNum = Number(p.stock) || 0;
                     const isFav = wishlistIds.includes(p.id);
                     const simImg = transformProductImage(p.image_url || '/images/product-placeholder.jpg', 300, 300);
+                    const rating = Number(p.rating) || 5;
+                    const fullStars = Math.min(5, Math.max(1, Math.round(rating)));
+                    const starsHtml = '<i class="fas fa-star"></i>'.repeat(fullStars) + '<i class="far fa-star"></i>'.repeat(5 - fullStars);
+
                     return `
-                    <div class="product-card similar-product" id="similar-product-${p.id}" style="height: auto !important;">
-                        ${hasDiscount ? `<span class="product-badge">-${discountPct}%</span>` : ''}
-                        <button type="button" class="product-wishlist ${isFav ? 'active' : ''}" data-wishlist-id="${p.id}" data-action="toggleWishlist" data-args="${p.id}" data-i18n-title="common.wishlist" aria-label="${window.I18n ? window.I18n.t('common.wishlist', 'المفضلة') : 'المفضلة'}">
-                            <i class="${isFav ? 'fas fa-heart text-danger' : 'far fa-heart'}"></i>
-                        </button>
-                        <a href="product.html?id=${p.id}" class="product-image">
-                            <img src="${simImg}" width="400" height="400" alt="${safeName}" loading="lazy">
-                        </a>
+                    <div class="product-card similar-product" id="similar-product-${p.id}">
+                        <div class="product-image-container">
+                            ${hasDiscount ? `<span class="product-badge">-${discountPct}%</span>` : ''}
+                            <button type="button" class="product-wishlist ${isFav ? 'active' : ''}" data-wishlist-id="${p.id}" data-action="toggleWishlist" data-args="${p.id}" data-i18n-title="common.wishlist" aria-label="${window.I18n ? window.I18n.t('common.wishlist', 'المفضلة') : 'المفضلة'}">
+                                <i class="${isFav ? 'fas fa-heart text-danger' : 'far fa-heart'}"></i>
+                            </button>
+                            <a href="product.html?id=${p.id}" class="product-image">
+                                <img src="${simImg}" width="400" height="400" alt="${safeName}" loading="lazy">
+                            </a>
+                        </div>
                         <div class="product-info">
+                            ${safeCat ? `<span class="product-category">${safeCat}</span>` : ''}
                             <h3 class="product-name"><a href="product.html?id=${p.id}" title="${safeName}">${safeName}</a></h3>
+                            <div class="product-rating" aria-label="${rating} / 5">
+                                <div class="rating-stars">${starsHtml}</div>
+                                <span class="rating-count">(${rating.toFixed(1)})</span>
+                            </div>
                             <div class="product-price-row">
                                 <div class="price-group">
                                     <span class="product-price">${Number(p.price).toLocaleString()} <small>${currency}</small></span>

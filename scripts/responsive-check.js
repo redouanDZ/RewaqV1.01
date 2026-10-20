@@ -8,12 +8,11 @@ const { chromium } = require('playwright');
 
 const BASE_URL = process.env.BASE_URL || 'http://localhost:3100';
 const VIEWPORTS = [
-    { width: 320, height: 600, name: '320px (iPhone SE mini)' },
-    { width: 375, height: 667, name: '375px (iPhone 8/SE)' },
-    { width: 414, height: 896, name: '414px (iPhone 11/XR)' },
-    { width: 768, height: 1024, name: '768px (iPad Mini/Tablet)' },
-    { width: 1280, height: 800, name: '1280px (Laptop)' },
-    { width: 1920, height: 1080, name: '1920px (Desktop Full HD)' }
+    { width: 360, height: 740, name: '360px (Android Mobile)' },
+    { width: 390, height: 844, name: '390px (iPhone 12/13/14)' },
+    { width: 768, height: 1024, name: '768px (Tablet)' },
+    { width: 1024, height: 768, name: '1024px (Small Desktop/Tablet Landscape)' },
+    { width: 1440, height: 900, name: '1440px (Desktop HD)' }
 ];
 
 const LANGUAGES = ['ar', 'fr', 'en'];
@@ -28,6 +27,8 @@ const STORE_PAGES = [
     'account.html',
     'wishlist.html',
     'track-order.html',
+    'order-confirmation.html',
+    'invoice.html',
     'landing.html',
     'terms.html',
     'privacy.html'
@@ -49,8 +50,11 @@ const singlePageArg = args.find(a => a.startsWith('--page='))?.replace('--page='
 const quickMode = args.includes('--quick'); // Quick tests: only 320, 768, 1280 and 'ar'
 
 async function run() {
-    console.log(`🚀 Starting Playwright Responsive Check against ${BASE_URL}`);
-    const browser = await chromium.launch({ headless: true });
+    const launchOptions = { headless: true };
+    if (process.platform === 'win32') {
+        launchOptions.channel = 'chrome';
+    }
+    const browser = await chromium.launch(launchOptions);
     const context = await browser.newContext();
     const page = await context.newPage();
 
@@ -61,13 +65,18 @@ async function run() {
     // Authenticate as Admin first
     try {
         console.log('🔑 Logging in as Admin for admin dashboard testing...');
-        const adminEmail = process.env.ADMIN_EMAIL || 'admin@test.dz';
-        const adminPassword = process.env.ADMIN_PASSWORD || 'Admin12345!x';
+        const adminEmail = process.env.ADMIN_EMAIL || 'admin@example.com';
+        const adminPassword = process.env.ADMIN_PASSWORD || 'adminpassword';
         
         await page.goto(`${BASE_URL}/index.html`);
-        await page.request.post(`${BASE_URL}/api/login`, {
+        const loginRes = await page.request.post(`${BASE_URL}/api/login`, {
             data: { email: adminEmail, password: adminPassword }
         });
+        if (!loginRes.ok()) {
+            console.warn('⚠️ Admin login HTTP status:', loginRes.status(), await loginRes.text());
+        } else {
+            console.log('✅ Admin login succeeded');
+        }
     } catch (e) {
         console.warn('⚠️ Admin login failed or skipped:', e.message);
     }

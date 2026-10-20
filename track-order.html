@@ -34,7 +34,7 @@
     </section>
 
     <!-- Main Content -->
-    <section class="container" style="flex: 1 0 auto;">
+    <main class="track-main-section container">
         <div class="track-container">
             <form id="trackingForm">
                 <div class="track-form-grid">
@@ -80,46 +80,48 @@
                 <!-- Order Header Info -->
                 <div class="order-header-info">
                     <div class="order-info-item">
-                        <span><span data-i18n="account.col_order_num">رقم الطلب</span>
+                        <span><span data-i18n="account.col_order_num">رقم الطلب</span></span>
                         <strong id="resOrderNumber">-</strong>
                     </div>
                     <div class="order-info-item">
-                        <span><span data-i18n="account.col_date">تاريخ الطلب</span>
+                        <span><span data-i18n="account.col_date">تاريخ الطلب</span></span>
                         <strong id="resOrderDate">-</strong>
                     </div>
                     <div class="order-info-item">
-                        <span><span data-i18n="track.wilaya_address">الولاية والعنوان</span>
+                        <span><span data-i18n="track.wilaya_address">الولاية والعنوان</span></span>
                         <strong id="resWilaya">-</strong>
                     </div>
                     <div class="order-info-item">
-                        <span><span data-i18n="conf.payment_method">طريقة الدفع</span>
+                        <span><span data-i18n="conf.payment_method">طريقة الدفع</span></span>
                         <strong id="resPaymentMethod">-</strong>
                     </div>
                     <div class="order-info-item">
-                        <span><span data-i18n="account.col_status">حالة الطلب</span>
+                        <span><span data-i18n="account.col_status">حالة الطلب</span></span>
                         <span id="resStatusBadge" class="status-badge-custom status-pending">-</span>
                     </div>
                 </div>
 
                 <!-- Items Table -->
-                <table class="order-items-table">
-                    <thead>
-                        <tr>
-                            <th><span data-i18n="track.product">المنتج</span></th>
-                            <th style="text-align: center;"><span data-i18n="invoice.col_qty">الكمية</span></th>
-                            <th style="text-align: left;"><span data-i18n="track.total_price">السعر الإجمالي</span></th>
-                        </tr>
-                    </thead>
-                    <tbody id="resOrderItemsBody">
-                        <!-- Filled by JS -->
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="2" style="font-weight: bold; text-align: right; padding-top: 15px;"><span data-i18n="track.grand_total">المبلغ الإجمالي (شامل التوصيل):</span></td>
-                            <td style="font-weight: bold; text-align: left; color: var(--primary-color); font-size: 1.15rem; padding-top: 15px;" id="resOrderTotal">0 <span data-i18n="common.currency">دج</span></td>
-                        </tr>
-                    </tfoot>
-                </table>
+                <div class="track-table-responsive">
+                    <table class="order-items-table">
+                        <thead>
+                            <tr>
+                                <th><span data-i18n="track.product">المنتج</span></th>
+                                <th class="text-center"><span data-i18n="invoice.col_qty">الكمية</span></th>
+                                <th class="text-end"><span data-i18n="track.total_price">السعر الإجمالي</span></th>
+                            </tr>
+                        </thead>
+                        <tbody id="resOrderItemsBody">
+                            <!-- Filled by JS -->
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2" class="total-label"><span data-i18n="track.grand_total">المبلغ الإجمالي (شامل التوصيل):</span></td>
+                                <td class="total-amount text-end" id="resOrderTotal">0 <span data-i18n="common.currency">دج</span></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
 
                 <div class="order-actions-bar">
                     <a href="#" id="viewInvoiceBtn" target="_blank" class="btn-outline">
@@ -131,7 +133,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </main>
 
     <script src="js/layout.js" defer></script>
     <script src="js/api-client.js" defer></script>
