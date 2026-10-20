@@ -107,7 +107,7 @@
 
   function getFooterTemplate() {
     return `
-    <footer id="main-footer">
+    <footer id="main-footer" class="site-footer" data-layout-rendered="true">
       <div class="container">
         <div class="footer-grid">
           <!-- Store Description -->
@@ -241,9 +241,9 @@
       headerPlaceholder.outerHTML = getHeaderTemplate();
     }
 
-    // Target element: #site-footer or <footer data-layout="auto"> or first <footer>
-    const footerPlaceholder = document.getElementById('site-footer') || document.querySelector('footer[data-layout="auto"]');
-    if (footerPlaceholder) {
+    // Target element: #site-footer or #main-footer or <footer data-layout="auto"> or first <footer>
+    const footerPlaceholder = document.getElementById('site-footer') || document.querySelector('footer[data-layout="auto"]') || (!document.querySelector('footer[data-layout-rendered="true"]') ? document.getElementById('main-footer') : null);
+    if (footerPlaceholder && !footerPlaceholder.hasAttribute('data-layout-rendered')) {
       footerPlaceholder.outerHTML = getFooterTemplate();
     }
 

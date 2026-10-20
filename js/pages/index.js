@@ -44,7 +44,7 @@ let homeProductsList = [];
                     }
                 });
 
-                const buildProductCardHtml = (p, wishlistIds, isOffer = false) => {
+                const buildProductCardHtml = (p, wishlistIds, isOffer = false, index = 0) => {
                     const isFav = wishlistIds.includes(p.id);
                     const safeName = window.escapeHtml ? window.escapeHtml(p.name) : p.name;
                     const safeCat = window.escapeHtml ? window.escapeHtml(p.category || p.category_name || '') : (p.category || p.category_name || '');
@@ -58,6 +58,11 @@ let homeProductsList = [];
                     const rating = Number(p.rating) || 5;
                     const fullStars = Math.min(5, Math.max(1, Math.round(rating)));
                     const starsHtml = '<i class="fas fa-star"></i>'.repeat(fullStars) + '<i class="far fa-star"></i>'.repeat(5 - fullStars);
+                    const isAboveFold = index < 2;
+                    const loadingVal = isAboveFold ? 'eager' : 'lazy';
+                    const fetchPriorityAttr = isAboveFold ? 'fetchpriority="high"' : '';
+                    const placeholderImg = '/images/product-placeholder.jpg';
+                    const safeImg = p.image_url || placeholderImg;
 
                     return `
                     <div class="${cardClass}" id="${cardId}">
@@ -67,7 +72,7 @@ let homeProductsList = [];
                                 <i class="${isFav ? 'fas fa-heart text-danger' : 'far fa-heart'}"></i>
                             </button>
                             <a href="product.html?id=${p.id}" class="product-image">
-                                <img src="${p.image_url || '/images/product-placeholder.jpg'}" srcset="${p.image_url || '/images/product-placeholder.jpg'} 1x, ${p.image_url || '/images/product-placeholder.jpg'} 2x" width="400" height="400" alt="${safeName}" loading="lazy" decoding="async">
+                                <img src="${safeImg}" srcset="${safeImg} 1x, ${safeImg} 2x" width="400" height="400" alt="${safeName}" loading="${loadingVal}" ${fetchPriorityAttr} decoding="async" onerror="this.onerror=null;this.src='${placeholderImg}';">
                             </a>
                         </div>
                         <div class="product-info">
@@ -98,13 +103,13 @@ let homeProductsList = [];
                     const wishlistIds = window.getWishlist ? window.getWishlist() : [];
                     // Render first 4 products immediately to satisfy first contentful viewport
                     const initialBatch = products.slice(0, 4);
-                    featuredContainer.innerHTML = initialBatch.map(p => buildProductCardHtml(p, wishlistIds, false)).join('');
+                    featuredContainer.innerHTML = initialBatch.map((p, i) => buildProductCardHtml(p, wishlistIds, false, i)).join('');
 
                     if (products.length > 4) {
                         // Yield to main thread to prevent Long Tasks (TBT)
                         yieldToMain().then(() => {
                             const remaining = products.slice(4);
-                            const fragment = document.createRange().createContextualFragment(remaining.map(p => buildProductCardHtml(p, wishlistIds, false)).join(''));
+                            const fragment = document.createRange().createContextualFragment(remaining.map((p, i) => buildProductCardHtml(p, wishlistIds, false, i + 4)).join(''));
                             featuredContainer.appendChild(fragment);
                             if (window.I18n && window.I18n.currentLang !== 'ar') window.I18n.translatePage(featuredContainer);
                         });
@@ -125,7 +130,7 @@ let homeProductsList = [];
                 if (offersContainer && discountedProducts.length >= 2) {
                     yieldToMain().then(() => {
                         const wishlistIds = window.getWishlist ? window.getWishlist() : [];
-                        offersContainer.innerHTML = discountedProducts.slice(0, 8).map(p => buildProductCardHtml(p, wishlistIds, true)).join('');
+                        offersContainer.innerHTML = discountedProducts.slice(0, 8).map((p, i) => buildProductCardHtml(p, wishlistIds, true, i)).join('');
                         if (window.I18n && window.I18n.currentLang !== 'ar') window.I18n.translatePage(offersContainer);
                     });
                 }

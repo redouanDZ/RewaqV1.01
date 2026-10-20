@@ -56,6 +56,8 @@
     --space-5xl: 80px;
 
     /* Spacing Semantics */
+    --section-gap: 40px;
+    --section-gap-mobile: 24px;
     --section-spacing: 56px;
     --section-spacing-mobile: 36px;
     --container-gutter: 24px;
@@ -455,7 +457,7 @@ header {
     overflow: hidden;
     padding: 4px 6px;
     padding-inline-start: 18px;
-    padding-inline-end: 8px;
+    padding-inline-end: 4px;
     gap: 0;
     height: 44px;
     min-height: 44px;
@@ -517,7 +519,7 @@ body.dark-mode .header-search-form input {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     white-space: nowrap;
     flex-shrink: 0;
-    margin: 2px 4px;
+    margin: 2px;
     min-height: 36px;
     box-shadow: 0 2px 6px rgba(79, 70, 229, 0.25);
 }
@@ -1019,7 +1021,7 @@ body.dark-mode .search-bar input[type="text"] {
     position: relative;
     display: block;
     width: 100%;
-    margin-bottom: 50px !important;
+    margin-bottom: var(--section-gap, 40px);
 }
 
 .banner {
@@ -1027,15 +1029,14 @@ body.dark-mode .search-bar input[type="text"] {
     border-radius: var(--radius-lg, 16px);
     position: relative;
     width: 100%;
-    height: auto !important;
+    height: auto;
     min-height: 450px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     color: white;
-    margin: 20px 0 0;
-    margin-bottom: 50px !important;
+    margin: 0;
     padding: 60px 32px;
     box-sizing: border-box;
     overflow: hidden;
@@ -1156,15 +1157,16 @@ body.dark-mode .search-bar input[type="text"] {
     position: relative;
     display: block;
     width: 100%;
-    clear: both !important;
-    margin-top: 30px !important;
-    margin-bottom: var(--section-spacing, 56px);
+    clear: both;
+    margin-top: 0;
+    margin-bottom: var(--section-gap, 40px);
 }
 
 .trust-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: var(--space-5, 20px);
+    gap: var(--space-4, 16px);
+    align-items: stretch;
 }
 
 @media (max-width: 992px) {
@@ -1192,6 +1194,7 @@ body.dark-mode .search-bar input[type="text"] {
     gap: 14px;
     box-shadow: var(--shadow-sm);
     min-width: 0;
+    height: 100%;
     transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.2s ease;
 }
 
@@ -1224,6 +1227,9 @@ body.dark-mode .search-bar input[type="text"] {
 .trust-info {
     min-width: 0;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .trust-info h2 {
@@ -1232,8 +1238,9 @@ body.dark-mode .search-bar input[type="text"] {
     margin: 0;
     color: var(--dark-color);
     white-space: normal;
-    word-break: break-word;
+    word-break: normal;
     overflow-wrap: break-word;
+    hyphens: none;
     line-height: 1.35;
 }
 
@@ -1303,8 +1310,22 @@ body.dark-mode .search-bar input[type="text"] {
 
 .categories-cards-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 20px;
+}
+
+@media (max-width: 992px) {
+    .categories-cards-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .categories-cards-grid > .category-card:last-child:nth-child(odd) {
+        grid-column: 1 / -1;
+        justify-self: center;
+        width: 100%;
+        max-width: calc(50% - 6px);
+    }
 }
 
 .category-card {
@@ -1488,6 +1509,8 @@ body.dark-mode .search-bar input[type="text"] {
     aspect-ratio: 1 / 1;
     width: 100%;
     background-color: var(--light-color);
+    background-image: linear-gradient(90deg, rgba(226, 232, 240, 0.5) 0%, rgba(241, 245, 249, 0.8) 50%, rgba(226, 232, 240, 0.5) 100%);
+    background-size: 200% 100%;
     display: block;
     border-bottom: 1px solid var(--border-color);
 }
@@ -2149,6 +2172,15 @@ body.dark-mode .product-wishlist:hover {
 }
 
 /* تذييل الموقع */
+footer:empty,
+#site-footer:empty,
+#main-footer:empty {
+    display: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    min-height: 0 !important;
+}
+
 footer#site-footer,
 #site-footer,
 footer#main-footer,
@@ -5157,8 +5189,9 @@ body.dark-mode .mobile-nav-item.active {
         align-items: center;
     }
 
+    body,
     body:has(.mobile-bottom-nav) {
-        padding-bottom: calc(78px + env(safe-area-inset-bottom)) !important;
+        padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
     }
 
     .back-to-top-btn {
@@ -5293,8 +5326,8 @@ body.dark-mode .mobile-nav-item.active {
     .trust-section,
     .features-section {
         clear: both !important;
-        margin-top: 30px !important;
-        margin-bottom: var(--section-spacing-mobile, 36px) !important;
+        margin-top: 0 !important;
+        margin-bottom: var(--section-gap-mobile, 24px) !important;
     }
 
     .categories-section,
@@ -5351,15 +5384,14 @@ body.dark-mode .mobile-nav-item.active {
     .banner-section,
     .hero-section,
     .hero {
-        margin-bottom: 50px !important;
+        margin-bottom: var(--section-gap-mobile, 24px) !important;
     }
 
     .banner {
         min-height: 240px !important;
         padding: 28px 16px !important;
         border-radius: 16px !important;
-        margin: 16px 0 50px !important;
-        margin-bottom: 50px !important;
+        margin: 0 !important;
     }
 
     .banner h1 {
@@ -5955,14 +5987,13 @@ input[type="tel"] {
     .banner-section,
     .hero-section,
     .hero {
-        margin-bottom: 50px !important;
+        margin-bottom: var(--section-gap-mobile, 24px) !important;
     }
 
     .banner {
         min-height: auto !important;
         padding: 28px 14px !important;
-        margin: 12px 0 50px !important;
-        margin-bottom: 50px !important;
+        margin: 0 !important;
         border-radius: 14px !important;
     }
 
@@ -6007,13 +6038,14 @@ input[type="tel"] {
     .trust-section,
     .features-section {
         clear: both !important;
-        margin-top: 30px !important;
-        margin-bottom: 28px !important;
+        margin-top: 0 !important;
+        margin-bottom: var(--section-gap-mobile, 24px) !important;
     }
 
     .trust-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
         gap: 10px !important;
+        align-items: stretch !important;
     }
 
     .trust-card {
@@ -6021,6 +6053,7 @@ input[type="tel"] {
         gap: 8px !important;
         border-radius: 12px !important;
         min-width: 0 !important;
+        height: 100% !important;
     }
 
     .trust-icon-box {
@@ -6034,28 +6067,39 @@ input[type="tel"] {
     .trust-info {
         min-width: 0 !important;
         overflow: hidden !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
     }
 
     .trust-info h2,
     .trust-info h3 {
-        font-size: 0.8rem !important;
-        margin-bottom: 2px !important;
+        font-size: 0.82rem !important;
+        margin-bottom: 0 !important;
         white-space: normal !important;
-        word-break: break-word !important;
+        word-break: normal !important;
         overflow-wrap: break-word !important;
-        line-height: 1.3 !important;
+        hyphens: none !important;
+        line-height: 1.35 !important;
     }
 
     .trust-info p {
         font-size: 0.72rem !important;
         line-height: 1.25 !important;
-        word-break: break-word !important;
+        word-break: normal !important;
     }
 
-    /* شبكة تصنيفات الأقسام المتناسقة في الهاتف (2x2) */
+    /* شبكة تصنيفات الأقسام المتناسقة في الهاتف (2x2 مع توسيط العنصر الخامس) */
     .categories-cards-grid {
         grid-template-columns: repeat(2, 1fr) !important;
         gap: 12px !important;
+    }
+
+    .categories-cards-grid > .category-card:last-child:nth-child(odd) {
+        grid-column: 1 / -1 !important;
+        justify-self: center !important;
+        width: 100% !important;
+        max-width: calc(50% - 6px) !important;
     }
 
     .category-card {
@@ -6780,7 +6824,8 @@ input[type="tel"] {
     }
 
     .logo-text {
-        max-width: 110px !important;
+        max-width: none !important;
+        white-space: nowrap !important;
     }
 
     .user-actions {
@@ -6835,22 +6880,25 @@ input[type="tel"] {
     }
 
     .logo-text {
-        font-size: 0.92rem !important;
-        max-width: 85px !important;
+        font-size: 0.88rem !important;
+        max-width: none !important;
         letter-spacing: -0.2px !important;
+        white-space: nowrap !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
     }
 
     .user-actions {
-        gap: 4px !important;
+        gap: 3px !important;
     }
 
     .cart-icon,
     .theme-toggle-btn,
     .mobile-menu-btn {
-        width: 44px !important;
-        height: 44px !important;
-        min-width: 44px !important;
-        min-height: 44px !important;
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+        min-height: 38px !important;
         font-size: 13px !important;
         border-radius: 8px !important;
     }
@@ -7268,10 +7316,11 @@ input[type="tel"] {
     overflow: hidden;
 }
 
-.header-search-form {
+.header-search-form,
+.search-bar form {
     padding: 4px 6px;
     padding-inline-start: 18px;
-    padding-inline-end: 8px;
+    padding-inline-end: 4px;
     gap: 0;
 }
 
@@ -7296,7 +7345,7 @@ body.dark-mode .search-bar input[type="text"],
 .header-search-btn,
 .search-bar button {
     border-radius: 999px !important;
-    margin: 2px 4px;
+    margin: 2px;
 }
 
 .header-search-form input[type="text"] {

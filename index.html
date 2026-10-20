@@ -60,16 +60,16 @@
       .logo a{display:flex;align-items:center;gap:10px;text-decoration:none;}
       .logo-text{font-size:1.25rem;font-weight:800;color:var(--dark-color);}
       .header-search{flex:1;max-width:540px;margin:0 16px;}
-      .header-search-form{display:flex;align-items:center;background:var(--card-bg);border:1.5px solid var(--border-color);border-radius:999px;padding:4px 6px;padding-inline-start:18px;padding-inline-end:8px;gap:0;height:44px;min-height:44px;}
+      .header-search-form{display:flex;align-items:center;background:var(--card-bg);border:1.5px solid var(--border-color);border-radius:999px;padding:4px 6px;padding-inline-start:18px;padding-inline-end:4px;gap:0;height:44px;min-height:44px;}
       .header-search-icon{width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;color:var(--muted-text);flex-shrink:0;margin-inline-start:2px;margin-inline-end:12px;pointer-events:none;}
       .header-search-form input{flex:1;border:none;outline:none;background:transparent;font-size:0.92rem;font-family:inherit;padding-inline-start:8px;padding-inline-end:10px;}
-      .header-search-btn{background:var(--primary-gradient);color:#fff;border:none;padding:8px 20px;border-radius:999px;font-weight:700;font-size:0.88rem;cursor:pointer;min-height:36px;margin:2px 4px;}
+      .header-search-btn{background:var(--primary-gradient);color:#fff;border:none;padding:8px 20px;border-radius:999px;font-weight:700;font-size:0.88rem;cursor:pointer;min-height:36px;margin:2px;}
       .user-actions{display:flex;align-items:center;gap:6px;}
       .action-btn{width:44px;height:44px;min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:1px solid transparent;border-radius:10px;color:var(--text-color);text-decoration:none;cursor:pointer;}
       .sub-nav{background:#fff;border-top:1px solid var(--border-color);}
       .nav-links{display:flex;align-items:center;gap:18px;list-style:none;overflow-x:auto;padding:8px 0;}
       .nav-links a{color:var(--text-color);text-decoration:none;font-size:0.9rem;font-weight:600;white-space:nowrap;}
-      .banner-section{padding:20px 0;}
+      .banner-section{padding:10px 0;margin-bottom:var(--section-gap, 40px);}
       .banner{background:linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#4338ca 100%);border-radius:16px;padding:36px 24px;color:#fff;}
       .hero-badge-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.15);padding:6px 14px;border-radius:999px;font-size:0.85rem;font-weight:700;margin-bottom:14px;}
       h1{font-size:1.75rem;font-weight:800;line-height:1.3;margin-bottom:18px;}
@@ -77,22 +77,23 @@
       .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 22px;border-radius:10px;font-weight:700;font-size:0.92rem;text-decoration:none;min-height:44px;cursor:pointer;}
       .btn-hero-primary{background:#fff;color:var(--primary-color);}
       .btn-hero-secondary{background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.25);}
-      .trust-section{padding:16px 0 24px;}
-      .trust-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;}
-      .trust-card{background:var(--card-bg);border:1px solid var(--border-color);border-radius:14px;padding:16px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow-sm);}
+      .trust-section{padding:0 0 24px;margin-bottom:var(--section-gap, 40px);}
+      .trust-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:stretch;}
+      .trust-card{background:var(--card-bg);border:1px solid var(--border-color);border-radius:14px;padding:16px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow-sm);height:100%;}
       .trust-icon-box{width:44px;height:44px;border-radius:10px;background:rgba(79,70,229,0.08);color:var(--primary-color);display:flex;align-items:center;justify-content:center;font-size:1.25rem;flex-shrink:0;}
-      .trust-info h2{font-size:0.95rem;font-weight:700;}
+      .trust-info h2{font-size:0.95rem;font-weight:700;word-break:normal;overflow-wrap:break-word;line-height:1.35;}
       .categories-section{min-height:240px;}
       .section-header-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
       .section-main-title{font-size:1.35rem;font-weight:800;}
       .section-sub-title{color:var(--light-text);font-size:0.88rem;}
       .section-link{font-weight:700;color:var(--primary-color);text-decoration:none;display:inline-flex;align-items:center;gap:6px;min-height:44px;}
-      .categories-cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;}
+      .categories-cards-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;}
       .category-card{background:var(--card-bg);border:1px solid var(--border-color);border-radius:14px;padding:18px 12px;text-align:center;text-decoration:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;min-height:130px;aspect-ratio:1/0.85;}
       .category-card-icon{width:56px;height:56px;border-radius:12px;background:rgba(79,70,229,0.08);color:var(--primary-color);display:flex;align-items:center;justify-content:center;font-size:1.4rem;}
       .category-card h3{font-size:0.95rem;font-weight:700;color:var(--dark-color);}
       @media(max-width:768px){
         .categories-cards-grid{grid-template-columns:repeat(2,1fr);}
+        .categories-cards-grid > .category-card:last-child:nth-child(odd){grid-column:1/-1;justify-self:center;width:100%;max-width:calc(50% - 6px);}
         .trust-grid{grid-template-columns:repeat(2,1fr);}
       }
     </style>
@@ -294,8 +295,73 @@
         </section>
     </main>
 
-    <!-- ===== Unified Footer (Injected by js/layout.js) ===== -->
-    <footer id="site-footer"></footer>
+    <!-- ===== Unified Footer ===== -->
+    <footer id="main-footer" class="site-footer" data-layout-rendered="true">
+      <div class="container">
+        <div class="footer-grid">
+          <!-- Store Description -->
+          <div class="footer-col">
+            <div class="footer-brand-lockup">
+              <img src="/images/logo-32.webp" srcset="/images/logo-32.webp 1x, /images/logo-64.webp 2x" alt="" class="site-logo-img" width="32" height="32" style="border-radius: 8px; vertical-align: middle;" loading="lazy">
+              <span class="footer-brand dynamic-store-name" data-i18n="footer.brand">المتجر الإلكتروني</span>
+            </div>
+            <p class="footer-tagline" data-i18n="footer.tagline">وجهتك الموثوقة للتسوق الإلكتروني في الجزائر، منتجات عالية الجودة، شحن سريع لـ 58 ولاية، وضمان الدفع عند الاستلام.</p>
+            <div class="footer-badges">
+              <span class="footer-trust-tag"><i class="fas fa-shield-halved text-success"></i> <span data-i18n="footer.genuine_products">100% منتجات أصلية</span></span>
+              <span class="footer-trust-tag"><i class="fas fa-box-open text-primary"></i> <span data-i18n="footer.inspect_on_delivery">فحص عند الاستلام</span></span>
+            </div>
+          </div>
+
+          <!-- Quick Links -->
+          <div class="footer-col">
+            <h3 data-i18n="footer.quick_links">روابط سريعة</h3>
+            <ul class="footer-links">
+              <li><a href="index.html"><i class="fas fa-angle-left"></i> <span data-i18n="footer.link_home">الرئيسية</span></a></li>
+              <li><a href="shop.html"><i class="fas fa-angle-left"></i> <span data-i18n="footer.link_shop">متجر المنتجات</span></a></li>
+              <li><a href="cart.html"><i class="fas fa-angle-left"></i> <span data-i18n="footer.link_cart">سلة التسوق</span></a></li>
+              <li><a href="wishlist.html"><i class="fas fa-angle-left"></i> <span data-i18n="footer.link_wishlist">قائمة المفضلة</span></a></li>
+              <li><a href="track-order.html"><i class="fas fa-angle-left"></i> <span data-i18n="footer.link_track">تتبع طلبيتك</span></a></li>
+              <li><a href="terms.html"><i class="fas fa-angle-left"></i> <span data-i18n="footer.link_terms">الشروط والأحكام</span></a></li>
+              <li><a href="privacy.html"><i class="fas fa-angle-left"></i> <span data-i18n="footer.link_privacy">سياسة الخصوصية</span></a></li>
+            </ul>
+          </div>
+
+          <!-- Customer Support -->
+          <div class="footer-col">
+            <h3 data-i18n="footer.contact">خدمة العملاء والتواصل</h3>
+            <ul class="footer-contact-list">
+              <li><i class="fas fa-map-pin text-primary"></i> <span data-i18n="footer.address" class="footer-address">الجزائر العاصمة، الجزائر</span></li>
+              <li><i class="fas fa-envelope text-primary"></i> <span class="footer-email">contact@rewaq-store.dz</span></li>
+              <li><i class="fas fa-clock text-primary"></i> <span data-i18n="footer.hours">السبت - الخميس: 9:00 ص - 6:00 م</span></li>
+              <li><i class="fas fa-headset text-primary"></i> <span data-i18n="footer.tech_support">دعم فني واستفسارات مستمرة</span></li>
+            </ul>
+          </div>
+
+          <!-- Payment Methods & Social -->
+          <div class="footer-col">
+            <h3 data-i18n="footer.payment_shipping">طرق الدفع والشحن</h3>
+            <p class="footer-payment-desc" data-i18n="footer.payment_desc">نقبل الدفع الآمن عند الاستلام أو عبر البطاقات الإلكترونية الجزائرية:</p>
+            <div class="payment-badges-row">
+              <span class="payment-badge"><i class="fas fa-money-bill-wave text-success"></i> <span data-i18n="footer.cod_cash">COD نقداً عند الاستلام</span></span>
+              <span class="payment-badge"><i class="fas fa-credit-card text-secondary"></i> EDAHABIA / CIB</span>
+            </div>
+            <h4 class="footer-sub-heading" data-i18n="footer.follow">تابعنا على الشبكات</h4>
+            <div class="social-links">
+              <a href="#" title="Facebook" class="social-btn facebook" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+              <a href="#" title="Instagram" class="social-btn instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+              <a href="#" title="TikTok" class="social-btn tiktok" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p class="copyright-text">&copy; <span class="dynamic-year">2026</span> <span class="dynamic-store-name">متجر رواق</span>. <span data-i18n="common.rights_reserved">جميع الحقوق محفوظة.</span></p>
+          <div class="footer-bottom-trust">
+            <span data-i18n="footer.made_in">صُمم بأعلى معايير الأمان والتجارة الإلكترونية في الجزائر 🇩🇿</span>
+          </div>
+        </div>
+      </div>
+    </footer>
 
     <!-- Main Rendering Scripts (Deferred) -->
     <script src="js/layout.js" defer></script>

@@ -370,7 +370,7 @@
         return url;
       };
 
-      const buildShopProductCard = (product) => {
+      const buildShopProductCard = (product, index = 0) => {
         const isFav = wishlistIds.includes(product.id);
         const stockNum = Number(product.stock) || 0;
         const safeName = window.escapeHtml ? window.escapeHtml(product.name) : product.name;
@@ -381,6 +381,11 @@
         const rating = Number(product.rating) || 5;
         const fullStars = Math.min(5, Math.max(1, Math.round(rating)));
         const starsHtml = '<i class="fas fa-star"></i>'.repeat(fullStars) + '<i class="far fa-star"></i>'.repeat(5 - fullStars);
+        const isAboveFold = index < 2;
+        const loadingVal = isAboveFold ? 'eager' : 'lazy';
+        const fetchPriorityAttr = isAboveFold ? 'fetchpriority="high"' : '';
+        const fallbackPlaceholder = '/images/product-placeholder.jpg';
+        const safeImg = imgUrl || fallbackPlaceholder;
 
         return `
         <div class="product-card" id="shop-product-${product.id}">
@@ -390,7 +395,7 @@
               <i class="${isFav ? 'fas fa-heart text-danger' : 'far fa-heart'}"></i>
             </button>
             <a href="product.html?id=${product.id}" class="product-image">
-              <img src="${imgUrl}" width="400" height="400" alt="${safeName}" loading="lazy" decoding="async">
+              <img src="${safeImg}" width="400" height="400" alt="${safeName}" loading="${loadingVal}" ${fetchPriorityAttr} decoding="async" onerror="this.onerror=null;this.src='${fallbackPlaceholder}';">
             </a>
           </div>
           <div class="product-info">
@@ -420,7 +425,7 @@
 
       // Chunk rendering: render first 4 immediately, then remainder to eliminate long tasks
       const firstBatch = pageProducts.slice(0, 4);
-      container.innerHTML = firstBatch.map(buildShopProductCard).join('');
+      container.innerHTML = firstBatch.map((p, i) => buildShopProductCard(p, i)).join('');
 
       if (pageProducts.length > 4) {
         const yieldToMain = () => {
@@ -431,7 +436,7 @@
         };
         yieldToMain().then(() => {
           const secondBatch = pageProducts.slice(4);
-          const fragment = document.createRange().createContextualFragment(secondBatch.map(buildShopProductCard).join(''));
+          const fragment = document.createRange().createContextualFragment(secondBatch.map((p, i) => buildShopProductCard(p, i + 4)).join(''));
           container.appendChild(fragment);
           if (window.I18n && window.I18n.currentLang !== 'ar') {
             window.I18n.translatePage(container);
