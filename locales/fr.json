@@ -485,7 +485,7 @@
         "exclusive_offer": "Offre exclusive"
     },
     "footer": {
-        "brand": "MyShop",
+        "brand": "Rewaq",
         "tagline": "Votre destination de confiance pour les achats en ligne en Algérie, produits de haute qualité, livraison rapide vers 58 wilayas et paiement à la livraison garanti.",
         "description": "Votre première destination d'achat en ligne en Algérie. Des milliers de produits de qualité avec livraison rapide vers 58 wilayas et paiement à la livraison.",
         "badge_wilayas": "58 Wilayas",
@@ -510,7 +510,7 @@
         "data_protected": "Données cryptées et protégées",
         "reliable_shopping": "Expérience d'achat 100% fiable",
         "important_links": "Liens importants",
-        "myshop_pro": "Obtenez une boutique comme celle-ci (Boutique Rewaq Pro)",
+        "rewaq_pro": "Obtenez une boutique comme celle-ci (Boutique Rewaq Pro)",
         "newsletter_success": "Merci pour votre inscription à la newsletter! 🎉 Vous recevrez bientôt nos offres.",
         "newsletter_invalid": "Veuillez entrer une adresse e-mail valide",
         "newsletter_error": "Une erreur est survenue lors de l'inscription. Veuillez réessayer ultérieurement.",
@@ -698,7 +698,7 @@
     "invoice": {
         "meta_title": "Facture de commande - E-Store",
         "store_tagline": "Service d'achat fiable en Algérie",
-        "store_contact": "Tél: 0550000000 | Email: contact@myshop.dz",
+        "store_contact": "Tél: 0550000000 | Email: contact@rewaq.dz",
         "title": "Facture | Boutique Rewaq",
         "invoice_num": "Numéro de facture:",
         "order_num": "Numéro de commande:",

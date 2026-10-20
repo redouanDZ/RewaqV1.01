@@ -1,5 +1,5 @@
 /**
- * Shared Layout Injection Module (Header & Footer) for MYSHOP
+ * Shared Layout Injection Module (Header & Footer) for Rewaq
  * Dynamically provides the canonical header, navigation, and footer templates
  * while preserving active navigation states, data-i18n translation bindings,
  * theme controls, and cart/wishlist badge counters.
@@ -48,7 +48,7 @@
         <div class="logo">
           <a href="index.html" class="logo-link">
             <img src="/images/logo-32.webp" srcset="/images/logo-32.webp 1x, /images/logo-64.webp 2x" alt="" class="site-logo-img" width="38" height="38" fetchpriority="high">
-            <span class="logo-text" data-i18n="common.store_name">متجر رِواق</span>
+            <span class="logo-text" data-i18n="common.store_name">متجر رواق</span>
           </a>
         </div>
 
@@ -166,7 +166,7 @@
         </div>
 
         <div class="footer-bottom">
-          <p class="copyright-text">&copy; <span class="dynamic-year">2026</span> <span class="dynamic-store-name">متجر رِواق</span>. <span data-i18n="common.rights_reserved">جميع الحقوق محفوظة.</span></p>
+          <p class="copyright-text">&copy; <span class="dynamic-year">2026</span> <span class="dynamic-store-name">متجر رواق</span>. <span data-i18n="common.rights_reserved">جميع الحقوق محفوظة.</span></p>
           <div class="footer-bottom-trust">
             <span data-i18n="footer.made_in">صُمم بأعلى معايير الأمان والتجارة الإلكترونية في الجزائر 🇩🇿</span>
           </div>

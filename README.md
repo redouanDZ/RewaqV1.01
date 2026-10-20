@@ -1,4 +1,4 @@
-# متجر إلكتروني متكامل للإنتاج — متجر رِواق E-Commerce Platform
+# متجر إلكتروني متكامل للإنتاج — متجر رواق E-Commerce Platform
 
 [![Node Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org)
 [![Database](https://img.shields.io/badge/database-MySQL%208.0-blue.svg)](https://www.mysql.com)
@@ -77,8 +77,8 @@ NODE_ENV=production
 PORT=3000
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_NAME=myshop_db
-DB_USER=myshop_user
+DB_NAME=rewaq_db
+DB_USER=rewaq_user
 DB_PASSWORD=your_db_password
 JWT_SECRET=your_long_random_64char_jwt_secret
 COOKIE_SECRET=your_long_random_64char_cookie_secret
@@ -131,7 +131,7 @@ npm test
 ```
 
 > ⚠️ **تنبيه أمان الاختبارات (Database Test Guard):**
-> لحماية قواعد بيانات الإنتاج من الحذف العرضي، ترفض حزمة الاختبارات الآلية (`npm test`) العمل إلا على قاعدة بيانات ينتهي اسمها بـ `_test` (مثال: `ecommerce_store_test` أو `myshop_test`). يجب ضبط المتغير `DB_NAME` لقاعدة تجريبية مخصصة عند تشغيل الاختبارات.
+> لحماية قواعد بيانات الإنتاج من الحذف العرضي، ترفض حزمة الاختبارات الآلية (`npm test`) العمل إلا على قاعدة بيانات ينتهي اسمها بـ `_test` (مثال: `ecommerce_store_test` أو `rewaq_test`). يجب ضبط المتغير `DB_NAME` لقاعدة تجريبية مخصصة عند تشغيل الاختبارات.
 
 ---
 
@@ -156,7 +156,7 @@ docker compose up --build -d
 
 ## 📄 الترخيص وحقوق الملكية (License & Assets Attribution)
 
-- **كود المشروع**: هذا البرنامج مرخص بموجب **رخصة برمجية تجارية خاصة (Commercial Proprietary Software License)**. جميع الحقوق محفوظة © 2026 متجر رِواق. يُحظر إعادة البيع أو إعادة التوزيع أو الاستخدام دون ترخيص مسبق. للاطلاع على الشروط الكاملة، يُرجى مراجعة ملف [LICENSE](LICENSE).
+- **كود المشروع**: هذا البرنامج مرخص بموجب **رخصة برمجية تجارية خاصة (Commercial Proprietary Software License)**. جميع الحقوق محفوظة © 2026 متجر رواق. يُحظر إعادة البيع أو إعادة التوزيع أو الاستخدام دون ترخيص مسبق. للاطلاع على الشروط الكاملة، يُرجى مراجعة ملف [LICENSE](LICENSE).
 - **أصول الصور والوسائط والخطوط**: مصادر الصور والخطوط والأيقونات وتراخيصها موثقة في [ASSETS_LICENSE.md](ASSETS_LICENSE.md). صور المنتجات الحالية للبيانات التجريبية فقط؛ تراخيص الصور لا تمنح تلقائيًا حقوق العلامات التجارية أو الأشخاص الظاهرين فيها.
 
 ---
@@ -165,7 +165,7 @@ docker compose up --build -d
 
 ## English Summary
 
-**متجر رِواق** is a production-grade, full-stack Arabic, French, and English e-commerce platform built with Node.js, Express, and MySQL 8.0.
+**Rewaq Store** is a production-grade, full-stack Arabic, French, and English e-commerce platform built with Node.js, Express, and MySQL 8.0.
 
 ### Highlights:
 - **Trilingual Storefront**: Full RTL Arabic support, French, and English with instant locale switching and dark mode support.

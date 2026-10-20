@@ -1,5 +1,5 @@
 /**
- * MYSHOP Admin Dashboard Centralized Architecture
+ * Rewaq Admin Dashboard Centralized Architecture
  * Unifies Security Guards, Shared Utilities, UI Notifications & Modals
  */
 

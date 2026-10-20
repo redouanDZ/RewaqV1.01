@@ -15,7 +15,7 @@
             const storeType = document.getElementById('orderStoreType').value.trim();
             const notes = document.getElementById('orderNotes').value.trim();
 
-            const message = `مرحباً، أود طلب متجر إلكتروني MYSHOP Pro التفاصيل كالتالي:\n\n` +
+            const message = `مرحباً، أود طلب متجر إلكتروني (متجر رواق برو) التفاصيل كالتالي:\n\n` +
                             `👤 الاسم: ${fullName}\n` +
                             `📞 الهاتف: ${phone}\n` +
                             `📍 الولاية: ${wilaya}\n` +

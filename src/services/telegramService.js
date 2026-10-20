@@ -1,5 +1,5 @@
 /**
- * Telegram Notification Service for MYSHOP Admin
+ * Telegram Notification Service for Rewaq Admin
  * Sends instant rich alerts on new customer orders
  */
 const https = require('https');
@@ -126,7 +126,7 @@ ${itemsSummary || '  • تفاصيل الطلب مسجلة في لوحة الت
      */
     async sendTestAlert(token, chatId) {
         // Get the real store name from settings
-        let storeName = 'MYSHOP';
+        let storeName = 'متجر رواق';
         try {
             const settings = await db.getStoreSettings().catch(() => ({}));
             if (settings && settings.store_name) storeName = String(settings.store_name).trim();

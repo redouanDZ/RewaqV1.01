@@ -48,7 +48,7 @@
         }
 
         // 4. Store Contact Details
-        const storeName = settings.store_name || 'MYSHOP';
+        const storeName = settings.store_name || (window.I18n ? window.I18n.t('common.store_name', 'متجر رواق') : 'متجر رواق');
         document.querySelectorAll('.terms-store-name').forEach(el => {
             el.textContent = storeName;
         });

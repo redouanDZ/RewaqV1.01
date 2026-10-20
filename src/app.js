@@ -240,13 +240,13 @@ app.get('/', sendWithBaseUrl('index.html', 'html'));
 // manifest.json (PWA app name) used to be 100% static with a hardcoded
 // Arabic/"Algeria" branded name, so it never matched whatever store_name
 // the merchant set in Admin > Settings. Now it's generated on the fly from
-// the real store settings, and falls back to a neutral "MYSHOP" placeholder
+// the real store settings, and falls back to a neutral "متجر رواق" placeholder
 // (not a fixed marketing name) when the merchant hasn't set anything yet.
 app.get('/manifest.json', async (req, res) => {
     try {
         const db = require('./data/db-connection.js');
         const settings = await db.getStoreSettings().catch(() => ({}));
-        const storeName = (settings && settings.store_name && String(settings.store_name).trim()) || 'متجر رِواق';
+        const storeName = (settings && settings.store_name && String(settings.store_name).trim()) || 'متجر رواق';
         const logo = (settings && settings.store_logo) || '/images/logo.png';
 
         res.json({

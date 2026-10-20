@@ -1,6 +1,6 @@
-# 📦 حقيبة التسويق والبيع الشاملة — متجر رِواق برو Marketing & Sales Kit
+# 📦 حقيبة التسويق والبيع الشاملة — متجر رواق برو Marketing & Sales Kit
 
-هذا الملف يحتوي على كافة النصوص والرسائل الإعلانية الجاهزة للنسخ واللصق فوراً للبدء في تسويق وبيع متجر **متجر رِواق برو** للتجار والمسوقين في الجزائر والوطن العربي.
+هذا الملف يحتوي على كافة النصوص والرسائل الإعلانية الجاهزة للنسخ واللصق فوراً للبدء في تسويق وبيع متجر **رواق برو** للتجار والمسوقين في الجزائر والوطن العربي.
 
 ---
 
@@ -22,7 +22,7 @@
 ```text
 🚀 حاب تضاعف مبيعاتك وتتخلص من مشاكل ووكومرس وشوبيفاي؟
 
-لكل تاجر ومسوق إلكتروني في الجزائر 🇩🇿، متجر متجر رِواق برو جاهز الآن ليمنحك تجربة بيع استثنائية وبدون أي اشتراكات شهرية! 💰
+لكل تاجر ومسوق إلكتروني في الجزائر 🇩🇿، متجر رواق برو جاهز الآن ليمنحك تجربة بيع استثنائية وبدون أي اشتراكات شهرية! 💰
 
 🔥 الميزات التي تجعل متجرك يتفوق على المنافسين:
 ✅ سرعة تحميل خيالية (أقل من ثانية) ترفع نسبة الشراء (Conversion Rate).
@@ -38,7 +38,7 @@
 🎁 العرض الحالي يشمل: المتجر جاهز بشعارك وهوية علامتك + الدومين والاستضافة + دعم فني مجاني!
 
 🔗 جرب المتجر الحي ولوحة التحكم بنفسك الآن:
-https://myshop-aa9v.onrender.com/landing.html
+https://rewaq-aa9v.onrender.com/landing.html
 
 📲 للطلب أو الاستفسار تواصل معنا عبر الخاص أو واتساب:
 📞 الهاتف / واتساب: 0669754875
@@ -66,10 +66,10 @@ https://myshop-aa9v.onrender.com/landing.html
 4. تأكيد الطلب مع الزبون على WhatsApp بنقرة واحدة بدون حفظ رقمه.
 
 🔗 يمكنك تجربة المتجر الحي بنفسك الآن كزبون:
-https://myshop-aa9v.onrender.com/
+https://rewaq-aa9v.onrender.com/
 
 📊 لوحة التحكم الإدارية لتجربة إدارة الطلبات:
-https://myshop-aa9v.onrender.com/admin/index.html
+https://rewaq-aa9v.onrender.com/admin/index.html
 (يتم توفير بيانات الدخول الفعلية للمراجعة في وصف المشروع فقط، مع عدم الاحتفاظ بأي حساب تجريبي داخل التطبيق.)
 
 إذا كنت مهتماً بإطلاق متجرك بهوية علامتك التجارية خلال 24 ساعة، تواصل معي مباشرة عبر واتساب:
@@ -112,11 +112,11 @@ https://myshop-aa9v.onrender.com/admin/index.html
 ## 4️⃣ نص بيع الكود المصدري للمطورين والوكالات (English Listing Copy)
 
 **Title:**
-> متجر رِواق برو — Production-Ready E-Commerce Platform with Telegram Alerts, Chargily Pay, 58 Wilayas & Profit Tracker
+> Rewaq Pro — Production-Ready E-Commerce Platform with Telegram Alerts, Chargily Pay, 58 Wilayas & Profit Tracker
 
 **Description:**
 ```text
-متجر رِواق برو is a high-performance, full-stack e-commerce web application built with Node.js, Express, and MySQL 8. Designed specifically for high conversion rates and Algerian / MENA market readiness.
+Rewaq Pro is a high-performance, full-stack e-commerce web application built with Node.js, Express, and MySQL 8. Designed specifically for high conversion rates and Algerian / MENA market readiness.
 
 🚀 Key Technical Highlights:
 - Blazing Fast Performance (<1s load time, zero WordPress bloat).

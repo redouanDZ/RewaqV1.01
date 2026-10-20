@@ -84,7 +84,7 @@ function createAccessToken(user, sessionId) {
     return jwt.sign(
         { id: user.id, email: user.email, role: user.role || 'customer', sessionId, type: 'access' },
         config.JWT_SECRET,
-        { expiresIn: '15m', issuer: 'myshop' }
+        { expiresIn: '15m', issuer: 'rewaq' }
     );
 }
 

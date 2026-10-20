@@ -1,5 +1,5 @@
 /**
- * myshop API Client
+ * Rewaq API Client
  * مشغّل طلبات الشبكة الموحد للـ Frontend مع إدارة التوكنات وCSRF والأخطاء
  */
 /**

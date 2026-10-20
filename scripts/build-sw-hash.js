@@ -51,7 +51,7 @@ function generateSwCacheHash() {
     }
 
     const shortHash = hash.digest('hex').slice(0, 10);
-    const newCacheName = `myshop-pwa-v${shortHash}`;
+    const newCacheName = `rewaq-pwa-v${shortHash}`;
 
     const updatedContent = swContent.replace(
         /const\s+CACHE_NAME\s*=\s*['"][^'"]+['"];/,

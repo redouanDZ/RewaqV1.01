@@ -1,4 +1,4 @@
-# Production Dockerfile for MYSHOP
+# Production Dockerfile for Rewaq
 FROM node:20-alpine AS base
 
 WORKDIR /app

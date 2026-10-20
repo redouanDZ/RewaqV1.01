@@ -1,5 +1,5 @@
 /**
- * myshop - إدارة قائمة الأمنيات والرغبات (Wishlist)
+ * Rewaq - إدارة قائمة الأمنيات والرغبات (Wishlist)
  */
 
 window.WishlistManager = {
@@ -79,7 +79,7 @@ window.WishlistManager = {
      */
     getLocalItems() {
         try {
-            return JSON.parse(localStorage.getItem('myshop_wishlist') || '[]');
+            return JSON.parse(localStorage.getItem('rewaq_wishlist') || localStorage.getItem('wishlist') || '[]');
         } catch (e) {
             return [];
         }
@@ -89,7 +89,7 @@ window.WishlistManager = {
      * حفظ العناصر في LocalStorage
      */
     saveLocalItems(items) {
-        localStorage.setItem('myshop_wishlist', JSON.stringify(items));
+        localStorage.setItem('rewaq_wishlist', JSON.stringify(items));
         this.updateBadgeCount();
     },
 

@@ -138,7 +138,7 @@ describe('Security: CSP Headers', () => {
             const home = await (await fetch(`${base}/`)).text();
             for (const body of [robots, sitemap, home]) {
                 assert.ok(!body.includes('{{BASE_URL}}'), 'placeholder token must be replaced');
-                assert.ok(!body.includes('myshop.dz/') || body.includes('contact@myshop.dz'), 'no hardcoded placeholder domain');
+                assert.ok(!body.includes('rewaq.dz/') || body.includes('contact@rewaq.dz'), 'no hardcoded placeholder domain');
             }
             assert.ok(robots.includes(`Sitemap: ${base}/sitemap.xml`));
             assert.ok(sitemap.includes(`<loc>${base}/</loc>`));

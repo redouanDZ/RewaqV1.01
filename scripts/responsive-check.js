@@ -116,7 +116,7 @@ async function run() {
 
                     // Set language & theme in localStorage before navigating
                     await page.addInitScript(({ l, t }) => {
-                        localStorage.setItem('myshop_lang', l);
+                        localStorage.setItem('rewaq_lang', l);
                         localStorage.setItem('theme', t);
                     }, { l: lang, t: theme });
 

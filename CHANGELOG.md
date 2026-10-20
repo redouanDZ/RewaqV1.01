@@ -1,13 +1,13 @@
 # Changelog
 
-All notable changes to the MYSHOP e-commerce platform are documented in this file.
+All notable changes to the Rewaq e-commerce platform are documented in this file.
 
 ## [1.1.1] - 2026-10-16
 
 ### Marketplace Review & UX Optimizations (Beekalia Compliance)
 - **Eliminated Dark Mode Flicker (FOUC)**: Added zero-latency inline theme-resolution script at the very top of `<head>` across all 21 HTML documents before stylesheet parsing. Removed body background transition on page load so dark mode renders instantaneously without any white flash or delayed color transition during page navigation. Added dynamic `.theme-transitioning` class only during user-initiated toggles.
 - **Search Component Layout & Spacing**: Resolved the search button sticking issue across all viewports. Added a unified rounded pill container (`border-radius: 999px`), responsive internal gaps (`gap: 8px` to `gap: 10px`), separated button margins (`margin: 2px`), and comfortable input padding (`padding-inline: 4px 8px`) ensuring the search button never contacts the input edge or container boundary.
-- **Titles & SEO Standardization**: Standardized main product and page titles across the entire store adhering strictly to the Beekalia format (`MYSHOP - متجر إلكتروني عربي احترافي متعدد الأقسام`) without repeating keywords. Updated `title` and `meta description` tags across HTML files and synchronized all 3 locale dictionaries (`ar.json`, `en.json`, `fr.json`).
+- **Titles & SEO Standardization**: Standardized main product and page titles across the entire store adhering strictly to the Beekalia format (`متجر رواق - متجر إلكتروني عربي احترافي متعدد الأقسام`) without repeating keywords. Updated `title` and `meta description` tags across HTML files and synchronized all 3 locale dictionaries (`ar.json`, `en.json`, `fr.json`).
 - **Comprehensive Assets Licensing Documentation**: Added [`ASSETS_LICENSE.md`](ASSETS_LICENSE.md) providing direct source URLs, authors, and commercial usage licenses for all demo images (Unsplash Commercial License), icons (Font Awesome 6 Free), typography (Google Fonts SIL OFL 1.1), flags, and branding assets.
 - **Mobile Touch Usability (WCAG 2.5.5/2.5.8)**: Raised `.mobile-nav-item` touch targets to a minimum of 48px × 48px to meet AAA accessibility standards on touchscreen devices.
 - **Hero CTA & Visual Contrast**: Re-engineered `.btn-hero-primary` with elevated contrast, warm orange gradient, 3D shadow, and pill border-radius. Raised card price contrast to 6.68:1 (light) and 8.21:1 (dark).

@@ -8,7 +8,7 @@
 
 ## Reporting a Vulnerability
 
-If you discover any security-related issues, please do not open a public issue. Instead, report it privately by sending an email to `security@myshop.dz` or by creating a Private Vulnerability Report on GitHub Security tab.
+If you discover any security-related issues, please do not open a public issue. Instead, report it privately by sending an email to `security@rewaq.dz` or by creating a Private Vulnerability Report on GitHub Security tab.
 
 ## Content Security Policy (CSP)
 

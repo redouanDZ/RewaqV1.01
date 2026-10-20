@@ -6,12 +6,12 @@ CREATE TABLE IF NOT EXISTS store_settings (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO store_settings (setting_key, setting_value) VALUES
-('store_name', 'MYSHOP'),
+('store_name', 'متجر رواق'),
 ('store_logo', ''),
 ('store_favicon', ''),
 ('store_phone', '0550000000'),
 ('store_whatsapp', '213550000000'),
-('store_email', 'contact@myshop.dz'),
+('store_email', 'contact@rewaq.dz'),
 ('store_address', 'الجزائر العاصمة، الجزائر'),
 ('store_currency', 'دج'),
 ('facebook_url', 'https://facebook.com'),

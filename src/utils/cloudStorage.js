@@ -22,7 +22,7 @@ async function uploadToCloudinary(filePath, options = {}) {
     const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
     const apiKey = process.env.CLOUDINARY_API_KEY;
     const apiSecret = process.env.CLOUDINARY_API_SECRET;
-    const folder = options.folder || process.env.CLOUDINARY_FOLDER || 'myshop';
+    const folder = options.folder || process.env.CLOUDINARY_FOLDER || 'rewaq';
 
     const timestamp = Math.floor(Date.now() / 1000);
     const paramsToSign = `folder=${folder}&timestamp=${timestamp}${apiSecret}`;

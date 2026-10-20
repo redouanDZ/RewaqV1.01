@@ -1,4 +1,4 @@
-# MYSHOP — Production Release & Deployment Checklist
+# Rewaq — Production Release & Deployment Checklist
 
 ---
 

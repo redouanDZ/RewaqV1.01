@@ -238,7 +238,7 @@ function transformProductImage(url, width = 600, height = 600) {
             const dc = document.getElementById('description-content');
             if (dc) dc.innerHTML = `<p>${safeDescription}</p>`;
 
-            const storeName = window.I18n ? window.I18n.t('common.store_name', 'MyShop') : 'MyShop';
+            const storeName = window.I18n ? window.I18n.t('common.store_name', 'متجر رواق') : 'متجر رواق';
             document.title = `${locP.name} - ${storeName}`;
 
             const metaDesc = document.querySelector('meta[name="description"]');

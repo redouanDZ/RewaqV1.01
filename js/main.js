@@ -150,7 +150,7 @@ function getWishlist() {
     return window.WishlistManager.getLocalItems().map(p => Number(p.id));
   }
   try {
-    const raw = localStorage.getItem('myshop_wishlist') || localStorage.getItem('wishlist');
+    const raw = localStorage.getItem('rewaq_wishlist') || localStorage.getItem('wishlist');
     const parsed = raw ? JSON.parse(raw) : [];
     if (Array.isArray(parsed) && parsed.length > 0 && typeof parsed[0] === 'object') {
       return parsed.map(p => Number(p.id));
@@ -349,7 +349,7 @@ function initBackToTop() {
 function initNewsletter() {
   // Clear any persistent VIP card override so page reload always returns to the normal state
   try {
-    localStorage.removeItem('myshop_vip_club');
+    localStorage.removeItem('rewaq_vip_club');
   } catch (e) {}
 
   const forms = document.querySelectorAll('form[data-newsletter], .newsletter-form, footer form');
@@ -683,13 +683,13 @@ function initMobileNavigation() {
 
 function getLocalizedStoreName(rawName) {
   const trimmed = String(rawName || '').trim();
-  const isDefault = !trimmed || trimmed === 'MYSHOP' || trimmed.includes('MYSHOP');
+  const isDefault = !trimmed || trimmed.toLowerCase() === 'rewaq' || trimmed === '\u0631\u0648\u0627\u0642' || trimmed === '\u0645\u062a\u062c\u0631 \u0631\u0648\u0627\u0642';
   if (isDefault) {
     if (window.I18n && typeof window.I18n.t === 'function') {
       const translated = window.I18n.t('common.store_brand_title');
       if (translated && translated !== 'common.store_brand_title') return translated;
     }
-    return 'MYSHOP';
+    return (window.I18n && typeof window.I18n.t === 'function') ? window.I18n.t('common.store_brand_title', 'متجر رواق') : 'Rewaq';
   }
   return rawName;
 }

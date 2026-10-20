@@ -1859,12 +1859,12 @@ class MysqlRepository {
 
   async getStoreSettings() {
     const defaultSettings = {
-      store_name: 'MYSHOP',
+      store_name: 'متجر رواق',
       store_logo: '',
       store_favicon: '',
       store_phone: '0550000000',
       store_whatsapp: '213550000000',
-      store_email: 'contact@myshop.dz',
+      store_email: 'contact@rewaq.dz',
       store_address: 'الجزائر العاصمة، الجزائر',
       store_currency: 'دج',
       facebook_url: 'https://facebook.com',
@@ -3164,12 +3164,12 @@ function createFallbackRepository() {
     async getStoreSettings() {
       if (!state.settings) {
         state.settings = {
-          store_name: 'MYSHOP',
+          store_name: 'متجر رواق',
           store_logo: '',
           store_favicon: '',
           store_phone: '0550000000',
           store_whatsapp: '213550000000',
-          store_email: 'contact@myshop.dz',
+          store_email: 'contact@rewaq.dz',
           store_address: 'الجزائر العاصمة، الجزائر',
           store_currency: 'دج',
           facebook_url: 'https://facebook.com',

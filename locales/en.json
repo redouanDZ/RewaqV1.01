@@ -485,7 +485,7 @@
         "exclusive_offer": "Exclusive Offer"
     },
     "footer": {
-        "brand": "MyShop",
+        "brand": "Rewaq",
         "tagline": "Your trusted destination for online shopping in Algeria, high-quality products, fast shipping to 58 wilayas, and guaranteed cash on delivery.",
         "description": "Your premier e-commerce shopping destination in Algeria. Thousands of quality products with fast delivery across 58 wilayas and cash on delivery.",
         "badge_wilayas": "58 Wilayas",
@@ -510,7 +510,7 @@
         "data_protected": "Data encrypted and protected",
         "reliable_shopping": "100% reliable shopping experience",
         "important_links": "Important Links",
-        "myshop_pro": "Get a store like this (Rewaq Store Pro)",
+        "rewaq_pro": "Get a store like this (Rewaq Store Pro)",
         "newsletter_success": "Thank you for subscribing to our newsletter! 🎉 You will receive our offers soon.",
         "newsletter_invalid": "Please enter a valid email address",
         "newsletter_error": "An error occurred while subscribing. Please try again later.",
@@ -698,7 +698,7 @@
     "invoice": {
         "meta_title": "Order Invoice - E-Store",
         "store_tagline": "Reliable shopping service in Algeria",
-        "store_contact": "Phone: 0550000000 | Email: contact@myshop.dz",
+        "store_contact": "Phone: 0550000000 | Email: contact@rewaq.dz",
         "title": "Invoice | Rewaq Store",
         "invoice_num": "Invoice Number:",
         "order_num": "Order Number:",

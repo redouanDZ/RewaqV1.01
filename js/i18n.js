@@ -1,9 +1,9 @@
 /**
- * myshop - نظام الترجمة خفيف الوزن (Lightweight i18n - Vanilla JS)
+ * Rewaq - نظام الترجمة خفيف الوزن (Lightweight i18n - Vanilla JS)
  */
 
 window.I18n = {
-    currentLang: localStorage.getItem('myshop_lang') || 'ar',
+    currentLang: localStorage.getItem('rewaq_lang') || 'ar',
     cache: {},
 
     /**
@@ -161,7 +161,7 @@ window.I18n = {
     async setLanguage(lang) {
         if (!['ar', 'fr', 'en'].includes(lang)) lang = 'ar';
         this.currentLang = lang;
-        localStorage.setItem('myshop_lang', lang);
+        localStorage.setItem('rewaq_lang', lang);
 
         const dict = await this.loadDictionary(lang);
         if (!dict) return;

@@ -1,5 +1,5 @@
 /**
- * MYSHOP Admin Dashboard - Store Settings Page Logic
+ * Rewaq Admin Dashboard - Store Settings Page Logic
  */
 
         async function loadSettings() {

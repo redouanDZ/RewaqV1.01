@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: myshop-pro-demo
+    name: rewaq-pro-demo
     env: node
     plan: free
     buildCommand: npm install
@@ -15,7 +15,7 @@ services:
       - key: COOKIE_SECRET
         generateValue: true
       - key: ADMIN_EMAIL
-        value: demo@myshop.com
+        value: demo@rewaq.dz
       - key: ADMIN_PASSWORD
         sync: false
       - key: DB_HOST

@@ -7,7 +7,7 @@ const { validateCoupon } = require('../src/controllers/couponController.js');
 test('Newsletter VIP Club Feature Suite', async (t) => {
     await t.test('1. Subscribe with valid email returns 200 and PROMO10 coupon', async () => {
         const req = {
-            body: { email: 'vip_customer@myshop.dz' },
+            body: { email: 'vip_customer@rewaq.dz' },
             ip: '127.0.0.1'
         };
         let statusCode = 200;
@@ -30,7 +30,7 @@ test('Newsletter VIP Club Feature Suite', async (t) => {
 
     await t.test('2. Subscribing again with the same email handles duplicate gracefully', async () => {
         const req = {
-            body: { email: 'vip_customer@myshop.dz' },
+            body: { email: 'vip_customer@rewaq.dz' },
             ip: '127.0.0.1'
         };
         let statusCode = 200;
@@ -92,7 +92,7 @@ test('Newsletter VIP Club Feature Suite', async (t) => {
         assert.ok(Array.isArray(list.subscribers));
         assert.ok(list.total >= 1);
 
-        const sub = list.subscribers.find(s => s.email === 'vip_customer@myshop.dz');
+        const sub = list.subscribers.find(s => s.email === 'vip_customer@rewaq.dz');
         assert.ok(sub);
 
         const deleted = await db.deleteNewsletterSubscriber(sub.id);

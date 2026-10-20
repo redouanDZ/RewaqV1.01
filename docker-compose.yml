@@ -1,7 +1,7 @@
 services:
   mysql:
     image: mysql:8.0
-    container_name: myshop_mysql
+    container_name: rewaq_mysql
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:?DB_ROOT_PASSWORD must be set}
@@ -24,7 +24,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: myshop_app
+    container_name: rewaq_app
     restart: unless-stopped
     depends_on:
       mysql:

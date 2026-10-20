@@ -1,6 +1,6 @@
 {
-  "name": "MyShop E-Commerce",
-  "description": "متجر إلكتروني متكامل - منصة تجارة إلكترونية باللغة العربية",
-  "prompt": "MyShop Algerian E-commerce platform with Arabic localization, product catalog, cart, checkout, order tracking, and admin dashboard",
+  "name": "Rewaq E-Commerce",
+  "description": "متجر رواق - منصة تجارة إلكترونية باللغة العربية",
+  "prompt": "Rewaq Algerian E-commerce platform with Arabic localization, product catalog, cart, checkout, order tracking, and admin dashboard",
   "capabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

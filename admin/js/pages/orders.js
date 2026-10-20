@@ -148,7 +148,7 @@
                 const order = await orderRes.json();
 
                 // Get store identity — API → localStorage cache → hardcoded fallback
-                let storeName = 'MYSHOP';
+                let storeName = 'متجر رواق';
                 let storeTagline = 'خدمة التوصيل السريع لـ 58 ولاية';
                 if (settingsRes && settingsRes.ok) {
                     const s = await settingsRes.json();
@@ -521,7 +521,15 @@
             }
 
             const greeting = customerName ? `الأستاذ(ة) ${customerName}` : 'عزيزي العميل';
-            const msg = `مرحباً ${greeting} 👋\nنتواصل معك من متجر MYSHOP بخصوص طلبك رقم (${orderNum}) بمبلغ ${Number(total).toLocaleString()} دج.\nهل تؤكد رغبتك في شحن وتوصيل الطلب إلى عنوانك؟`;
+            let sName = 'متجر رواق';
+            try {
+                const cached = localStorage.getItem('store_settings_cache');
+                if (cached) {
+                    const parsed = JSON.parse(cached);
+                    if (parsed.store_name) sName = parsed.store_name.trim();
+                }
+            } catch (e) {}
+            const msg = `مرحباً ${greeting} 👋\nنتواصل معك من ${sName} بخصوص طلبك رقم (${orderNum}) بمبلغ ${Number(total).toLocaleString()} دج.\nهل تؤكد رغبتك في شحن وتوصيل الطلب إلى عنوانك؟`;
 
             const waUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(msg)}`;
             window.open(waUrl, '_blank');

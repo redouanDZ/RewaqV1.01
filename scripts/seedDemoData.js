@@ -1,5 +1,5 @@
 /**
- * Demo Data Seeder for MYSHOP Pro
+ * Demo Data Seeder for Rewaq Pro
  * Populates the database with realistic demo products, categories, reviews, coupons, and orders.
  */
 require('dotenv').config();
@@ -13,7 +13,7 @@ async function seedDemoData() {
         process.exit(1);
     }
 
-    console.log('🌱 Starting MYSHOP Pro Demo Data Seeding...');
+    console.log('🌱 Starting Rewaq Pro Demo Data Seeding...');
     await db.initializeDatabase();
 
     const pool = db.pool;
@@ -30,8 +30,8 @@ async function seedDemoData() {
     await pool.query(`
         INSERT INTO users (username, email, password, role, phone)
         VALUES 
-            ('مدير المتجر', 'review-admin@myshop.dz', ?, 'admin', '0550000001'),
-            ('مستخدم مراجعة', 'review-customer@myshop.dz', ?, 'customer', '0661234567')
+            ('مدير المتجر', 'review-admin@rewaq.dz', ?, 'admin', '0550000001'),
+            ('مستخدم مراجعة', 'review-customer@rewaq.dz', ?, 'customer', '0661234567')
         ON DUPLICATE KEY UPDATE 
             username = VALUES(username),
             password = VALUES(password),
@@ -267,7 +267,7 @@ async function seedDemoData() {
         const names = ['كريم بلحاج', 'ياسمين قادري', 'عمر منصوري', 'فاطمة الزهراء', 'سمير دراجي'];
         const phones = ['0551234567', '0662345678', '0773456789', '0554567890', '0665678901'];
 
-        const [custRows] = await pool.query('SELECT id FROM users WHERE email = "review-customer@myshop.dz" LIMIT 1');
+        const [custRows] = await pool.query('SELECT id FROM users WHERE email = "review-customer@rewaq.dz" LIMIT 1');
         const customerId = custRows.length > 0 ? custRows[0].id : null;
 
         for (let i = 0; i < 5; i++) {
@@ -313,17 +313,17 @@ async function seedDemoData() {
     // 6. Update Store Settings
     console.log('⚙️ Updating Demo Store Settings...');
     const demoSettings = {
-        store_name: 'MYSHOP',
+        store_name: 'متجر رواق',
         store_currency: 'دج',
         store_phone: '0550 00 00 00',
         store_whatsapp: '213550000000',
-        store_email: 'contact@myshop.dz',
+        store_email: 'contact@rewaq.dz',
         store_address: 'الجزائر العاصمة، الجزائر',
         store_logo: '/images/logo.png',
         store_favicon: '/images/favicon.svg',
         enable_cod: 'true',
         enable_chargily: 'true',
-        announcement_bar_text: '🎉 مرحباً بكم في MYSHOP — توصيل سريع لـ 58 ولاية والدفع عند الاستلام!'
+        announcement_bar_text: '🎉 مرحباً بكم في متجر رواق — توصيل سريع لـ 58 ولاية والدفع عند الاستلام!'
     };
 
     for (const [key, value] of Object.entries(demoSettings)) {
@@ -333,10 +333,10 @@ async function seedDemoData() {
         );
     }
 
-    console.log('✅ MYSHOP Pro Demo Seeding completed successfully!');
+    console.log('✅ Rewaq Pro Demo Seeding completed successfully!');
     console.log('----------------------------------------------------');
     console.log('🔑 Demo Admin Credentials:');
-    console.log('   Email:    review-admin@myshop.dz');
+    console.log('   Email:    review-admin@rewaq.dz');
     console.log('   Password: reviewpass1234');
     console.log('----------------------------------------------------');
 }

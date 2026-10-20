@@ -24,8 +24,8 @@ cp .env.example .env
 | `PORT` | منفذ الخادم | `3000` |
 | `DB_HOST` | مضيف قاعدة البيانات | `127.0.0.1` أو `mysql` |
 | `DB_PORT` | منفذ MySQL | `3306` |
-| `DB_NAME` | اسم قاعدة البيانات | `myshop_db` |
-| `DB_USER` | اسم المستخدم | `myshop_user` |
+| `DB_NAME` | اسم قاعدة البيانات | `rewaq_db` |
+| `DB_USER` | اسم المستخدم | `rewaq_user` |
 | `DB_PASSWORD` | كلمة مرور قوية لقاعدة البيانات | *كلمة مرور فريدة ومعقدة* |
 | `JWT_SECRET` | مفتاح توثيق JWT (64 حرفاً عشوائياً) | *مفتاح سري مشفر* |
 | `COOKIE_SECRET` | مفتاح تشفير الجلسات والكوكيز | *مفتاح سري مشفر* |
@@ -37,7 +37,7 @@ cp .env.example .env
 | `CLOUDINARY_CLOUD_NAME` | اسم سحابة Cloudinary لتخزين الصور | `your-cloud-name` |
 | `CLOUDINARY_API_KEY` | المفتاح العام لـ Cloudinary | `your-api-key` |
 | `CLOUDINARY_API_SECRET` | المفتاح السري لـ Cloudinary | `your-api-secret` |
-| `BASE_URL` | النطاق الرسمي للإنتاج | `https://myshop.dz` |
+| `BASE_URL` | النطاق الرسمي للإنتاج | `https://rewaq.dz` |
 
 > 🔑 **توليد مفاتيح سرية قوية**:
 > ```bash
@@ -50,7 +50,7 @@ cp .env.example .env
 
 1. قم بإنشاء قاعدة البيانات في MySQL 8:
 ```sql
-CREATE DATABASE myshop_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE rewaq_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
 2. تشغيل الـ Migrations الآلية لإنشاء الجداول والبيانات الأولية:
@@ -90,7 +90,7 @@ npm ci --only=production
 
 # 2. تشغيل الخادم عبر PM2 للإدارة وإعادة التشغيل التلقائي
 npm install -g pm2
-pm2 start server.js --name "myshop" --env production
+pm2 start server.js --name "rewaq" --env production
 pm2 save
 ```
 
@@ -101,18 +101,18 @@ pm2 save
 ### 1. أخذ نسخة احتياطية كاملة (Backup with Schema, Data & Triggers):
 ```bash
 # استخراج نسخة احتياطية مضغوطة وآمنة
-mysqldump -h 127.0.0.1 -P 3306 -u myshop_user -p --single-transaction --quick --routines --triggers myshop_db > backup_myshop_$(date +%Y%m%d_%H%M%S).sql
+mysqldump -h 127.0.0.1 -P 3306 -u rewaq_user -p --single-transaction --quick --routines --triggers rewaq_db > backup_rewaq_$(date +%Y%m%d_%H%M%S).sql
 ```
 
 ### 2. استعادة النسخة الاحتياطية (Restore):
 ```bash
-mysql -h 127.0.0.1 -P 3306 -u myshop_user -p myshop_db < backup_file.sql
+mysql -h 127.0.0.1 -P 3306 -u rewaq_user -p rewaq_db < backup_file.sql
 ```
 
 ### 3. جدولة النسخ الاحتياطي التلقائي (Cron Job):
 ```bash
 # تشغيل النسخ الاحتياطي يومياً في الساعة 02:00 صباحاً
-0 2 * * * mysqldump -u myshop_user -p'YOUR_PASSWORD' myshop_db | gzip > /backups/myshop_$(date +\%F).sql.gz
+0 2 * * * mysqldump -u rewaq_user -p'YOUR_PASSWORD' rewaq_db | gzip > /backups/rewaq_$(date +\%F).sql.gz
 ```
 
 ---

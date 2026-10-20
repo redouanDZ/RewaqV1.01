@@ -1278,15 +1278,15 @@ test('Phase 5 — General Store Customization (Branding, Policies, Social Links,
         },
         body: JSON.stringify({
             store_name: 'متجر الجزائر بريميوم',
-            store_logo: 'https://res.cloudinary.com/myshop/image/upload/logo.png',
-            store_favicon: 'https://res.cloudinary.com/myshop/image/upload/favicon.ico',
+            store_logo: 'https://res.cloudinary.com/rewaq/image/upload/logo.png',
+            store_favicon: 'https://res.cloudinary.com/rewaq/image/upload/favicon.ico',
             store_phone: '0555123456',
             store_whatsapp: '213555123456',
             store_email: 'support@algeria-shop.dz',
             store_address: 'حي الرياض، وهران',
-            facebook_url: 'https://facebook.com/myshopdz',
-            instagram_url: 'https://instagram.com/myshopdz',
-            tiktok_url: 'https://tiktok.com/@myshopdz',
+            facebook_url: 'https://facebook.com/rewaqdz',
+            instagram_url: 'https://instagram.com/rewaqdz',
+            tiktok_url: 'https://tiktok.com/@rewaqdz',
             shipping_policy: 'شحن مضمون خلال 24 ساعة لـ 58 ولاية',
             return_policy: 'إرجاع مجاني خلال 3 أيام',
             warranty_policy: 'ضمان سنة كاملة ضد عيوب الصناعة',
@@ -1303,8 +1303,8 @@ test('Phase 5 — General Store Customization (Branding, Policies, Social Links,
     const settings = await publicRes.json();
 
     assert.strictEqual(settings.store_name, 'متجر الجزائر بريميوم');
-    assert.strictEqual(settings.store_logo, 'https://res.cloudinary.com/myshop/image/upload/logo.png');
-    assert.strictEqual(settings.facebook_url, 'https://facebook.com/myshopdz');
+    assert.strictEqual(settings.store_logo, 'https://res.cloudinary.com/rewaq/image/upload/logo.png');
+    assert.strictEqual(settings.facebook_url, 'https://facebook.com/rewaqdz');
     assert.strictEqual(settings.enable_chargily, 'false');
     assert.strictEqual(settings.shipping_policy, 'شحن مضمون خلال 24 ساعة لـ 58 ولاية');
 
@@ -1389,7 +1389,7 @@ test('Phase 6 — Google Authentication Security & Account Takeover Prevention',
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                email: 'admin@myshop.dz',
+                email: 'admin@rewaq.dz',
                 googleId: `spoofed_admin_${Date.now()}`
             })
         });
@@ -1399,7 +1399,7 @@ test('Phase 6 — Google Authentication Security & Account Takeover Prevention',
         const fakeHeader = Buffer.from(JSON.stringify({ alg: 'RS256', typ: 'JWT' })).toString('base64');
         const fakePayload = Buffer.from(JSON.stringify({
             sub: '1234567890',
-            email: 'admin@myshop.dz',
+            email: 'admin@rewaq.dz',
             email_verified: true,
             name: 'Hacked Admin'
         })).toString('base64');
