@@ -562,9 +562,16 @@ function initNetworkStatusWatcher() {
 function registerPwaServiceWorker() {
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js')
-        .then(() => {})
-        .catch(() => {});
+      try {
+        // In preview iframes, third-party SW or storage partitioning may restrict registration.
+        // Always catch silently so page functioning is completely undisturbed.
+        const promise = navigator.serviceWorker.register('/sw.js', { scope: '/' });
+        if (promise && typeof promise.then === 'function') {
+          promise.catch(() => {});
+        }
+      } catch (e) {
+        // Safe fallback in cross-origin / sandbox iframes
+      }
     });
   }
 }

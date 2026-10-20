@@ -69,15 +69,17 @@ async function register(req, res) {
         const refreshToken = await createRefreshToken(user, sessionId);
         const csrfToken = randomToken();
 
-        setCookie(res, 'access_token', accessToken, { httpOnly: true, sameSite: 'lax', secure: config.isProduction, maxAge: 15 * 60 * 1000 });
-        setCookie(res, 'refresh_token', refreshToken, { httpOnly: true, sameSite: 'lax', secure: config.isProduction, maxAge: 7 * 24 * 60 * 60 * 1000 });
-        setCookie(res, 'csrf_token', csrfToken, { httpOnly: false, sameSite: 'lax', secure: config.isProduction, maxAge: 60 * 60 * 1000 });
+        setCookie(res, 'access_token', accessToken, { req, httpOnly: true, maxAge: 15 * 60 * 1000 });
+        setCookie(res, 'refresh_token', refreshToken, { req, httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
+        setCookie(res, 'csrf_token', csrfToken, { req, httpOnly: false, maxAge: 60 * 60 * 1000 });
 
+        const isDemo = process.env.DEMO_MODE === 'true';
         res.status(201).json({
             message: 'تم إنشاء الحساب وتسجيل الدخول بنجاح! 🎉',
             code: 'REGISTRATION_SUCCESS',
             user: sanitizeUser(user),
-            sessionId
+            sessionId,
+            ...(isDemo ? { demoToken: accessToken, csrfToken } : {})
         });
     } catch (error) {
         console.error('Registration error:', error);
@@ -121,16 +123,18 @@ async function login(req, res) {
         const refreshToken = await createRefreshToken(user, sessionId, remember);
         const csrfToken = randomToken();
 
-        setCookie(res, 'access_token', accessToken, { httpOnly: true, sameSite: 'lax', secure: config.isProduction, maxAge: 15 * 60 * 1000 });
-        setCookie(res, 'refresh_token', refreshToken, refreshCookieOptions(remember));
-        setCookie(res, 'csrf_token', csrfToken, { httpOnly: false, sameSite: 'lax', secure: config.isProduction, maxAge: 60 * 60 * 1000 });
+        setCookie(res, 'access_token', accessToken, { req, httpOnly: true, maxAge: 15 * 60 * 1000 });
+        setCookie(res, 'refresh_token', refreshToken, refreshCookieOptions(remember, req));
+        setCookie(res, 'csrf_token', csrfToken, { req, httpOnly: false, maxAge: 60 * 60 * 1000 });
 
         const { password: _, ...userWithoutPass } = user;
+        const isDemo = process.env.DEMO_MODE === 'true';
         res.json({
             message: 'تم تسجيل الدخول بنجاح!',
             code: 'LOGIN_SUCCESS',
             user: userWithoutPass,
-            sessionId
+            sessionId,
+            ...(isDemo ? { demoToken: accessToken, csrfToken } : {})
         });
     } catch (error) {
         console.error('Login error:', error);
@@ -140,7 +144,7 @@ async function login(req, res) {
 
 function getCsrfToken(req, res) {
     const csrfToken = randomToken();
-    setCookie(res, 'csrf_token', csrfToken, { httpOnly: false, sameSite: 'lax', secure: config.isProduction, maxAge: 60 * 60 * 1000 });
+    setCookie(res, 'csrf_token', csrfToken, { req, httpOnly: false, maxAge: 60 * 60 * 1000 });
     res.json({ csrfToken });
 }
 
@@ -243,22 +247,22 @@ async function refreshSession(req, res) {
 
         const tokenRecord = await db.getRefreshToken(hashToken(refreshTokenValue));
         if (!tokenRecord) {
-            clearCookie(res, 'refresh_token');
-            clearCookie(res, 'access_token');
+            clearCookie(res, 'refresh_token', { req });
+            clearCookie(res, 'access_token', { req });
             return res.status(401).json({ message: 'جلسة المستخدم غير موجودة', code: 'SESSION_NOT_FOUND' });
         }
 
         // Token reuse detection!
         if (tokenRecord.revokedAt) {
             await revokeAllUserSessions(tokenRecord.userId);
-            clearCookie(res, 'refresh_token');
-            clearCookie(res, 'access_token');
+            clearCookie(res, 'refresh_token', { req });
+            clearCookie(res, 'access_token', { req });
             return res.status(401).json({ message: 'انتهت صلاحية الجلسة، يرجى تسجيل الدخول مرة أخرى', code: 'SESSION_EXPIRED' });
         }
 
         if (tokenRecord.expiresAt <= Date.now()) {
-            clearCookie(res, 'refresh_token');
-            clearCookie(res, 'access_token');
+            clearCookie(res, 'refresh_token', { req });
+            clearCookie(res, 'access_token', { req });
             return res.status(401).json({ message: 'انتهت صلاحية الجلسة، يرجى تسجيل الدخول مرة أخرى', code: 'SESSION_EXPIRED' });
         }
 
@@ -275,11 +279,17 @@ async function refreshSession(req, res) {
         await db.revokeRefreshToken(tokenRecord.tokenHash);
         await revokeSession(tokenRecord.sessionId);
 
-        setCookie(res, 'access_token', newAccessToken, { httpOnly: true, sameSite: 'lax', secure: config.isProduction, maxAge: 15 * 60 * 1000 });
-        setCookie(res, 'refresh_token', newRefreshToken, refreshCookieOptions(tokenRecord.remember));
-        setCookie(res, 'csrf_token', csrfToken, { httpOnly: false, sameSite: 'lax', secure: config.isProduction, maxAge: 60 * 60 * 1000 });
+        setCookie(res, 'access_token', newAccessToken, { req, httpOnly: true, maxAge: 15 * 60 * 1000 });
+        setCookie(res, 'refresh_token', newRefreshToken, refreshCookieOptions(tokenRecord.remember, req));
+        setCookie(res, 'csrf_token', csrfToken, { req, httpOnly: false, maxAge: 60 * 60 * 1000 });
 
-        res.json({ message: 'تم تجديد الجلسة بنجاح', code: 'SESSION_REFRESHED', user: sanitizeUser(user) });
+        const isDemo = process.env.DEMO_MODE === 'true';
+        res.json({
+            message: 'تم تجديد الجلسة بنجاح',
+            code: 'SESSION_REFRESHED',
+            user: sanitizeUser(user),
+            ...(isDemo ? { demoToken: newAccessToken, csrfToken } : {})
+        });
     } catch (error) {
         console.error('Refresh token error:', error);
         res.status(500).json({ message: 'فشل في تحديث الجلسة', code: 'SESSION_REFRESH_FAILED' });
@@ -351,15 +361,15 @@ async function logout(req, res) {
             await db.revokeRefreshToken(hashToken(refreshTokenValue));
         }
 
-        clearCookie(res, 'access_token');
-        clearCookie(res, 'refresh_token');
-        clearCookie(res, 'csrf_token');
+        clearCookie(res, 'access_token', { req });
+        clearCookie(res, 'refresh_token', { req });
+        clearCookie(res, 'csrf_token', { req });
         res.json({ message: 'تم تسجيل الخروج بنجاح', code: 'LOGOUT_SUCCESS' });
     } catch (err) {
         console.error('Logout error:', err);
-        clearCookie(res, 'access_token');
-        clearCookie(res, 'refresh_token');
-        clearCookie(res, 'csrf_token');
+        clearCookie(res, 'access_token', { req });
+        clearCookie(res, 'refresh_token', { req });
+        clearCookie(res, 'csrf_token', { req });
         res.json({ message: 'تم تسجيل الخروج بنجاح', code: 'LOGOUT_SUCCESS' });
     }
 }
@@ -427,16 +437,18 @@ async function googleLogin(req, res) {
         const refreshToken = await createRefreshToken(user, sessionId);
         const csrfToken = randomToken();
 
-        setCookie(res, 'access_token', accessToken, { httpOnly: true, sameSite: 'lax', secure: config.isProduction, maxAge: 15 * 60 * 1000 });
-        setCookie(res, 'refresh_token', refreshToken, { httpOnly: true, sameSite: 'lax', secure: config.isProduction, maxAge: 7 * 24 * 60 * 60 * 1000 });
-        setCookie(res, 'csrf_token', csrfToken, { httpOnly: false, sameSite: 'lax', secure: config.isProduction, maxAge: 60 * 60 * 1000 });
+        setCookie(res, 'access_token', accessToken, { req, httpOnly: true, maxAge: 15 * 60 * 1000 });
+        setCookie(res, 'refresh_token', refreshToken, { req, httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
+        setCookie(res, 'csrf_token', csrfToken, { req, httpOnly: false, maxAge: 60 * 60 * 1000 });
 
         const { password: _, ...userWithoutPass } = user;
+        const isDemo = process.env.DEMO_MODE === 'true';
         res.json({
             message: 'تم تسجيل الدخول بنجاح عبر حساب Google! 🎉',
             code: 'GOOGLE_LOGIN_SUCCESS',
             user: userWithoutPass,
-            sessionId
+            sessionId,
+            ...(isDemo ? { demoToken: accessToken, csrfToken } : {})
         });
     } catch (error) {
         console.error('Google login error:', error);

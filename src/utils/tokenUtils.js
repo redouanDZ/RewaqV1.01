@@ -44,19 +44,51 @@ function getCookie(req, name) {
     }
 }
 
-function setCookie(res, name, value, options = {}) {
-    const cookieOptions = {
-        httpOnly: true,
-        sameSite: 'lax',
-        secure: config.isProduction,
-        path: '/',
-        ...options
+function isHttpsRequest(req) {
+    if (!req) return config.isProduction;
+    if (req.secure) return true;
+    if (typeof req.protocol === 'string' && req.protocol.toLowerCase() === 'https') return true;
+    const forwarded = req.headers && (req.headers['x-forwarded-proto'] || req.headers['x-forwarded-ssl']);
+    if (forwarded && String(forwarded).toLowerCase().includes('https')) return true;
+    return config.isProduction || process.env.COOKIE_SECURE === 'true';
+}
+
+function getDefaultCookieOptions(reqOrOptions = {}) {
+    let req = null;
+    let overrides = {};
+    if (reqOrOptions && (reqOrOptions.headers || reqOrOptions.protocol || reqOrOptions.secure !== undefined)) {
+        req = reqOrOptions;
+    } else if (typeof reqOrOptions === 'object') {
+        overrides = reqOrOptions;
+        req = overrides.req || null;
+    }
+
+    const secure = overrides.secure !== undefined ? overrides.secure : isHttpsRequest(req);
+    // In an iframe (third-party context on preview/production), SameSite must be 'none' with Secure: true.
+    // For local HTTP development, browsers require 'lax' or 'strict' because SameSite=None requires Secure.
+    const sameSite = overrides.sameSite || (secure ? 'none' : 'lax');
+
+    return {
+        httpOnly: overrides.httpOnly !== undefined ? overrides.httpOnly : true,
+        sameSite,
+        secure,
+        path: overrides.path || '/',
+        ...overrides
     };
+}
+
+function setCookie(res, name, value, options = {}) {
+    const cookieOptions = getDefaultCookieOptions(options);
+    delete cookieOptions.req;
     res.cookie(name, value, cookieOptions);
 }
 
-function clearCookie(res, name) {
-    res.clearCookie(name, { path: '/', httpOnly: true, sameSite: 'lax', secure: config.isProduction });
+function clearCookie(res, name, options = {}) {
+    const cookieOptions = getDefaultCookieOptions(options);
+    delete cookieOptions.req;
+    delete cookieOptions.maxAge;
+    delete cookieOptions.expires;
+    res.clearCookie(name, cookieOptions);
 }
 
 function sanitizeUser(user) {
@@ -97,8 +129,8 @@ function getRefreshTtl(remember) {
 
 // Cookie options for the refresh token. Without "remember" no maxAge is set,
 // so the browser drops the cookie when it is closed.
-function refreshCookieOptions(remember) {
-    const opts = { httpOnly: true, sameSite: 'lax', secure: config.isProduction };
+function refreshCookieOptions(remember, req = null) {
+    const opts = getDefaultCookieOptions({ req, httpOnly: true });
     if (remember !== false) opts.maxAge = getRefreshTtl(remember);
     return opts;
 }
@@ -306,5 +338,7 @@ module.exports = {
     parseUserFromReq,
     purgeExpiredRecords,
     activeSessions,
-    SESSION_CACHE_TTL
+    SESSION_CACHE_TTL,
+    getDefaultCookieOptions,
+    isHttpsRequest
 };

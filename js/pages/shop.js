@@ -564,9 +564,11 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.getRegistration().then(reg => {
-          if (reg) reg.update();
-        }).catch(() => {});
+        try {
+          navigator.serviceWorker.getRegistration().then(reg => {
+            if (reg) reg.update();
+          }).catch(() => {});
+        } catch (e) {}
       }
       loadProducts();
       const sortFilter = document.getElementById('sortFilter');

@@ -146,4 +146,57 @@ describe('Security: CSP Headers', () => {
             await new Promise((resolve) => server.close(resolve));
         }
     });
+
+    test('Iframe & Pikalika Preview: CSP frame-ancestors is properly configured and X-Frame-Options is absent', async () => {
+        const http = require('http');
+        const app = require('../src/app');
+        const server = http.createServer(app);
+        await new Promise((resolve) => server.listen(0, resolve));
+        try {
+            const base = `http://127.0.0.1:${server.address().port}`;
+            const pages = ['/', '/index.html', '/shop.html', '/product.html', '/cart.html', '/track-order.html', '/checkout.html'];
+            for (const page of pages) {
+                const res = await fetch(`${base}${page}`);
+                assert.strictEqual(res.status, 200, `${page} should return 200`);
+
+                // Assert X-Frame-Options is completely absent
+                const xFrameOptions = res.headers.get('x-frame-options');
+                assert.strictEqual(xFrameOptions, null, `X-Frame-Options must NOT be present on ${page}`);
+
+                // Assert CSP frame-ancestors includes self and Pikalika domains
+                const csp = res.headers.get('content-security-policy') || '';
+                assert.ok(csp.includes('frame-ancestors'), `CSP on ${page} must define frame-ancestors`);
+                assert.ok(csp.includes('https://*.pikalika.com'), `CSP must whitelist https://*.pikalika.com on ${page}`);
+                assert.ok(csp.includes('https://pikalika.com'), `CSP must whitelist https://pikalika.com on ${page}`);
+                assert.ok(csp.includes('https://*.hsoub.com'), `CSP must whitelist https://*.hsoub.com on ${page}`);
+                assert.ok(csp.includes('https://*.onrender.com'), `CSP must whitelist https://*.onrender.com on ${page}`);
+            }
+
+            // Test sw.js headers
+            const swRes = await fetch(`${base}/sw.js`);
+            assert.strictEqual(swRes.status, 200);
+            assert.strictEqual(swRes.headers.get('service-worker-allowed'), '/', 'sw.js must have Service-Worker-Allowed: /');
+            assert.ok(swRes.headers.get('cache-control')?.includes('no-cache'), 'sw.js must have no-cache header');
+        } finally {
+            await new Promise((resolve) => server.close(resolve));
+        }
+    });
+
+    test('Cookie Security & Iframe Third-Party Compatibility', () => {
+        const { getDefaultCookieOptions } = require('../src/utils/tokenUtils');
+        
+        // 1. Local HTTP request
+        const localOpts = getDefaultCookieOptions({
+            req: { secure: false, protocol: 'http', headers: {} }
+        });
+        assert.strictEqual(localOpts.sameSite, 'lax', 'Local HTTP cookies should be SameSite=Lax');
+        assert.strictEqual(localOpts.secure, false, 'Local HTTP cookies should not require Secure');
+
+        // 2. HTTPS request (e.g. Render / Production / Reverse Proxy)
+        const httpsOpts = getDefaultCookieOptions({
+            req: { secure: true, protocol: 'https', headers: { 'x-forwarded-proto': 'https' } }
+        });
+        assert.strictEqual(httpsOpts.sameSite, 'none', 'HTTPS preview/production cookies must have SameSite=None for iframe support');
+        assert.strictEqual(httpsOpts.secure, true, 'HTTPS cookies must be Secure');
+    });
 });

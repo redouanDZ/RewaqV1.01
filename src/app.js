@@ -43,7 +43,19 @@ const buildCspDirectives = (strict) => ({
     connectSrc: ["'self'", 'https://cdn.jsdelivr.net', 'https://geoip.maxmind.com', 'https://accounts.google.com', 'https://connect.facebook.net', 'https://analytics.tiktok.com', 'https://www.google-analytics.com', 'https://*.google-analytics.com', 'https://*.chargily.com', 'https://*.chargily.net', 'https://www.facebook.com', 'https://www.googletagmanager.com'],
     objectSrc: ["'none'"],
     baseUri: ["'self'"],
-    frameAncestors: ["'self'", 'https://*.pikalika.com', 'https://pikalika.com', 'https://*.hsoub.com', 'https://hsoub.com', 'https://*.google.com', 'https://*.run.app', '*'],
+    frameAncestors: [
+        "'self'",
+        'https://*.pikalika.com',
+        'https://pikalika.com',
+        'https://*.hsoub.com',
+        'https://hsoub.com',
+        'https://*.hsoubcdn.com',
+        'https://*.onrender.com',
+        'https://*.run.app',
+        'https://*.google.com',
+        'http://localhost:*',
+        'http://127.0.0.1:*'
+    ],
     formAction: ["'self'", 'https://checkout.chargily.com'],
     frameSrc: ["'self'", 'https://accounts.google.com']
 });
@@ -72,7 +84,14 @@ if (!CSP_STRICT && process.env.CSP_REPORT_ONLY !== 'true') {
     });
 }
 
+// Ensure X-Frame-Options is never emitted so valid iframe embeddings (e.g. Pikalika preview) are never blocked
 app.use((req, res, next) => {
+    res.removeHeader('X-Frame-Options');
+    next();
+});
+
+app.use((req, res, next) => {
+    res.removeHeader('X-Frame-Options');
     res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
     res.setHeader('X-Content-Type-Options', 'nosniff');
     res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
@@ -147,8 +166,9 @@ const corsOptions = {
         const isConfiguredOrigin = config.ALLOWED_ORIGINS.includes(origin);
         const isBaseUrlOrigin = process.env.BASE_URL && origin === process.env.BASE_URL.replace(/\/$/, '');
         const isAiStudioOrigin = origin.endsWith('.run.app') || origin.endsWith('.google.com');
+        const isPikalikaOrigin = origin === 'https://pikalika.com' || origin.endsWith('.pikalika.com') || origin === 'https://hsoub.com' || origin.endsWith('.hsoub.com');
 
-        if (isAiStudioOrigin || isConfiguredOrigin || isBaseUrlOrigin || isLocalDevelopmentOrigin || isRenderOrigin || !config.isProduction) {
+        if (isAiStudioOrigin || isPikalikaOrigin || isConfiguredOrigin || isBaseUrlOrigin || isLocalDevelopmentOrigin || isRenderOrigin || !config.isProduction) {
             return callback(null, true);
         }
         return callback(null, false);
@@ -274,9 +294,15 @@ app.get('/manifest.json', async (req, res) => {
 // Other Public Files
 app.get('/robots.txt', sendWithBaseUrl('robots.txt', 'text'));
 app.get('/sitemap.xml', sendWithBaseUrl('sitemap.xml', 'xml'));
-['sw.js', 'favicon.ico'].forEach((file) => {
-    app.get(`/${file}`, (req, res) => res.sendFile(path.join(rootDir, file)));
+// Service Worker with proper scope and cache control headers
+app.get('/sw.js', (req, res) => {
+    res.setHeader('Service-Worker-Allowed', '/');
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    res.sendFile(path.join(rootDir, 'sw.js'));
 });
+app.get('/favicon.ico', (req, res) => res.sendFile(path.join(rootDir, 'favicon.ico')));
 
 // API Routes
 app.use('/api', apiRoutes);
