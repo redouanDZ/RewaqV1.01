@@ -313,7 +313,10 @@
         "home_delivery": "À Domicile",
         "desk_delivery": "Au Bureau",
         "loading_name": "Nom du produit",
-        "loading_desc": "Description du produit..."
+        "loading_desc": "Description du produit...",
+        "zoom_image": "Agrandir l'image",
+        "lightbox_aria": "Afficher l'image en plein écran",
+        "lightbox_image_alt": "Image du produit en taille réelle"
     },
     "account": {
         "title": "Mon Compte | Boutique Rewaq",

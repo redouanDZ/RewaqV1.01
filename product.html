@@ -67,7 +67,10 @@
         <div class="container">
             <div class="product-container">
                 <div class="product-images">
-                    <div class="main-image skeleton" id="main-image-wrap"><img id="main-image" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 600'%3E%3C/svg%3E" width="600" height="600" loading="eager" fetchpriority="high" data-i18n="product.main_image_alt" alt="المنتج الرئيسي"></div>
+                    <div class="main-image skeleton" id="main-image-wrap">
+                        <img id="main-image" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 600'%3E%3C/svg%3E" width="600" height="600" loading="eager" fetchpriority="high" data-i18n="product.main_image_alt" alt="المنتج الرئيسي" style="cursor: zoom-in;" data-action="openLightbox">
+                        <button type="button" class="zoom-btn" id="open-lightbox-btn" title="تكبير الصورة" aria-label="تكبير الصورة" data-action="openLightbox" data-i18n-title="product.zoom_image" data-i18n-aria-label="product.zoom_image"><i class="fas fa-search-plus"></i></button>
+                    </div>
                     <div class="thumbnail-images" id="thumbnail-images"></div>
                 </div>
                 <div class="product-info">
@@ -189,6 +192,15 @@
             <div class="similar-products"><h2 data-i18n="product.similar_products">منتجات مشابهة</h2><div class="products-grid" id="similar-products"></div></div>
         </div>
     </section>
+
+    <!-- ===== Full-Screen Lightbox Modal ===== -->
+    <div id="product-lightbox" class="lightbox-modal" hidden aria-hidden="true" role="dialog" aria-label="عرض الصورة بالحجم الكامل" data-i18n-aria-label="product.lightbox_aria">
+        <div class="lightbox-backdrop" id="lightbox-backdrop" data-action="closeLightbox"></div>
+        <div class="lightbox-container">
+            <button type="button" class="lightbox-close" id="lightbox-close-btn" data-action="closeLightbox" aria-label="إغلاق" data-i18n-aria-label="common.close">&times;</button>
+            <img id="lightbox-image" src="" alt="صورة المنتج بحجم كامل" data-i18n="product.lightbox_image_alt">
+        </div>
+    </div>
 
     <!-- ===== Modern Standardized Footer ===== -->
     <footer id="site-footer"></footer>

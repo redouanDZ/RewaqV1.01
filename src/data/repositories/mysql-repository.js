@@ -12,7 +12,13 @@ const DEFAULT_PRODUCTS = [
     old_price: 4900,
     cost_price: 2100,
     stock: 18,
-    image_url: '/images/prod_linen_shirt.jpg',
+    image_url: '/images/prod_linen_shirt.webp',
+    images: [
+      '/images/prod_linen_shirt.webp',
+      '/images/prod_linen_shirt_white.webp',
+      '/images/prod_linen_shirt_navy.webp',
+      '/images/prod_linen_shirt_detail.webp'
+    ],
     status: 'active',
     description: 'قميص رجالي صيفي أنيق مصنوع من الكتان الطبيعي 100% عالي الجودة، قصة مريحة تناسب الإطلالات اليومية والعمل والمناسبات مع تهوية ممتازة وأزرار متينة.',
     rating: 4.9,
@@ -26,7 +32,12 @@ const DEFAULT_PRODUCTS = [
     old_price: 5900,
     cost_price: 2700,
     stock: 3,
-    image_url: '/images/prod_summer_dress.jpg',
+    image_url: '/images/prod_summer_dress.webp',
+    images: [
+      '/images/prod_summer_dress.webp',
+      '/images/prod_summer_dress_coral.webp',
+      '/images/prod_summer_dress_detail.webp'
+    ],
     status: 'active',
     description: 'فستان ميدي نسائي بنقوش زهرية رقيقة وقماش شيفون ناعم وخفيف، مزود بحزام خصر أنيق وقصة جذابة توفر راحة تامة وإطلالة متألقة في مختلف المناسبات.',
     rating: 4.7,
@@ -40,7 +51,12 @@ const DEFAULT_PRODUCTS = [
     old_price: null,
     cost_price: 3200,
     stock: 24,
-    image_url: '/images/prod_sneakers.jpg',
+    image_url: '/images/prod_sneakers.webp',
+    images: [
+      '/images/prod_sneakers.webp',
+      '/images/prod_sneakers_black.webp',
+      '/images/prod_sneakers_detail.webp'
+    ],
     status: 'active',
     description: 'حذاء سنيكرز خفيف الوزن بتقنية النعل الهوائي الماص للصدمات وقماش شبكي مسامي للتهوية الفائقة، صُمم خصيصاً للراحة اليومية والتمارين الرياضية الطويلة.',
     rating: 4.4,
@@ -54,7 +70,12 @@ const DEFAULT_PRODUCTS = [
     old_price: 5400,
     cost_price: 2300,
     stock: 4,
-    image_url: '/images/prod_classic_watch.jpg',
+    image_url: '/images/prod_classic_watch.webp',
+    images: [
+      '/images/prod_classic_watch.webp',
+      '/images/prod_classic_watch_angle.webp',
+      '/images/prod_classic_watch_detail.webp'
+    ],
     status: 'active',
     description: 'ساعة يد كرونوغراف ميكانيكية فاخرة بهيكل ستانلس ستيل مصقول ومينا كحلي ملكي، سوار من الجلد الطبيعي وزجاج ياقوتي مقاوم للخدوش ومقاومة للماء.',
     rating: 4.8,
@@ -68,7 +89,12 @@ const DEFAULT_PRODUCTS = [
     old_price: null,
     cost_price: 3500,
     stock: 15,
-    image_url: '/images/prod_perfume.jpg',
+    image_url: '/images/prod_perfume.webp',
+    images: [
+      '/images/prod_perfume.webp',
+      '/images/prod_perfume_box.webp',
+      '/images/prod_perfume_detail.webp'
+    ],
     status: 'active',
     description: 'عطر شرقي فاخر بتركيز Eau de Parfum يدوم طويلاً لأكثر من 24 ساعة، تركيبة فريدة تجمع بين أخشاب العود المعتقة، العنبر الملكي، ولمسات الفانيليا المخملية.',
     rating: 4.2,
@@ -82,7 +108,12 @@ const DEFAULT_PRODUCTS = [
     old_price: 11500,
     cost_price: 5200,
     stock: 2,
-    image_url: '/images/prod_cookware.jpg',
+    image_url: '/images/prod_cookware.webp',
+    images: [
+      '/images/prod_cookware.webp',
+      '/images/prod_cookware_pan.webp',
+      '/images/prod_cookware_detail.webp'
+    ],
     status: 'active',
     description: 'طقم أواني طهي تركي فاخر مطلي بطبقات الغرانيت الصحي المقاوم للالتصاق والخدش (PFOA Free)، مزود بمقابض عازلة للحرارة وأغطية زجاجية بخارية.',
     rating: 4.9,
@@ -96,7 +127,12 @@ const DEFAULT_PRODUCTS = [
     old_price: 5200,
     cost_price: 2100,
     stock: 16,
-    image_url: '/images/christopher-gower-m_HRfLhgABo-unsplash.jpg',
+    image_url: '/images/christopher-gower-m_HRfLhgABo-unsplash.webp',
+    images: [
+      '/images/christopher-gower-m_HRfLhgABo-unsplash.webp',
+      '/images/prod_laptop_screen.webp',
+      '/images/prod_laptop_side.webp'
+    ],
     status: 'active',
     description: 'حاسوب محمول فائق السرعة بمعالج قوي وشاشة عالية الدقة مضادة للانعكاس، بطارية تدوم طويلاً وهيكل أنيق خفيف الوزن مثالي للعمل المكتبي والبرمجة والدراسة.',
     rating: 4.5,
@@ -110,7 +146,12 @@ const DEFAULT_PRODUCTS = [
     old_price: 5800,
     cost_price: 2400,
     stock: 5,
-    image_url: '/images/samsung-memory-RZM2cE0lx0Y-unsplash.jpg',
+    image_url: '/images/samsung-memory-RZM2cE0lx0Y-unsplash.webp',
+    images: [
+      '/images/samsung-memory-RZM2cE0lx0Y-unsplash.webp',
+      '/images/prod_camera_lens.webp',
+      '/images/prod_camera_detail.webp'
+    ],
     status: 'active',
     description: 'كاميرا تصوير رقمية احترافية مزودة بمستشعر متطور وعدسة تصوير عالية الدقة، تدعم تصوير الفيديو بدقة 4K مع تركيز بؤري فائق السرعة وشاشة متحركة لإنتاج محتوى متميز.',
     rating: 4.8,
@@ -181,6 +222,22 @@ const DEFAULT_WILAYAS = [
 ];
 
 function normalizeProductRow(row) {
+  let images = [];
+  if (Array.isArray(row.images)) {
+    images = row.images;
+  } else if (typeof row.images === 'string' && row.images.trim()) {
+    try {
+      const parsed = JSON.parse(row.images);
+      if (Array.isArray(parsed)) images = parsed;
+    } catch (_) {
+      images = [row.images];
+    }
+  }
+  const defaultImg = row.image_url || '/images/product-placeholder.jpg';
+  if (!images.length) {
+    images = [defaultImg];
+  }
+
   return {
     id: Number(row.id),
     name: row.name,
@@ -190,7 +247,8 @@ function normalizeProductRow(row) {
     old_price: (row.old_price !== null && row.old_price !== undefined && row.old_price !== '') ? Number(row.old_price) : null,
     cost_price: Number(row.cost_price || 0),
     stock: Number(row.stock),
-    image_url: row.image_url || '/images/product-placeholder.jpg',
+    image_url: defaultImg,
+    images,
     status: row.status || 'active',
     description: row.description || '',
     rating: Number(row.rating || 5),
@@ -805,9 +863,12 @@ class MysqlRepository {
     const oldPrice = (rawOldPrice !== undefined && rawOldPrice !== null && rawOldPrice !== '' && !isNaN(Number(rawOldPrice)) && Number(rawOldPrice) > 0)
       ? Number(rawOldPrice)
       : null;
+    const imagesVal = Array.isArray(productData.images)
+      ? JSON.stringify(productData.images)
+      : (productData.images ? JSON.stringify([productData.images]) : null);
 
     const [result] = await this.pool.query(
-      'INSERT INTO products (category_id, name, price, old_price, cost_price, stock, image_url, status, description, rating) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      'INSERT INTO products (category_id, name, price, old_price, cost_price, stock, image_url, images, status, description, rating) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
       [
         categoryId,
         String(productData.name || '').trim(),
@@ -816,6 +877,7 @@ class MysqlRepository {
         costPrice,
         Number(productData.stock || 0),
         productData.image_url || '/images/product-placeholder.jpg',
+        imagesVal,
         productData.status || 'active',
         productData.description || '',
         Number(productData.rating || 5)
@@ -854,6 +916,12 @@ class MysqlRepository {
     }
     if (productData.image_url !== undefined) {
       fields.push('image_url = ?'); params.push(productData.image_url || '/images/product-placeholder.jpg');
+    }
+    if (productData.images !== undefined) {
+      const imagesVal = Array.isArray(productData.images)
+        ? JSON.stringify(productData.images)
+        : (productData.images ? JSON.stringify([productData.images]) : null);
+      fields.push('images = ?'); params.push(imagesVal);
     }
     if (productData.status !== undefined) {
       fields.push('status = ?'); params.push(productData.status || 'active');
@@ -2324,6 +2392,10 @@ function createFallbackRepository() {
       const id = state.nextProductId++;
       const rawCost = productData.cost_price ?? productData.costPrice ?? 0;
       const costPrice = Number(rawCost);
+      const img = productData.image_url || '/images/product-placeholder.jpg';
+      const images = Array.isArray(productData.images)
+        ? productData.images
+        : (productData.images ? [productData.images] : [img]);
       const product = { 
         id, 
         name: String(productData.name || '').trim(), 
@@ -2331,7 +2403,8 @@ function createFallbackRepository() {
         price: Number(productData.price), 
         cost_price: Number.isFinite(costPrice) ? costPrice : 0,
         stock: Number(productData.stock), 
-        image_url: productData.image_url || '/images/product-placeholder.jpg', 
+        image_url: img, 
+        images,
         status: productData.status || 'active', 
         description: productData.description || '', 
         rating: Number(productData.rating || 5), 
@@ -2353,6 +2426,9 @@ function createFallbackRepository() {
       }
       if (productData.stock !== undefined) product.stock = Number(productData.stock);
       if (productData.image_url !== undefined) product.image_url = productData.image_url || '/images/product-placeholder.jpg';
+      if (productData.images !== undefined) {
+        product.images = Array.isArray(productData.images) ? productData.images : [productData.images];
+      }
       if (productData.status !== undefined) product.status = productData.status || 'active';
       if (productData.description !== undefined) product.description = productData.description || '';
       if (productData.rating !== undefined) product.rating = Number(productData.rating || 5);

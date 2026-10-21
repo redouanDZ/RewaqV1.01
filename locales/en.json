@@ -313,7 +313,10 @@
         "home_delivery": "To Home",
         "desk_delivery": "To Desk",
         "loading_name": "Product Name",
-        "loading_desc": "Product description..."
+        "loading_desc": "Product description...",
+        "zoom_image": "Zoom image",
+        "lightbox_aria": "View image in full size",
+        "lightbox_image_alt": "Product image full size"
     },
     "account": {
         "title": "My Account | Rewaq Store",

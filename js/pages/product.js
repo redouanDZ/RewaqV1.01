@@ -15,6 +15,23 @@ function transformProductImage(url, width = 600, height = 600) {
     return url;
 }
 
+function getProductSrcset(imgUrl) {
+    if (!imgUrl || typeof imgUrl !== 'string') return '';
+    if (imgUrl.includes('res.cloudinary.com')) {
+        const url400 = imgUrl.replace('/upload/', '/upload/w_400,c_fill,f_auto,q_auto/');
+        const url800 = imgUrl.replace('/upload/', '/upload/w_800,c_fill,f_auto,q_auto/');
+        const url1600 = imgUrl.replace('/upload/', '/upload/w_1600,c_fill,f_auto,q_auto/');
+        return `${url400} 400w, ${url800} 800w, ${url1600} 1600w`;
+    }
+    const m = imgUrl.match(/^(\/images\/[^\/]+?)(\.[a-zA-Z0-9]+)$/);
+    if (m) {
+        const base = m[1].replace(/-(400|800)$/, '');
+        const ext = m[2];
+        return `${base}-400${ext} 400w, ${base}-800${ext} 800w, ${base}${ext} 1600w`;
+    }
+    return '';
+}
+
         const demoProductTranslations = {
             1: {
                 fr: {
@@ -78,22 +95,22 @@ function transformProductImage(url, width = 600, height = 600) {
             },
             100: {
                 fr: {
-                    name: "Sac à dos moderne antivol avec port de charge USB",
-                    description: "Sac à dos ergonomique résistant à l'eau et aux rayures avec cadenas numérique intégré et port USB. Idéal pour ordinateurs portables jusqu'à 15,6 pouces, voyages et travail."
+                    name: "Ordinateur portable haute performance pour professionnels et développeurs",
+                    description: "Ordinateur portable ultra-rapide avec processeur puissant, écran antireflet haute définition, autonomie longue durée et châssis fin et élégant, idéal pour le travail et la programmation."
                 },
                 en: {
-                    name: "Modern Anti-Theft Backpack with USB Charging Port",
-                    description: "Comfortable, waterproof and scratch-resistant backpack with built-in digital lock and USB charging port. Fits laptops up to 15.6 inches, perfect for travel and daily commute."
+                    name: "High-Performance Business & Coding Laptop",
+                    description: "Ultra-fast laptop featuring a powerful processor, anti-glare high-resolution display, extended battery life, and sleek lightweight chassis perfect for office work, coding, and study."
                 }
             },
             101: {
                 fr: {
-                    name: "Écouteurs sans fil Pro ANC à réduction active du bruit",
-                    description: "Casque audio sans fil haute fidélité avec technologie de réduction active du bruit (ANC) et Bluetooth 5.3. Batterie puissante offrant jusqu'à 30 heures d'écoute et micro cristallin."
+                    name: "Appareil photo numérique professionnel 4K pour photographie",
+                    description: "Appareil photo numérique professionnel avec capteur avancé et objectif haute résolution, enregistrement vidéo 4K, autofocus ultra-rapide et écran orientable pour la création de contenu."
                 },
                 en: {
-                    name: "Wireless Pro ANC Noise Cancelling Headphones",
-                    description: "High-fidelity wireless headphones with Active Noise Cancelling (ANC) and Bluetooth 5.3. Powerful 30-hour battery life and crystal-clear microphone for calls."
+                    name: "Professional 4K Digital Camera for Photography",
+                    description: "Professional digital camera equipped with advanced sensor, high-resolution lens, 4K video recording, ultra-fast autofocus, and articulating screen for superior content creation."
                 }
             }
         };
@@ -285,9 +302,16 @@ function transformProductImage(url, width = 600, height = 600) {
                 const thumbnails = document.getElementById('thumbnail-images');
                 const mainImage = document.getElementById('main-image');
                 
-                // Collect distinct images from main product and any variants
+                // Collect distinct images from main product (images array + image_url) and any variants
                 const images = [];
-                if (currentProduct.image_url) images.push(currentProduct.image_url);
+                if (Array.isArray(currentProduct.images)) {
+                    currentProduct.images.forEach(img => {
+                        if (img && !images.includes(img)) images.push(img);
+                    });
+                }
+                if (currentProduct.image_url && !images.includes(currentProduct.image_url)) {
+                    images.unshift(currentProduct.image_url);
+                }
                 if (Array.isArray(currentProduct.variants)) {
                     currentProduct.variants.forEach(v => {
                         const vImg = v.imageUrl || v.image_url;
@@ -302,7 +326,7 @@ function transformProductImage(url, width = 600, height = 600) {
                     thumbnails.innerHTML = images.map((img, index) => {
                         const altText = window.I18n ? window.I18n.t('product.image_alt', 'صورة {index}').replace('{index}', index + 1) : `Image ${index + 1}`;
                         const thumbImg = transformProductImage(img, 120, 120);
-                        return `<img src="${thumbImg}" width="80" height="80" alt="${altText}" class="${index === 0 ? 'active' : ''}" data-action="switchImage" data-index="${index}" ${index === 0 ? '' : 'loading="lazy"'}>`;
+                        return `<img src="${thumbImg}" data-full="${img}" width="80" height="80" alt="${altText}" class="${index === 0 ? 'active' : ''}" data-action="switchImage" data-index="${index}" ${index === 0 ? '' : 'loading="lazy"'}>`;
                     }).join('');
                 }
                 if (mainImage) {
@@ -315,11 +339,21 @@ function transformProductImage(url, width = 600, height = 600) {
                     mainImage.onload = revealImage;
                     mainImage.onerror = () => {
                         mainImage.src = '/images/product-placeholder.jpg';
+                        mainImage.removeAttribute('srcset');
                         revealImage();
                     };
 
                     const mainImgSrc = transformProductImage(images[0], 600, 600);
                     mainImage.src = mainImgSrc;
+                    mainImage.setAttribute('width', '600');
+                    mainImage.setAttribute('height', '600');
+                    const realSrcset = getProductSrcset(images[0]);
+                    if (realSrcset) {
+                        mainImage.srcset = realSrcset;
+                        mainImage.sizes = '(max-width: 768px) 100vw, 600px';
+                    } else {
+                        mainImage.removeAttribute('srcset');
+                    }
 
                     if (mainImage.complete && mainImage.naturalWidth > 0) {
                         revealImage();
@@ -392,13 +426,20 @@ function transformProductImage(url, width = 600, height = 600) {
             if (!thumbnails[index] || !mainImage) return;
 
             thumbnails.forEach((thumb, i) => thumb.classList.toggle('active', i === index));
-            const newSrc = thumbnails[index].getAttribute('src');
+            const fullImg = thumbnails[index].getAttribute('data-full') || thumbnails[index].getAttribute('src');
+            const newSrc = transformProductImage(fullImg, 600, 600);
 
             mainImage.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
             mainImage.style.opacity = '0.3';
             setTimeout(() => {
                 mainImage.src = newSrc;
-                mainImage.srcset = `${newSrc} 1x, ${newSrc} 2x`;
+                const realSrcset = getProductSrcset(fullImg);
+                if (realSrcset) {
+                    mainImage.srcset = realSrcset;
+                    mainImage.sizes = '(max-width: 768px) 100vw, 600px';
+                } else {
+                    mainImage.removeAttribute('srcset');
+                }
                 mainImage.style.opacity = '1';
             }, 120);
 
@@ -406,7 +447,7 @@ function transformProductImage(url, width = 600, height = 600) {
             if (currentProduct && Array.isArray(currentProduct.variants)) {
                 const matchingVariant = currentProduct.variants.find(v => {
                     const vImg = v.imageUrl || v.image_url;
-                    return vImg && (vImg === newSrc || (newSrc && newSrc.endsWith(vImg)));
+                    return vImg && (vImg === fullImg || vImg === newSrc || (fullImg && fullImg.endsWith(vImg)));
                 });
                 if (matchingVariant && (!selectedVariant || Number(selectedVariant.id) !== Number(matchingVariant.id))) {
                     selectedVariant = matchingVariant;
@@ -419,6 +460,44 @@ function transformProductImage(url, width = 600, height = 600) {
                 }
             }
         }
+
+        function openLightbox() {
+            const mainImage = document.getElementById('main-image');
+            const lightbox = document.getElementById('product-lightbox');
+            const lightboxImg = document.getElementById('lightbox-image');
+            if (!lightbox || !lightboxImg || !mainImage) return;
+
+            const activeThumb = document.querySelector('.thumbnail-images img.active, #thumbnail-images img.active');
+            let fullSrc = activeThumb ? (activeThumb.getAttribute('data-full') || activeThumb.getAttribute('src')) : mainImage.getAttribute('src');
+            if (fullSrc && fullSrc.includes('w_')) {
+                fullSrc = fullSrc.replace(/w_\d+,h_\d+[^/]*\//, '');
+            }
+            lightboxImg.src = fullSrc;
+            const fullSrcset = getProductSrcset(fullSrc);
+            if (fullSrcset) {
+                lightboxImg.srcset = fullSrcset;
+                lightboxImg.sizes = '100vw';
+            } else {
+                lightboxImg.removeAttribute('srcset');
+            }
+            lightbox.hidden = false;
+            lightbox.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('product-lightbox');
+            if (!lightbox) return;
+            lightbox.hidden = true;
+            lightbox.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
 
         function renderStars(rating) {
             const r = Number(rating) || 5;
@@ -1113,6 +1192,12 @@ document.addEventListener('click', (e) => {
     } else if (action === 'switchImage') {
         e.preventDefault();
         window.switchImage(Number(actionEl.dataset.index));
+    } else if (action === 'openLightbox') {
+        e.preventDefault();
+        window.openLightbox();
+    } else if (action === 'closeLightbox') {
+        e.preventDefault();
+        window.closeLightbox();
     }
 });
 
@@ -1144,6 +1229,8 @@ window.addToCartFromProduct = addToCartFromProduct;
 window.addToWishlist = addToWishlist;
 window.submitReview = submitReview;
 window.switchImage = switchImage;
+window.openLightbox = openLightbox;
+window.closeLightbox = closeLightbox;
 window.updateExpressCalculations = updateExpressCalculations;
 window.onExpressWilayaChange = onExpressWilayaChange;
 window.handleExpressOrder = handleExpressOrder;

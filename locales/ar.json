@@ -313,7 +313,10 @@
         "home_delivery": "للمنزل",
         "desk_delivery": "للمكتب",
         "loading_name": "اسم المنتج هنا",
-        "loading_desc": "وصف المنتج..."
+        "loading_desc": "وصف المنتج...",
+        "zoom_image": "تكبير الصورة",
+        "lightbox_aria": "عرض الصورة بالحجم الكامل",
+        "lightbox_image_alt": "صورة المنتج بحجم كامل"
     },
     "account": {
         "title": "حسابي | متجر رواق - إدارة الحساب والطلبات",

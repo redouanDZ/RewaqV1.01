@@ -66,6 +66,11 @@
       .nav-links a{color:var(--text-color);text-decoration:none;font-size:0.9rem;font-weight:600;white-space:nowrap;}
       .banner-section{padding:10px 0;margin-bottom:var(--section-gap, 40px);}
       .banner{background:linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#4338ca 100%);border-radius:16px;padding:36px 24px;color:#fff;}
+      .hero-banner-wrapper{position:relative;overflow:hidden;isolation:isolate;border-radius:16px;min-height:360px;display:flex;align-items:center;}
+      .hero-picture{position:absolute;inset:0;width:100%;height:100%;z-index:1;}
+      .hero-bg-img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;}
+      .hero-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(15,23,42,0.85) 0%,rgba(30,27,75,0.8) 50%,rgba(67,56,202,0.7) 100%);z-index:2;}
+      .hero-banner-wrapper .banner-inner{position:relative;z-index:3;max-width:640px;padding:36px 24px;color:#fff;}
       .hero-badge-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.15);padding:6px 14px;border-radius:999px;font-size:0.85rem;font-weight:700;margin-bottom:14px;}
       h1{font-size:1.75rem;font-weight:800;line-height:1.3;margin-bottom:18px;}
       .hero-cta-group{display:flex;gap:12px;flex-wrap:wrap;}
@@ -126,7 +131,15 @@
         <!-- ===== Hero Banner Section ===== -->
         <section class="banner-section hero-section">
             <div class="container">
-                <div class="banner">
+                <div class="banner hero-banner-wrapper">
+                    <picture class="hero-picture">
+                        <source media="(min-width: 769px)" srcset="/images/hero-banner-desktop.webp" type="image/webp">
+                        <source media="(min-width: 769px)" srcset="/images/hero-banner-desktop.jpg" type="image/jpeg">
+                        <source media="(max-width: 768px)" srcset="/images/hero-banner-mobile.webp" type="image/webp">
+                        <source media="(max-width: 768px)" srcset="/images/hero-banner-mobile.jpg" type="image/jpeg">
+                        <img class="hero-bg-img" src="/images/hero-banner-desktop.jpg" width="1920" height="800" alt="تسوق أحدث المنتجات العصرية بأفضل الأسعار" data-i18n="home.hero_title" fetchpriority="high" loading="eager">
+                    </picture>
+                    <div class="hero-overlay"></div>
                     <div class="banner-inner">
                         <div class="hero-badge-pill">
                             <i class="fas fa-shield-halved"></i>

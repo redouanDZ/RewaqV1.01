@@ -71,7 +71,13 @@ async function seedDemoData() {
             old_price: 4900.00,
             cost_price: 2100.00,
             stock: 18,
-            image_url: '/images/prod_linen_shirt.jpg',
+            image_url: '/images/prod_linen_shirt.webp',
+            images: [
+                '/images/prod_linen_shirt.webp',
+                '/images/prod_linen_shirt_white.webp',
+                '/images/prod_linen_shirt_navy.webp',
+                '/images/prod_linen_shirt_detail.webp'
+            ],
             description: 'قميص رجالي صيفي أنيق مصنوع من الكتان الطبيعي 100% عالي الجودة، قصة مريحة تناسب الإطلالات اليومية والعمل والمناسبات مع تهوية ممتازة وأزرار متينة.',
             rating: 4.9
         },
@@ -83,7 +89,12 @@ async function seedDemoData() {
             old_price: 5900.00,
             cost_price: 2700.00,
             stock: 3,
-            image_url: '/images/prod_summer_dress.jpg',
+            image_url: '/images/prod_summer_dress.webp',
+            images: [
+                '/images/prod_summer_dress.webp',
+                '/images/prod_summer_dress_coral.webp',
+                '/images/prod_summer_dress_detail.webp'
+            ],
             description: 'فستان ميدي نسائي بنقوش زهرية رقيقة وقماش شيفون ناعم وخفيف، مزود بحزام خصر أنيق وقصة جذابة توفر راحة تامة وإطلالة متألقة في مختلف المناسبات.',
             rating: 4.7
         },
@@ -95,7 +106,12 @@ async function seedDemoData() {
             old_price: null,
             cost_price: 3200.00,
             stock: 24,
-            image_url: '/images/prod_sneakers.jpg',
+            image_url: '/images/prod_sneakers.webp',
+            images: [
+                '/images/prod_sneakers.webp',
+                '/images/prod_sneakers_black.webp',
+                '/images/prod_sneakers_detail.webp'
+            ],
             description: 'حذاء سنيكرز خفيف الوزن بتقنية النعل الهوائي الماص للصدمات وقماش شبكي مسامي للتهوية الفائقة، صُمم خصيصاً للراحة اليومية والتمارين الرياضية الطويلة.',
             rating: 4.4
         },
@@ -107,7 +123,12 @@ async function seedDemoData() {
             old_price: 5400.00,
             cost_price: 2300.00,
             stock: 4,
-            image_url: '/images/prod_classic_watch.jpg',
+            image_url: '/images/prod_classic_watch.webp',
+            images: [
+                '/images/prod_classic_watch.webp',
+                '/images/prod_classic_watch_angle.webp',
+                '/images/prod_classic_watch_detail.webp'
+            ],
             description: 'ساعة يد كرونوغراف ميكانيكية فاخرة بهيكل ستانلس ستيل مصقول ومينا كحلي ملكي، سوار من الجلد الطبيعي وزجاج ياقوتي مقاوم للخدوش ومقاومة للماء.',
             rating: 4.8
         },
@@ -119,7 +140,12 @@ async function seedDemoData() {
             old_price: null,
             cost_price: 3500.00,
             stock: 15,
-            image_url: '/images/prod_perfume.jpg',
+            image_url: '/images/prod_perfume.webp',
+            images: [
+                '/images/prod_perfume.webp',
+                '/images/prod_perfume_box.webp',
+                '/images/prod_perfume_detail.webp'
+            ],
             description: 'عطر شرقي فاخر بتركيز Eau de Parfum يدوم طويلاً لأكثر من 24 ساعة، تركيبة فريدة تجمع بين أخشاب العود المعتقة، العنبر الملكي، ولمسات الفانيليا المخملية.',
             rating: 4.2
         },
@@ -131,7 +157,12 @@ async function seedDemoData() {
             old_price: 11500.00,
             cost_price: 5200.00,
             stock: 2,
-            image_url: '/images/prod_cookware.jpg',
+            image_url: '/images/prod_cookware.webp',
+            images: [
+                '/images/prod_cookware.webp',
+                '/images/prod_cookware_pan.webp',
+                '/images/prod_cookware_detail.webp'
+            ],
             description: 'طقم أواني طهي تركي فاخر مطلي بطبقات الغرانيت الصحي المقاوم للالتصاق والخدش (PFOA Free)، مزود بمقابض عازلة للحرارة وأغطية زجاجية بخارية.',
             rating: 4.9
         },
@@ -143,7 +174,12 @@ async function seedDemoData() {
             old_price: 5200.00,
             cost_price: 2100.00,
             stock: 16,
-            image_url: '/images/christopher-gower-m_HRfLhgABo-unsplash.jpg',
+            image_url: '/images/christopher-gower-m_HRfLhgABo-unsplash.webp',
+            images: [
+                '/images/christopher-gower-m_HRfLhgABo-unsplash.webp',
+                '/images/prod_laptop_screen.webp',
+                '/images/prod_laptop_side.webp'
+            ],
             description: 'حاسوب محمول فائق السرعة بمعالج قوي وشاشة عالية الدقة مضادة للانعكاس، بطارية تدوم طويلاً وهيكل أنيق خفيف الوزن مثالي للعمل المكتبي والبرمجة والدراسة.',
             rating: 4.5
         },
@@ -155,7 +191,12 @@ async function seedDemoData() {
             old_price: 5800.00,
             cost_price: 2400.00,
             stock: 5,
-            image_url: '/images/samsung-memory-RZM2cE0lx0Y-unsplash.jpg',
+            image_url: '/images/samsung-memory-RZM2cE0lx0Y-unsplash.webp',
+            images: [
+                '/images/samsung-memory-RZM2cE0lx0Y-unsplash.webp',
+                '/images/prod_camera_lens.webp',
+                '/images/prod_camera_detail.webp'
+            ],
             description: 'كاميرا تصوير رقمية احترافية مزودة بمستشعر متطور وعدسة تصوير عالية الدقة، تدعم تصوير الفيديو بدقة 4K مع تركيز بؤري فائق السرعة وشاشة متحركة لإنتاج محتوى متميز.',
             rating: 4.8
         }
@@ -165,8 +206,8 @@ async function seedDemoData() {
     const insertedProductIds = [];
     for (const p of demoProducts) {
         await pool.query(
-            `INSERT INTO products (id, category_id, name, price, old_price, cost_price, stock, image_url, status, description, rating)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'active', ?, ?)
+            `INSERT INTO products (id, category_id, name, price, old_price, cost_price, stock, image_url, images, status, description, rating)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'active', ?, ?)
              ON DUPLICATE KEY UPDATE 
                 category_id = VALUES(category_id),
                 name = VALUES(name),
@@ -175,10 +216,11 @@ async function seedDemoData() {
                 cost_price = VALUES(cost_price),
                 stock = VALUES(stock),
                 image_url = VALUES(image_url),
+                images = VALUES(images),
                 status = 'active',
                 description = VALUES(description),
                 rating = VALUES(rating)`,
-            [p.id, p.category_id, p.name, p.price, p.old_price || null, p.cost_price, p.stock, p.image_url, p.description, p.rating]
+            [p.id, p.category_id, p.name, p.price, p.old_price || null, p.cost_price, p.stock, p.image_url, JSON.stringify(p.images), p.description, p.rating]
         );
         insertedProductIds.push(p.id);
     }
@@ -199,30 +241,43 @@ async function seedDemoData() {
 
     // 3.5. Seed Realistic Demo Variants (Colors, Sizes, Volumes)
     console.log('🎨 Seeding Product Variants...');
-    await pool.query('DELETE FROM product_variants WHERE product_id IN (1, 2, 3, 5)');
+    await pool.query('DELETE FROM product_variants WHERE product_id IN (1, 2, 3, 4, 5, 6, 100, 101)');
     const demoVariants = [
-        // Product 1: Linen Shirt (Linen beige matches prod_linen_shirt.jpg, white matches prod_linen_shirt_white.jpg, navy matches prod_linen_shirt_navy.jpg)
-        { productId: 1, sku: 'SHIRT-BEIGE-M', name: 'المقاس: M / اللون: بيج كتاني', priceModifier: 0, stock: 6, imageUrl: '/images/prod_linen_shirt.jpg' },
-        { productId: 1, sku: 'SHIRT-BEIGE-L', name: 'المقاس: L / اللون: بيج كتاني', priceModifier: 0, stock: 8, imageUrl: '/images/prod_linen_shirt.jpg' },
-        { productId: 1, sku: 'SHIRT-BEIGE-XL', name: 'المقاس: XL / اللون: بيج كتاني', priceModifier: 0, stock: 4, imageUrl: '/images/prod_linen_shirt.jpg' },
-        { productId: 1, sku: 'SHIRT-WHITE-L', name: 'المقاس: L / اللون: أبيض ملكي', priceModifier: 0, stock: 5, imageUrl: '/images/prod_linen_shirt_white.jpg' },
-        { productId: 1, sku: 'SHIRT-NAVY-L', name: 'المقاس: L / اللون: كحلي داكن', priceModifier: 200, stock: 0, imageUrl: '/images/prod_linen_shirt_navy.jpg' },
+        // Product 1: Linen Shirt
+        { productId: 1, sku: 'SHIRT-BEIGE-M', name: 'المقاس: M / اللون: بيج كتاني', priceModifier: 0, stock: 6, imageUrl: '/images/prod_linen_shirt.webp' },
+        { productId: 1, sku: 'SHIRT-BEIGE-L', name: 'المقاس: L / اللون: بيج كتاني', priceModifier: 0, stock: 8, imageUrl: '/images/prod_linen_shirt.webp' },
+        { productId: 1, sku: 'SHIRT-WHITE-L', name: 'المقاس: L / اللون: أبيض ملكي', priceModifier: 0, stock: 5, imageUrl: '/images/prod_linen_shirt_white.webp' },
+        { productId: 1, sku: 'SHIRT-NAVY-L', name: 'المقاس: L / اللون: كحلي داكن', priceModifier: 200, stock: 4, imageUrl: '/images/prod_linen_shirt_navy.webp' },
 
         // Product 2: Summer Dress
-        { productId: 2, sku: 'DRESS-S', name: 'المقاس: S / اللون: أخضر زمردي', priceModifier: 0, stock: 2, imageUrl: '/images/prod_summer_dress.jpg' },
-        { productId: 2, sku: 'DRESS-M', name: 'المقاس: M / اللون: أخضر زمردي', priceModifier: 0, stock: 3, imageUrl: '/images/prod_summer_dress.jpg' },
-        { productId: 2, sku: 'DRESS-CORAL-M', name: 'المقاس: M / اللون: مرجاني زهري', priceModifier: 150, stock: 4, imageUrl: '/images/prod_summer_dress_coral.jpg' },
+        { productId: 2, sku: 'DRESS-S', name: 'المقاس: S / اللون: أخضر زمردي', priceModifier: 0, stock: 2, imageUrl: '/images/prod_summer_dress.webp' },
+        { productId: 2, sku: 'DRESS-M', name: 'المقاس: M / اللون: أخضر زمردي', priceModifier: 0, stock: 3, imageUrl: '/images/prod_summer_dress.webp' },
+        { productId: 2, sku: 'DRESS-CORAL-M', name: 'المقاس: M / اللون: مرجاني زهري', priceModifier: 150, stock: 4, imageUrl: '/images/prod_summer_dress_coral.webp' },
 
         // Product 3: Sports Sneakers
-        { productId: 3, sku: 'SNK-41', name: 'المقاس: 41 / اللون: رمادي رياضي', priceModifier: 0, stock: 8, imageUrl: '/images/prod_sneakers.jpg' },
-        { productId: 3, sku: 'SNK-42', name: 'المقاس: 42 / اللون: رمادي رياضي', priceModifier: 0, stock: 10, imageUrl: '/images/prod_sneakers.jpg' },
-        { productId: 3, sku: 'SNK-43', name: 'المقاس: 43 / اللون: رمادي رياضي', priceModifier: 0, stock: 6, imageUrl: '/images/prod_sneakers.jpg' },
-        { productId: 3, sku: 'SNK-BLK-42', name: 'المقاس: 42 / اللون: أسود داكن', priceModifier: 200, stock: 5, imageUrl: '/images/prod_sneakers_black.jpg' },
-        { productId: 3, sku: 'SNK-BLK-43', name: 'المقاس: 43 / اللون: أسود داكن', priceModifier: 200, stock: 3, imageUrl: '/images/prod_sneakers_black.jpg' },
+        { productId: 3, sku: 'SNK-41', name: 'المقاس: 41 / اللون: رمادي رياضي', priceModifier: 0, stock: 8, imageUrl: '/images/prod_sneakers.webp' },
+        { productId: 3, sku: 'SNK-42', name: 'المقاس: 42 / اللون: رمادي رياضي', priceModifier: 0, stock: 10, imageUrl: '/images/prod_sneakers.webp' },
+        { productId: 3, sku: 'SNK-BLK-42', name: 'المقاس: 42 / اللون: أسود داكن', priceModifier: 200, stock: 5, imageUrl: '/images/prod_sneakers_black.webp' },
+
+        // Product 4: Classic Watch
+        { productId: 4, sku: 'WATCH-BRWN', name: 'سوار جلد بني فاخر', priceModifier: 0, stock: 4, imageUrl: '/images/prod_classic_watch.webp' },
+        { productId: 4, sku: 'WATCH-NAVY', name: 'سوار كحلي كلاسيكي', priceModifier: 300, stock: 3, imageUrl: '/images/prod_classic_watch_angle.webp' },
 
         // Product 5: Luxury Oud Perfume
-        { productId: 5, sku: 'PERF-50ML', name: 'الحجم: 50 مل (50ml)', priceModifier: -1500, stock: 8, imageUrl: '/images/prod_perfume.jpg' },
-        { productId: 5, sku: 'PERF-100ML', name: 'الحجم: 100 مل (100ml)', priceModifier: 0, stock: 7, imageUrl: '/images/prod_perfume.jpg' }
+        { productId: 5, sku: 'PERF-50ML', name: 'الحجم: 50 مل (50ml)', priceModifier: -1500, stock: 8, imageUrl: '/images/prod_perfume.webp' },
+        { productId: 5, sku: 'PERF-100ML', name: 'الحجم: 100 مل (100ml)', priceModifier: 0, stock: 7, imageUrl: '/images/prod_perfume_box.webp' },
+
+        // Product 6: Cookware Set
+        { productId: 6, sku: 'COOK-4PC', name: 'طقم كامل (4 قطع)', priceModifier: 0, stock: 2, imageUrl: '/images/prod_cookware.webp' },
+        { productId: 6, sku: 'COOK-PAN', name: 'مقلاة منفردة 28 سم', priceModifier: -3500, stock: 5, imageUrl: '/images/prod_cookware_pan.webp' },
+
+        // Product 100: Laptop
+        { productId: 100, sku: 'LAP-16-512', name: '16GB RAM / 512GB SSD', priceModifier: 0, stock: 10, imageUrl: '/images/christopher-gower-m_HRfLhgABo-unsplash.webp' },
+        { productId: 100, sku: 'LAP-32-1TB', name: '32GB RAM / 1TB SSD', priceModifier: 1200, stock: 6, imageUrl: '/images/prod_laptop_screen.webp' },
+
+        // Product 101: 4K Digital Camera
+        { productId: 101, sku: 'CAM-BODY', name: 'هيكل الكاميرا فقط (Body)', priceModifier: 0, stock: 3, imageUrl: '/images/samsung-memory-RZM2cE0lx0Y-unsplash.webp' },
+        { productId: 101, sku: 'CAM-KIT', name: 'طقم مع عدسة احترافية (Kit)', priceModifier: 1800, stock: 2, imageUrl: '/images/prod_camera_lens.webp' }
     ];
 
     for (const v of demoVariants) {
@@ -254,7 +309,7 @@ async function seedDemoData() {
     // 5. Seed Demo Orders
     console.log('🛒 Seeding Demo Orders...');
     const [existingOrders] = await pool.query('SELECT COUNT(*) AS total FROM orders');
-    if (Number(existingOrders[0].total) < 5 && insertedProductIds.length >= 3) {
+    if (existingOrders && existingOrders[0] && Number(existingOrders[0].total) < 5 && insertedProductIds.length >= 3) {
         const wilayas = [
             { id: 16, name: 'الجزائر العاصمة', city: 'باب الزوار', cost: 400 },
             { id: 31, name: 'وهران', city: 'السانية', cost: 600 },
@@ -268,7 +323,7 @@ async function seedDemoData() {
         const phones = ['0551234567', '0662345678', '0773456789', '0554567890', '0665678901'];
 
         const [custRows] = await pool.query('SELECT id FROM users WHERE email = "review-customer@rewaq.dz" LIMIT 1');
-        const customerId = custRows.length > 0 ? custRows[0].id : null;
+        const customerId = (custRows && custRows.length > 0) ? custRows[0].id : null;
 
         for (let i = 0; i < 5; i++) {
             const w = wilayas[i];
@@ -277,10 +332,10 @@ async function seedDemoData() {
             
             const [p1Rows] = await pool.query('SELECT * FROM products WHERE id = ?', [pId1]);
             const [p2Rows] = await pool.query('SELECT * FROM products WHERE id = ?', [pId2]);
-            const prod1 = p1Rows[0];
-            const prod2 = p2Rows[0];
+            const prod1 = (p1Rows && p1Rows[0]) ? p1Rows[0] : demoProducts.find(p => p.id === pId1);
+            const prod2 = (p2Rows && p2Rows[0]) ? p2Rows[0] : demoProducts.find(p => p.id === pId2);
 
-            const subtotal = Number(prod1.price) + Number(prod2.price);
+            const subtotal = Number(prod1 ? prod1.price : 4000) + Number(prod2 ? prod2.price : 5000);
             const total = subtotal + w.cost;
             const orderNum = `DZ-2026-${10000 + i + 1}`;
 

@@ -36,6 +36,25 @@ async function createProduct(req, res) {
             ? parsedCostPrice
             : 0;
 
+        let images = [];
+        if (req.body.images) {
+            if (Array.isArray(req.body.images)) {
+                images = req.body.images;
+            } else if (typeof req.body.images === 'string') {
+                try {
+                    const parsed = JSON.parse(req.body.images);
+                    if (Array.isArray(parsed)) images = parsed;
+                    else images = [req.body.images];
+                } catch (_) {
+                    images = [req.body.images];
+                }
+            }
+        }
+        const imageUrl = req.file ? (req.file.url || `/images/${req.file.filename}`) : (req.body.image_url || '/images/product-placeholder.jpg');
+        if (!images.length && imageUrl) {
+            images = [imageUrl];
+        }
+
         const productData = {
             name,
             category,
@@ -45,7 +64,8 @@ async function createProduct(req, res) {
             stock: Math.trunc(stock),
             status,
             description,
-            image_url: req.file ? (req.file.url || `/images/${req.file.filename}`) : '/images/product-placeholder.jpg'
+            image_url: imageUrl,
+            images
         };
 
         const id = await db.createProduct(productData);
@@ -113,6 +133,21 @@ async function updateProduct(req, res) {
         const updateData = { ...req.body };
         if (req.file) {
             updateData.image_url = req.file.url || `/images/${req.file.filename}`;
+        }
+        if (req.body.images !== undefined) {
+            let images = [];
+            if (Array.isArray(req.body.images)) {
+                images = req.body.images;
+            } else if (typeof req.body.images === 'string') {
+                try {
+                    const parsed = JSON.parse(req.body.images);
+                    if (Array.isArray(parsed)) images = parsed;
+                    else images = [req.body.images];
+                } catch (_) {
+                    images = [req.body.images];
+                }
+            }
+            updateData.images = images;
         }
         if (updateData.price !== undefined && updateData.price !== '') {
             updateData.price = Number(updateData.price);
