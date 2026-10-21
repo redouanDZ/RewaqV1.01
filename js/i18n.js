@@ -203,6 +203,10 @@ window.I18n = {
         });
 
         document.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang, dir, dict } }));
+        window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang, dir, dict } }));
+        if (window.ShopLayout && typeof window.ShopLayout.updateSearchPlaceholders === 'function') {
+            window.ShopLayout.updateSearchPlaceholders();
+        }
     },
 
     /**
@@ -279,9 +283,13 @@ window.I18n = {
 };
 
 // تشغيل التهيئة فور تحميل الـ DOM
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     window.I18n.setupLanguageSwitchers();
     if (window.I18n.currentLang && window.I18n.currentLang !== 'ar') {
-        window.I18n.setLanguage(window.I18n.currentLang);
+        await window.I18n.setLanguage(window.I18n.currentLang);
+    } else {
+        await window.I18n.loadDictionary('ar');
+        document.dispatchEvent(new CustomEvent('i18nLoaded', { detail: { lang: 'ar' } }));
+        window.dispatchEvent(new CustomEvent('i18nLoaded', { detail: { lang: 'ar' } }));
     }
 });

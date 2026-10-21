@@ -1,4 +1,48 @@
+// Early health check ping to wake up sleeping server (e.g. Render free tier)
+try {
+    fetch('/health', { method: 'GET', keepalive: true }).catch(() => {});
+} catch (e) {}
+
 let homeProductsList = [];
+
+function renderProductSkeletons(container, count = 4) {
+    if (!container) return;
+    const skeletonCard = `
+        <div class="product-card skeleton-card" aria-hidden="true" style="pointer-events:none;">
+            <div class="product-image-container skeleton" style="height:240px; background:var(--border-color,#e2e8f0); border-radius:12px 12px 0 0;"></div>
+            <div class="product-info" style="padding:16px;">
+                <div class="skeleton" style="height:14px; width:40%; margin-bottom:10px; background:var(--border-color,#e2e8f0); border-radius:4px;"></div>
+                <div class="skeleton" style="height:18px; width:80%; margin-bottom:12px; background:var(--border-color,#e2e8f0); border-radius:4px;"></div>
+                <div class="skeleton" style="height:16px; width:50%; margin-bottom:16px; background:var(--border-color,#e2e8f0); border-radius:4px;"></div>
+                <div class="skeleton" style="height:38px; width:100%; background:var(--border-color,#e2e8f0); border-radius:8px;"></div>
+            </div>
+        </div>
+    `;
+    container.innerHTML = skeletonCard.repeat(count);
+}
+
+async function fetchWithRetry(url, options = {}, retries = 2, timeoutMs = 8000) {
+    for (let attempt = 0; attempt <= retries; attempt++) {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), timeoutMs);
+        try {
+            const res = await fetch(url, { ...options, signal: controller.signal });
+            clearTimeout(timer);
+            if (!res.ok) {
+                if (attempt < retries) {
+                    await new Promise(r => setTimeout(r, 1000 * (attempt + 1)));
+                    continue;
+                }
+                throw new Error(`HTTP ${res.status}`);
+            }
+            return res;
+        } catch (err) {
+            clearTimeout(timer);
+            if (attempt >= retries) throw err;
+            await new Promise(r => setTimeout(r, 1000 * (attempt + 1)));
+        }
+    }
+}
 
 function getProductSrcset(imgUrl) {
     if (!imgUrl || typeof imgUrl !== 'string') return '';
@@ -44,15 +88,24 @@ function getProductSrcset(imgUrl) {
         }
 
         async function loadHomeProducts() {
+            const featuredContainer = document.getElementById('featured-products');
+            const offersContainer = document.getElementById('special-offers') || document.getElementById('offers-products');
+
+            // Render skeleton placeholders immediately while loading
+            if (featuredContainer && (!featuredContainer.children.length || featuredContainer.querySelector('.empty-state'))) {
+                renderProductSkeletons(featuredContainer, 4);
+            }
+            if (offersContainer && !offersContainer.children.length) {
+                renderProductSkeletons(offersContainer, 2);
+            }
+
             try {
-                const response = await fetch('/api/products');
-                if (!response.ok) return;
+                const response = await fetchWithRetry('/api/products', {}, 2, 8000);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
                 const data = await response.json();
                 const products = Array.isArray(data) ? data : (Array.isArray(data && data.products) ? data.products : []);
                 homeProductsList = products;
                 
-                const featuredContainer = document.getElementById('featured-products');
-                const offersContainer = document.getElementById('special-offers') || document.getElementById('offers-products');
                 const yieldToMain = () => new Promise(resolve => {
                     if (window.scheduler && typeof window.scheduler.yield === 'function') {
                         window.scheduler.yield().then(resolve);
@@ -75,9 +128,10 @@ function getProductSrcset(imgUrl) {
                     const rating = Number(p.rating) || 5;
                     const fullStars = Math.min(5, Math.max(1, Math.round(rating)));
                     const starsHtml = '<i class="fas fa-star"></i>'.repeat(fullStars) + '<i class="far fa-star"></i>'.repeat(5 - fullStars);
-                    const isAboveFold = index < 8;
-                    const loadingVal = isAboveFold ? 'eager' : 'lazy';
-                    const fetchPriorityAttr = isAboveFold ? 'fetchpriority="high"' : '';
+                    // First row (first 4 products) loads eagerly with high fetchpriority; rest load lazily
+                    const isFirstRow = index < 4;
+                    const loadingVal = isFirstRow ? 'eager' : 'lazy';
+                    const fetchPriorityAttr = isFirstRow ? 'fetchpriority="high"' : '';
                     const placeholderImg = '/images/product-placeholder.jpg';
                     const safeImg = p.image_url || placeholderImg;
                     const realSrcset = getProductSrcset(safeImg);
@@ -154,7 +208,19 @@ function getProductSrcset(imgUrl) {
                     });
                 }
             } catch (error) {
-                // Silent error handling
+                console.error('Error loading home products:', error);
+                if (featuredContainer) {
+                    featuredContainer.innerHTML = `
+                        <div class="empty-state" style="grid-column: 1 / -1; text-align: center; padding: 40px 20px;">
+                            <i class="fas fa-exclamation-circle" style="font-size: 2.5rem; color: var(--danger-color, #ef4444); margin-bottom: 12px;"></i>
+                            <h3 style="margin-bottom: 8px;">${window.I18n ? window.I18n.t('shop.load_error', 'حدث خطأ في تحميل المنتجات') : 'حدث خطأ في تحميل المنتجات'}</h3>
+                            <p style="color: var(--text-muted, #64748b); margin-bottom: 16px;">${window.I18n ? window.I18n.t('shop.retry_desc', 'تعذر الاتصال بالخادم في الوقت المحدد. يرجى إعادة المحاولة.') : 'تعذر الاتصال بالخادم في الوقت المحدد. يرجى إعادة المحاولة.'}</p>
+                            <button type="button" class="btn btn-primary" data-action="loadHomeProducts">
+                                <i class="fas fa-redo"></i> <span>${window.I18n ? window.I18n.t('shop.retry_btn', 'إعادة المحاولة') : 'إعادة المحاولة'}</span>
+                            </button>
+                        </div>
+                    `;
+                }
             }
         }
 
@@ -228,6 +294,9 @@ document.addEventListener('click', (e) => {
     } else if (action === 'quickAddToCart') {
         e.preventDefault();
         window.quickAddToCart(Number(actionEl.dataset.id));
+    } else if (action === 'loadHomeProducts') {
+        e.preventDefault();
+        loadHomeProducts();
     }
 });
 

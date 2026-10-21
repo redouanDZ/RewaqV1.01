@@ -1,9 +1,52 @@
 
+// Early health check ping to wake up sleeping server (e.g. Render free tier)
+try {
+  fetch('/health', { method: 'GET', keepalive: true }).catch(() => {});
+} catch (e) {}
+
     let products = [];
     let filteredProducts = [];
     let currentPage = 1;
     const itemsPerPage = 8;
 
+    function renderShopSkeletons(container, count = 8) {
+      if (!container) return;
+      const card = `
+        <div class="product-card skeleton-card" aria-hidden="true" style="pointer-events:none;">
+          <div class="product-image-container skeleton" style="height:240px; background:var(--border-color,#e2e8f0); border-radius:12px 12px 0 0;"></div>
+          <div class="product-info" style="padding:16px;">
+            <div class="skeleton" style="height:14px; width:40%; margin-bottom:10px; background:var(--border-color,#e2e8f0); border-radius:4px;"></div>
+            <div class="skeleton" style="height:18px; width:80%; margin-bottom:12px; background:var(--border-color,#e2e8f0); border-radius:4px;"></div>
+            <div class="skeleton" style="height:16px; width:50%; margin-bottom:16px; background:var(--border-color,#e2e8f0); border-radius:4px;"></div>
+            <div class="skeleton" style="height:38px; width:100%; background:var(--border-color,#e2e8f0); border-radius:8px;"></div>
+          </div>
+        </div>
+      `;
+      container.innerHTML = card.repeat(count);
+    }
+
+    async function fetchWithRetry(url, options = {}, retries = 2, timeoutMs = 8000) {
+      for (let attempt = 0; attempt <= retries; attempt++) {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), timeoutMs);
+        try {
+          const res = await fetch(url, { ...options, signal: controller.signal });
+          clearTimeout(timer);
+          if (!res.ok) {
+            if (attempt < retries) {
+              await new Promise(r => setTimeout(r, 1000 * (attempt + 1)));
+              continue;
+            }
+            throw new Error(`HTTP ${res.status}`);
+          }
+          return res;
+        } catch (err) {
+          clearTimeout(timer);
+          if (attempt >= retries) throw err;
+          await new Promise(r => setTimeout(r, 1000 * (attempt + 1)));
+        }
+      }
+    }
     
     function normalizeText(text) {
       if (!text) return '';
@@ -193,9 +236,14 @@
     }
 
     async function loadProducts() {
+      const container = document.getElementById('products-container');
+      if (container && (!products.length || container.querySelector('.empty-state'))) {
+        renderShopSkeletons(container, 8);
+      }
+
       try {
-        const response = await fetch('/api/products');
-        if (!response.ok) throw new Error(window.I18n.t('messages.fetch_products_error', 'خطأ في جلب المنتجات'));
+        const response = await fetchWithRetry('/api/products', {}, 2, 8000);
+        if (!response.ok) throw new Error(window.I18n ? window.I18n.t('messages.fetch_products_error', 'خطأ في جلب المنتجات') : 'خطأ في جلب المنتجات');
         const data = await response.json();
         products = Array.isArray(data) ? data : (Array.isArray(data && data.products) ? data.products : []);
         
@@ -216,8 +264,20 @@
         initFiltersFromUrl();
         applyFilters();
       } catch (error) {
-
-        document.getElementById('products-container').innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--danger-color); padding: 30px;" data-i18n="shop.load_error">' + (window.I18n ? window.I18n.t('shop.load_error', 'حدث خطأ في تحميل المنتجات. يرجى المحاولة لاحقاً.') : 'حدث خطأ في تحميل المنتجات. يرجى المحاولة لاحقاً.') + '</p>';
+        console.error('Error loading shop products:', error);
+        if (container) {
+          container.innerHTML = `
+            <div class="empty-state" style="grid-column: 1 / -1; text-align: center; padding: 40px 20px;">
+              <i class="fas fa-exclamation-circle" style="font-size: 2.5rem; color: var(--danger-color, #ef4444); margin-bottom: 12px;"></i>
+              <h3 style="margin-bottom: 8px;">${window.I18n ? window.I18n.t('shop.load_error', 'حدث خطأ في تحميل المنتجات') : 'حدث خطأ في تحميل المنتجات'}</h3>
+              <p style="color: var(--text-muted, #64748b); margin-bottom: 16px;">${window.I18n ? window.I18n.t('shop.retry_desc', 'تعذر الاتصال بالخادم في الوقت المحدد. يرجى إعادة المحاولة.') : 'تعذر الاتصال بالخادم في الوقت المحدد. يرجى إعادة المحاولة.'}</p>
+              <button type="button" class="btn btn-primary" data-action="loadShopProducts">
+                <i class="fas fa-redo"></i> <span>${window.I18n ? window.I18n.t('shop.retry_btn', 'إعادة المحاولة') : 'إعادة المحاولة'}</span>
+              </button>
+            </div>
+          `;
+          if (window.I18n) window.I18n.translatePage(container);
+        }
       }
     }
 
@@ -398,7 +458,7 @@
         const rating = Number(product.rating) || 5;
         const fullStars = Math.min(5, Math.max(1, Math.round(rating)));
         const starsHtml = '<i class="fas fa-star"></i>'.repeat(fullStars) + '<i class="far fa-star"></i>'.repeat(5 - fullStars);
-        const isAboveFold = index < 8;
+        const isAboveFold = index < 4;
         const loadingVal = isAboveFold ? 'eager' : 'lazy';
         const fetchPriorityAttr = isAboveFold ? 'fetchpriority="high"' : '';
         const fallbackPlaceholder = '/images/product-placeholder.jpg';
@@ -694,6 +754,10 @@ document.addEventListener('click', (e) => {
         }
         if (typeof window.changePage === 'function') window.changePage(...args);
     }
+    if (action === 'loadShopProducts') {
+        e.preventDefault();
+        loadProducts();
+    }
 });
 
 document.addEventListener('change', (e) => {
@@ -784,6 +848,7 @@ window.clearSearch = clearSearch;
 window.onCategoryChange = onCategoryChange;
 window.initFiltersFromUrl = initFiltersFromUrl;
 window.loadProducts = loadProducts;
+window.loadShopProducts = loadProducts;
 window.updatePriceLabel = updatePriceLabel;
 window.applyFilters = applyFilters;
 window.resetFilters = resetFilters;

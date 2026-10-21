@@ -75,9 +75,9 @@ const imageDefs = [
         desc: 'ساعة يد رجالية كلاسيكية بسوار جلدي فاخر'
     },
     {
-        photoId: 'photo-1522335789203-aabd1fc54bc9',
+        photoId: 'photo-1508685096489-7aacd43bd3b1',
         baseName: 'prod_classic_watch_angle',
-        desc: 'ساعة يد كلاسيكية بزاوية جانبية'
+        desc: 'ساعة يد كلاسيكية بزاوية جانبية وسوار أنيق'
     },
     {
         photoId: 'photo-1524805444758-089113d48a6d',
@@ -87,9 +87,9 @@ const imageDefs = [
 
     // 5. Luxury Oud Perfume (Product 5)
     {
-        photoId: 'photo-1594035910387-fea47794261f',
+        photoId: 'photo-1592945403244-b3fbafd7f539',
         baseName: 'prod_perfume',
-        desc: 'عطر فاخر برائحة العود والعنبر الفواح 100ml'
+        desc: 'عطر فاخر برائحة العود والعنبر الفواح 100ml (قارورة عنبرية راقية بدون علامة تجارية)'
     },
     {
         photoId: 'photo-1547887537-6158d64c35b3',
@@ -139,10 +139,10 @@ const imageDefs = [
 
     // 8. 4K Digital Camera (Product 101)
     {
-        photoId: 'photo-1516035069371-29a1b244cc32',
+        photoId: 'photo-1510127034890-ba27508e9f1c',
         baseName: 'samsung-memory-RZM2cE0lx0Y-unsplash',
         aliases: ['prod_camera'],
-        desc: 'كاميرا رقمية احترافية بدقة 4K للتصوير الفوتوغرافي'
+        desc: 'كاميرا رقمية احترافية خالية من الشعارات بدقة 4K للتصوير الفوتوغرافي'
     },
     {
         photoId: 'photo-1502920917128-1aa500764cbd',
@@ -174,7 +174,8 @@ function downloadBuffer(url) {
 
 async function processProductImage(def) {
     const targetFile = path.join(IMAGES_DIR, `${def.baseName}.webp`);
-    if (fs.existsSync(targetFile)) {
+    const force = process.argv.includes('--force') || process.env.FORCE_REBUILD === 'true';
+    if (!force && fs.existsSync(targetFile)) {
         try {
             const meta = await sharp(targetFile).metadata();
             if (meta.width >= 1600 && meta.height >= 1600) {

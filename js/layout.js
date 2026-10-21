@@ -237,8 +237,8 @@
   function updateSearchPlaceholders() {
     const isMobile = window.matchMedia('(max-width: 480px)').matches;
     const targetKey = isMobile ? 'common.search_placeholder_short' : 'common.search_placeholder';
-    const shortText = window.I18n && typeof window.I18n.t === 'function' ? window.I18n.t('common.search_placeholder_short', 'ابحث عن منتج...') : 'Search...';
-    const fullText = window.I18n && typeof window.I18n.t === 'function' ? window.I18n.t('common.search_placeholder', 'ابحث عن ملابس، إلكترونيات، عطور، أدوات منزلية...') : 'Search...';
+    const shortText = window.I18n && typeof window.I18n.t === 'function' ? window.I18n.t('common.search_placeholder_short', 'ابحث عن منتج...') : 'ابحث عن منتج...';
+    const fullText = window.I18n && typeof window.I18n.t === 'function' ? window.I18n.t('common.search_placeholder', 'ابحث عن ملابس، إلكترونيات، عطور، أدوات منزلية...') : 'ابحث عن ملابس، إلكترونيات، عطور، أدوات منزلية...';
     const text = isMobile ? shortText : fullText;
 
     document.querySelectorAll('.header-search input[name="search"], .header-search-form input[type="text"]').forEach(input => {
@@ -290,7 +290,7 @@
 
     // Trigger i18n translation on newly injected layout elements only if language is not Arabic
     if (window.I18n && typeof window.I18n.translatePage === 'function' && window.I18n.currentLang !== 'ar') {
-      window.I18n.translatePage();
+      window.I18n.translatePage().then(() => updateSearchPlaceholders()).catch(() => {});
     }
   }
 
@@ -304,7 +304,11 @@
     }
   } catch (e) {}
 
+  window.addEventListener('resize', updateSearchPlaceholders);
   window.addEventListener('languageChanged', updateSearchPlaceholders);
+  document.addEventListener('languageChanged', updateSearchPlaceholders);
+  document.addEventListener('i18nReady', updateSearchPlaceholders);
+  document.addEventListener('i18nLoaded', updateSearchPlaceholders);
 
   // Auto-init on DOMContentLoaded or immediately if DOM is ready
   if (document.readyState === 'loading') {

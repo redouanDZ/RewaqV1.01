@@ -6569,10 +6569,14 @@ input[type="tel"] {
 }
 
 @media (min-width: 993px) {
+    .product-details .product-container {
+        align-items: start;
+    }
     .product-details .product-images {
         position: sticky;
         top: 90px;
         align-self: start;
+        margin-top: 0;
     }
 }
 

@@ -199,4 +199,40 @@ describe('Security: CSP Headers', () => {
         assert.strictEqual(httpsOpts.sameSite, 'none', 'HTTPS preview/production cookies must have SameSite=None for iframe support');
         assert.strictEqual(httpsOpts.secure, true, 'HTTPS cookies must be Secure');
     });
+
+    test('DEMO_MODE: Guest checkout and demo order submission succeeds even if third-party cookies are blocked (Safari)', async () => {
+        const http = require('http');
+        const app = require('../src/app');
+        const server = http.createServer(app);
+        await new Promise((resolve) => server.listen(0, resolve));
+        try {
+            const base = `http://127.0.0.1:${server.address().port}`;
+            // Simulating request with zero cookies sent (blocked third-party cookies in Safari)
+            const orderPayload = {
+                cart: [{ id: 1, name: 'قميص رجالي كاجوال من الكتان الفاخر', price: 3800, quantity: 1, image: '/images/prod_linen_shirt.webp' }],
+                total: 4200,
+                shippingInfo: {
+                    fullName: 'عميل تجريبي بيكاليكا',
+                    phone: '0550123456',
+                    address: 'حي 500 مسكن',
+                    wilayaId: 16,
+                    wilayaName: 'الجزائر العاصمة',
+                    deliveryType: 'home',
+                    shippingCost: 400,
+                    paymentMethod: 'cod'
+                }
+            };
+            const res = await fetch(`${base}/api/orders`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(orderPayload)
+            });
+            assert.strictEqual(res.status, 201, 'Order submission without cookies should succeed (status 201)');
+            const data = await res.json();
+            assert.ok(data.id, 'Created order must have an id');
+            assert.ok(data.trackingToken, 'Created order must have a tracking token');
+        } finally {
+            await new Promise((resolve) => server.close(resolve));
+        }
+    });
 });

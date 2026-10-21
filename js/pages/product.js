@@ -1,3 +1,8 @@
+// Early health check ping to wake up sleeping server (e.g. Render free tier)
+try {
+    fetch('/health', { method: 'GET', keepalive: true }).catch(() => {});
+} catch (e) {}
+
 let currentProduct = null;
 let selectedVariant = null;
 
@@ -302,22 +307,40 @@ function getProductSrcset(imgUrl) {
                 const thumbnails = document.getElementById('thumbnail-images');
                 const mainImage = document.getElementById('main-image');
                 
-                // Collect distinct images from main product (images array + image_url) and any variants
+                // Collect strictly distinct images from main product and variants (normalized deduplication)
+                const normalizeImgKey = (u) => {
+                    if (!u || typeof u !== 'string') return '';
+                    let clean = u.trim().split('?')[0].split('#')[0];
+                    clean = clean.replace(/^\/+/, '');
+                    clean = clean.replace(/-(?:400|800)\.[a-zA-Z0-9]+$/, '');
+                    clean = clean.replace(/\.[a-zA-Z0-9]+$/, '');
+                    return clean.toLowerCase();
+                };
+
                 const images = [];
-                if (Array.isArray(currentProduct.images)) {
-                    currentProduct.images.forEach(img => {
-                        if (img && !images.includes(img)) images.push(img);
-                    });
+                const seenKeys = new Set();
+                const addDistinctImage = (img, prepend = false) => {
+                    if (!img || typeof img !== 'string') return;
+                    const key = normalizeImgKey(img);
+                    if (!key || seenKeys.has(key)) return;
+                    seenKeys.add(key);
+                    if (prepend) {
+                        images.unshift(img);
+                    } else {
+                        images.push(img);
+                    }
+                };
+
+                if (currentProduct.image_url) {
+                    addDistinctImage(currentProduct.image_url);
                 }
-                if (currentProduct.image_url && !images.includes(currentProduct.image_url)) {
-                    images.unshift(currentProduct.image_url);
+                if (Array.isArray(currentProduct.images)) {
+                    currentProduct.images.forEach(img => addDistinctImage(img));
                 }
                 if (Array.isArray(currentProduct.variants)) {
                     currentProduct.variants.forEach(v => {
                         const vImg = v.imageUrl || v.image_url;
-                        if (vImg && !images.includes(vImg)) {
-                            images.push(vImg);
-                        }
+                        addDistinctImage(vImg);
                     });
                 }
                 if (images.length === 0) images.push('/images/product-placeholder.jpg');
