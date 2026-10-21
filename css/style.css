@@ -168,8 +168,7 @@ body {
 .featured-products,
 .special-offers,
 .newsletter-section,
-.testimonials-section,
-#main-footer {
+.testimonials-section {
     content-visibility: auto;
     contain-intrinsic-size: auto 550px;
 }
@@ -1303,17 +1302,72 @@ body.dark-mode .search-bar form {
     gap: 20px;
 }
 
-@media (max-width: 992px) {
+@media (min-width: 601px) and (max-width: 900px) {
     .categories-cards-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 12px;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 14px !important;
+    }
+
+    .category-card {
+        aspect-ratio: auto !important;
+        min-height: 95px !important;
+        max-height: 125px !important;
+        height: auto !important;
+        padding: 14px 18px !important;
+        gap: 12px !important;
+    }
+
+    .category-card-icon {
+        width: 64px !important;
+        height: 64px !important;
+        font-size: 1.75rem !important;
+    }
+
+    .category-card h3 {
+        font-size: 1.05rem !important;
+    }
+
+    /* توسيع العنصر الخامس اليتيم ليملأ الصف كاملاً بنسق أفقي متوازن */
+    .categories-cards-grid > .category-card:last-child:nth-child(odd) {
+        grid-column: 1 / -1 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        flex-direction: row !important;
+        gap: 20px !important;
+        justify-content: center !important;
+        padding: 14px 24px !important;
+        min-height: 95px !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .categories-cards-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 10px !important;
+    }
+
+    .category-card {
+        aspect-ratio: auto !important;
+        min-height: 90px !important;
+        padding: 12px 10px !important;
+        gap: 8px !important;
+    }
+
+    .category-card-icon {
+        width: 52px !important;
+        height: 52px !important;
+        font-size: 1.45rem !important;
     }
 
     .categories-cards-grid > .category-card:last-child:nth-child(odd) {
-        grid-column: 1 / -1;
-        justify-self: center;
-        width: 100%;
-        max-width: calc(50% - 6px);
+        grid-column: 1 / -1 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        flex-direction: row !important;
+        gap: 12px !important;
+        justify-content: center !important;
+        padding: 12px !important;
+        min-height: 85px !important;
     }
 }
 
@@ -2163,11 +2217,15 @@ body.dark-mode .product-wishlist:hover {
 /* تذييل الموقع */
 footer:empty,
 #site-footer:empty,
-#main-footer:empty {
+#main-footer:empty,
+footer:not([data-layout-rendered="true"]):empty {
     display: none !important;
+    background: transparent !important;
+    background-color: transparent !important;
     padding: 0 !important;
     margin: 0 !important;
     min-height: 0 !important;
+    border: none !important;
 }
 
 footer#site-footer,
@@ -5974,7 +6032,7 @@ input[type="tel"] {
         word-break: normal !important;
     }
 
-    /* شبكة تصنيفات الأقسام المتناسقة في الهاتف (2x2 مع توسيط العنصر الخامس) */
+    /* شبكة تصنيفات الأقسام المتناسقة في الهاتف (2x2 مع توسيع العنصر الخامس) */
     .categories-cards-grid {
         grid-template-columns: repeat(2, 1fr) !important;
         gap: 12px !important;
@@ -5982,17 +6040,22 @@ input[type="tel"] {
 
     .categories-cards-grid > .category-card:last-child:nth-child(odd) {
         grid-column: 1 / -1 !important;
-        justify-self: center !important;
         width: 100% !important;
-        max-width: calc(50% - 6px) !important;
+        max-width: 100% !important;
+        flex-direction: row !important;
+        gap: 14px !important;
+        justify-content: center !important;
+        padding: 12px 18px !important;
+        min-height: 85px !important;
     }
 
     .category-card {
-        padding: 24px 16px !important;
-        gap: 12px !important;
+        padding: 14px 12px !important;
+        gap: 10px !important;
         border-radius: 12px !important;
         height: auto !important;
-        min-height: unset !important;
+        aspect-ratio: auto !important;
+        min-height: 90px !important;
     }
 
     .category-card-icon {
@@ -11289,11 +11352,53 @@ html[dir="ltr"] .timeline-progress-bar,
     }
 }
 
-/* Sticky Footer Fix (track-order page only) */
-body.track-order-page {
+/* Universal Sticky Footer System (Reliable across all pages) */
+html {
+    height: 100%;
+}
+
+body {
     display: flex;
     flex-direction: column;
+    min-height: 100%;
     min-height: 100vh;
+}
+
+main,
+.main-content,
+#main-content,
+.cart-section,
+.checkout-section,
+.account-page-container,
+.legal-container,
+.order-confirmation-section,
+.wishlist-section,
+.track-order-section {
+    flex: 1 0 auto;
+}
+
+footer#site-footer,
+footer#main-footer,
+footer.site-footer,
+#site-footer,
+#main-footer,
+footer {
+    margin-top: auto !important;
+}
+
+@media (max-width: 768px) {
+    body:has(footer.site-footer),
+    body:has(#main-footer),
+    body:has(#site-footer) {
+        padding-bottom: 0 !important;
+    }
+
+    footer#main-footer,
+    footer#site-footer,
+    footer.site-footer,
+    footer {
+        padding-bottom: calc(32px + 72px + env(safe-area-inset-bottom, 0px)) !important;
+    }
 }
 
 

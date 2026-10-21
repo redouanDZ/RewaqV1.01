@@ -142,7 +142,7 @@
             <h3 data-i18n="footer.contact">خدمة العملاء والتواصل</h3>
             <ul class="footer-contact-list">
               <li><i class="fas fa-map-pin text-primary"></i> <span data-i18n="footer.address" class="footer-address">الجزائر العاصمة، الجزائر</span></li>
-              <li><i class="fas fa-envelope text-primary"></i> <span class="footer-email">contact@rewaq-store.dz</span></li>
+              <li><i class="fas fa-envelope text-primary"></i> <span class="footer-email">contact@rewaq.dz</span></li>
               <li><i class="fas fa-clock text-primary"></i> <span data-i18n="footer.hours">السبت - الخميس: 9:00 ص - 6:00 م</span></li>
               <li><i class="fas fa-headset text-primary"></i> <span data-i18n="footer.tech_support">دعم فني واستفسارات مستمرة</span></li>
             </ul>
@@ -234,6 +234,19 @@
     } catch (e) {}
   }
 
+  function updateSearchPlaceholders() {
+    const isMobile = window.matchMedia('(max-width: 480px)').matches;
+    const targetKey = isMobile ? 'common.search_placeholder_short' : 'common.search_placeholder';
+    const shortText = window.I18n && typeof window.I18n.t === 'function' ? window.I18n.t('common.search_placeholder_short', 'ابحث عن منتج...') : 'Search...';
+    const fullText = window.I18n && typeof window.I18n.t === 'function' ? window.I18n.t('common.search_placeholder', 'ابحث عن ملابس، إلكترونيات، عطور، أدوات منزلية...') : 'Search...';
+    const text = isMobile ? shortText : fullText;
+
+    document.querySelectorAll('.header-search input[name="search"], .header-search-form input[type="text"]').forEach(input => {
+      input.setAttribute('data-i18n-placeholder', targetKey);
+      input.placeholder = text;
+    });
+  }
+
   function initLayout() {
     // Target element: #site-header or <header data-layout="auto"> or first <header>
     const headerPlaceholder = document.getElementById('site-header') || document.querySelector('header[data-layout="auto"]');
@@ -242,9 +255,17 @@
     }
 
     // Target element: #site-footer or #main-footer or <footer data-layout="auto"> or first <footer>
-    const footerPlaceholder = document.getElementById('site-footer') || document.querySelector('footer[data-layout="auto"]') || (!document.querySelector('footer[data-layout-rendered="true"]') ? document.getElementById('main-footer') : null);
+    const footerPlaceholder = document.getElementById('site-footer') 
+      || document.querySelector('footer[data-layout="auto"]') 
+      || (!document.querySelector('footer[data-layout-rendered="true"]') ? (document.getElementById('main-footer') || document.querySelector('footer')) : null);
     if (footerPlaceholder && !footerPlaceholder.hasAttribute('data-layout-rendered')) {
       footerPlaceholder.outerHTML = getFooterTemplate();
+    } else if (!document.querySelector('footer')) {
+      const footerWrapper = document.createElement('div');
+      footerWrapper.innerHTML = getFooterTemplate();
+      if (footerWrapper.firstElementChild) {
+        document.body.appendChild(footerWrapper.firstElementChild);
+      }
     }
 
     // Target element: mobile bottom nav
@@ -256,14 +277,34 @@
       }
     }
 
+    // Dynamic current year sync
+    document.querySelectorAll('.dynamic-year').forEach(el => {
+      el.textContent = new Date().getFullYear();
+    });
+
     // Sync counters
     syncCounters();
+
+    // Sync responsive search placeholder
+    updateSearchPlaceholders();
 
     // Trigger i18n translation on newly injected layout elements only if language is not Arabic
     if (window.I18n && typeof window.I18n.translatePage === 'function' && window.I18n.currentLang !== 'ar') {
       window.I18n.translatePage();
     }
   }
+
+  // Setup responsive search placeholder listeners
+  try {
+    const mql = window.matchMedia('(max-width: 480px)');
+    if (mql.addEventListener) {
+      mql.addEventListener('change', updateSearchPlaceholders);
+    } else if (mql.addListener) {
+      mql.addListener(updateSearchPlaceholders);
+    }
+  } catch (e) {}
+
+  window.addEventListener('languageChanged', updateSearchPlaceholders);
 
   // Auto-init on DOMContentLoaded or immediately if DOM is ready
   if (document.readyState === 'loading') {
@@ -277,7 +318,8 @@
     getHeaderTemplate,
     getFooterTemplate,
     getMobileBottomNavTemplate,
-    syncCounters
+    syncCounters,
+    updateSearchPlaceholders
   };
 })();
 
