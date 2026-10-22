@@ -928,7 +928,8 @@ function getProductSrcset(imgUrl) {
                 container.innerHTML = similar.map(p => {
                     const locP = getLocalizedProduct(p);
                     const safeName = window.escapeHtml ? window.escapeHtml(locP.name) : locP.name;
-                    const safeCat = window.escapeHtml ? window.escapeHtml(locP.category || 'عام') : (locP.category || 'عام');
+                    const simCatRaw = (locP.category && locP.category !== 'عام') ? locP.category : (p.category_name || category || '');
+                    const safeCat = window.escapeHtml ? window.escapeHtml(simCatRaw) : simCatRaw;
                     const hasDiscount = p.old_price && Number(p.old_price) > Number(p.price);
                     const discountPct = hasDiscount ? Math.round((1 - Number(p.price) / Number(p.old_price)) * 100) : null;
                     const stockNum = Number(p.stock) || 0;

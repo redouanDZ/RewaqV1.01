@@ -126,7 +126,6 @@ async function seedDemoData() {
             image_url: '/images/prod_classic_watch.webp',
             images: [
                 '/images/prod_classic_watch.webp',
-                '/images/prod_classic_watch_angle.webp',
                 '/images/prod_classic_watch_detail.webp'
             ],
             description: 'ساعة يد كرونوغراف ميكانيكية فاخرة بهيكل ستانلس ستيل مصقول ومينا كحلي ملكي، سوار من الجلد الطبيعي وزجاج ياقوتي مقاوم للخدوش ومقاومة للماء.',
@@ -160,8 +159,7 @@ async function seedDemoData() {
             image_url: '/images/prod_cookware.webp',
             images: [
                 '/images/prod_cookware.webp',
-                '/images/prod_cookware_pan.webp',
-                '/images/prod_cookware_detail.webp'
+                '/images/prod_cookware_pan.webp'
             ],
             description: 'طقم أواني طهي تركي فاخر مطلي بطبقات الغرانيت الصحي المقاوم للالتصاق والخدش (PFOA Free)، مزود بمقابض عازلة للحرارة وأغطية زجاجية بخارية.',
             rating: 4.9
@@ -261,7 +259,7 @@ async function seedDemoData() {
 
         // Product 4: Classic Watch
         { productId: 4, sku: 'WATCH-BRWN', name: 'سوار جلد بني فاخر', priceModifier: 0, stock: 4, imageUrl: '/images/prod_classic_watch.webp' },
-        { productId: 4, sku: 'WATCH-NAVY', name: 'سوار كحلي كلاسيكي', priceModifier: 300, stock: 3, imageUrl: '/images/prod_classic_watch_angle.webp' },
+        { productId: 4, sku: 'WATCH-NAVY', name: 'سوار كحلي كلاسيكي', priceModifier: 300, stock: 3, imageUrl: '/images/prod_classic_watch_detail.webp' },
 
         // Product 5: Luxury Oud Perfume
         { productId: 5, sku: 'PERF-50ML', name: 'الحجم: 50 مل (50ml)', priceModifier: -1500, stock: 8, imageUrl: '/images/prod_perfume.webp' },

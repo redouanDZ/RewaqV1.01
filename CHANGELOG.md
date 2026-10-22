@@ -2,6 +2,12 @@
 
 All notable changes to the Rewaq e-commerce platform are documented in this file.
 
+## [Unreleased] - Review round fixes
+- Checkout: payment methods now render full-width, one per row.
+- Home: featured products use 2 columns on phones and 4 from 700px (no orphan row).
+- Product page: similar products show their category instead of a generic label.
+- Demo data: removed irrelevant gallery images (watch, cookware); migration 018 cleans live data and removes brand names from the demo camera text.
+
 ## [1.1.1] - 2026-10-16
 
 ### Marketplace Review & UX Optimizations (Beekalia Compliance)

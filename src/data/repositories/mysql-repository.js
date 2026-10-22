@@ -73,7 +73,6 @@ const DEFAULT_PRODUCTS = [
     image_url: '/images/prod_classic_watch.webp',
     images: [
       '/images/prod_classic_watch.webp',
-      '/images/prod_classic_watch_angle.webp',
       '/images/prod_classic_watch_detail.webp'
     ],
     status: 'active',
@@ -111,8 +110,7 @@ const DEFAULT_PRODUCTS = [
     image_url: '/images/prod_cookware.webp',
     images: [
       '/images/prod_cookware.webp',
-      '/images/prod_cookware_pan.webp',
-      '/images/prod_cookware_detail.webp'
+      '/images/prod_cookware_pan.webp'
     ],
     status: 'active',
     description: 'طقم أواني طهي تركي فاخر مطلي بطبقات الغرانيت الصحي المقاوم للالتصاق والخدش (PFOA Free)، مزود بمقابض عازلة للحرارة وأغطية زجاجية بخارية.',

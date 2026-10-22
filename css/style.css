@@ -11785,3 +11785,31 @@ body.dark-mode .product-card .product-image-container {
         background: linear-gradient(180deg, rgba(15, 23, 42, 0.85) 0%, rgba(30, 27, 75, 0.92) 100%);
     }
 }
+/* ===== Final fixes (review round) ===== */
+
+/* Checkout: payment methods always full-width, one per row (the 2-column grid made the
+   first option half-width while the last one spanned the whole row). */
+.payment-options {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+}
+.payment-option,
+.payment-option:last-child:nth-child(odd) {
+    grid-column: auto !important;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Home featured products: 2 columns on phones, 4 from 700px up.
+   Avoids the 3-column layout that left an orphan row with 8 products. */
+#featured-products.products-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 16px !important;
+}
+@media (min-width: 700px) {
+    #featured-products.products-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    }
+}
