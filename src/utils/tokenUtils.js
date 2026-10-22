@@ -73,6 +73,7 @@ function getDefaultCookieOptions(reqOrOptions = {}) {
         sameSite,
         secure,
         path: overrides.path || '/',
+        ...(secure ? { partitioned: true } : {}),
         ...overrides
     };
 }

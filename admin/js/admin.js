@@ -39,6 +39,10 @@ const AdminAuth = {
         if (token) {
             headers['X-CSRF-Token'] = token;
         }
+        const demoToken = sessionStorage.getItem('rewaq_demo_token') || sessionStorage.getItem('token');
+        if (demoToken) {
+            headers['Authorization'] = `Bearer ${demoToken}`;
+        }
         return headers;
     },
 

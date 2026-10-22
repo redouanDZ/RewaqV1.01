@@ -1,4 +1,4 @@
-const CACHE_NAME = 'rewaq-pwa-v358ae11709';
+const CACHE_NAME = 'rewaq-pwa-vec6f61863e';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -38,7 +38,10 @@ const STATIC_ASSETS = [
   '/locales/ar.json',
   '/locales/fr.json',
   '/locales/en.json',
-  '/manifest.json'
+  '/manifest.json',
+  '/images/logo.svg',
+  '/images/logo-32.webp',
+  '/images/logo-64.webp'
 ];
 const CACHE_VERSION_ASSETS = [
   '/js/pages/index.js',
@@ -69,8 +72,8 @@ const CACHE_VERSION_ASSETS = [
   '/images/prod_perfume.jpg',
   '/images/prod_sneakers.webp',
   '/images/prod_sneakers.jpg',
-  '/images/prod_sneakers_black.webp',
-  '/images/prod_sneakers_black.jpg',
+  '/images/prod_sneakers_sole.webp',
+  '/images/prod_sneakers_sole.jpg',
   '/images/prod_summer_dress.webp',
   '/images/prod_summer_dress.jpg',
   '/images/prod_summer_dress_coral.webp',

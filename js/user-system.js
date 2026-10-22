@@ -57,6 +57,7 @@ function clearSessionAuthState() {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('rememberedUser');
     sessionStorage.removeItem('token');
+    sessionStorage.removeItem('rewaq_demo_token');
     localStorage.removeItem('token');
     document.querySelectorAll('.user-icon').forEach(icon => {
         icon.innerHTML = '<i class="fas fa-user"></i>';
@@ -104,6 +105,15 @@ async function fetchJson(url, options = {}) {
 
     if (csrfToken && !headers['X-CSRF-Token'] && !headers['x-csrf-token']) {
         headers['X-CSRF-Token'] = csrfToken;
+    }
+
+    if (!headers['Authorization'] && !headers['authorization']) {
+        try {
+            const demoToken = sessionStorage.getItem('rewaq_demo_token') || sessionStorage.getItem('token');
+            if (demoToken) {
+                headers['Authorization'] = `Bearer ${demoToken}`;
+            }
+        } catch (e) {}
     }
 
     const doFetch = () => fetch(url, {
@@ -822,6 +832,9 @@ async function handleLogin() {
 
         if (response.ok) {
             saveSessionUser(data.user, rememberMe);
+            if (data.demoToken) {
+                sessionStorage.setItem('rewaq_demo_token', data.demoToken);
+            }
 
             closeAuthModalElement();
             updateUIForLoggedInUser(data.user);
@@ -897,6 +910,9 @@ async function handleSignup() {
         const data = await response.json();
 
         if (response.ok) {
+            if (data.demoToken) {
+                sessionStorage.setItem('rewaq_demo_token', data.demoToken);
+            }
             if (data.user) {
                 saveSessionUser(data.user);
                 updateUIForLoggedInUser(data.user);

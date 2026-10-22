@@ -77,6 +77,15 @@ class ApiClient {
             }
         }
 
+        if (!headers['Authorization'] && !headers['authorization']) {
+            try {
+                const demoToken = sessionStorage.getItem('rewaq_demo_token') || sessionStorage.getItem('token');
+                if (demoToken) {
+                    headers['Authorization'] = `Bearer ${demoToken}`;
+                }
+            } catch (e) {}
+        }
+
         const config = {
             credentials: 'include',
             ...options,

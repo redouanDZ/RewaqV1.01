@@ -95,6 +95,9 @@ app.use((req, res, next) => {
     res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
     res.setHeader('X-Content-Type-Options', 'nosniff');
     res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+    if (process.env.DEMO_MODE === 'true') {
+        res.setHeader('X-Demo-Mode', 'true');
+    }
     next();
 });
 

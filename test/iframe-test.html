@@ -156,19 +156,41 @@
 
         function loadPage(path, btn) {
             document.querySelectorAll('.nav-buttons button').forEach(b => b.classList.remove('active'));
-            if (btn) btn.classList.add('active');
+            if (btn) {
+                btn.classList.add('active');
+            } else {
+                const matchBtn = Array.from(document.querySelectorAll('.nav-buttons button')).find(b => b.getAttribute('onclick')?.includes(path));
+                if (matchBtn) matchBtn.classList.add('active');
+            }
             urlDisplay.textContent = 'المسار الحالي: ' + path;
             statusDisplay.textContent = 'الحالة: جارِ التحميل...';
             iframe.src = path;
         }
 
         iframe.addEventListener('load', () => {
+            try {
+                // If same-origin, we can test accessibility of window
+                const frameDoc = iframe.contentDocument || iframe.contentWindow?.document;
+                if (frameDoc && frameDoc.title) {
+                    statusDisplay.textContent = 'الحالة: تم التحميل بنجاح داخل الإطار (' + frameDoc.title + ') دون أخطاء CSP أو إيقاف';
+                    return;
+                }
+            } catch (e) {
+                // Cross-origin embed succeeded (CSP allowed it)
+            }
             statusDisplay.textContent = 'الحالة: تم التحميل بنجاح داخل الإطار دون أخطاء CSP أو إيقاف';
         });
 
-        iframe.addEventListener('error', () => {
-            statusDisplay.textContent = 'الحالة: حدث خطأ أثناء تحميل الإطار';
+        iframe.addEventListener('error', (err) => {
+            statusDisplay.textContent = 'الحالة: ❌ حدث خطأ أثناء تحميل الإطار: ' + (err.message || 'تعذر الاتصال أو رُفض الإطار');
         });
+
+        // Initialize from URL parameter ?url= if provided
+        const params = new URLSearchParams(window.location.search);
+        const queryUrl = params.get('url');
+        if (queryUrl) {
+            loadPage(queryUrl);
+        }
     </script>
 </body>
 </html>

@@ -208,6 +208,7 @@ async function getPublicStoreSettings(req, res) {
         for (const key of PUBLIC_SETTING_KEYS) {
             if (Object.prototype.hasOwnProperty.call(all, key)) publicSettings[key] = all[key];
         }
+        publicSettings.demo_mode = process.env.DEMO_MODE === 'true';
         res.json(publicSettings);
     } catch (error) {
         console.error('Error fetching public store settings:', error);

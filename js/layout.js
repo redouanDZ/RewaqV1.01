@@ -7,6 +7,14 @@
 (function () {
   'use strict';
 
+  function isDemoMode() {
+    if (typeof window !== 'undefined' && window._DEMO_MODE !== undefined) return !!window._DEMO_MODE;
+    try {
+      if (sessionStorage.getItem('rewaq_demo_mode') === 'true') return true;
+    } catch (e) {}
+    return false;
+  }
+
   function getActivePageKey() {
     const pathname = window.location.pathname.toLowerCase();
     if (pathname.endsWith('shop.html')) return 'shop';
@@ -32,6 +40,7 @@
         <div class="announcement-text">
           <i class="fas fa-truck-fast"></i>
           <span data-i18n="home.trusted_badge">🇩🇿 توصيل سريع وموثوق لـ 58 ولاية مع إمكانية الدفع عند الاستلام</span>
+          ${isDemoMode() ? `<span class="demo-mode-badge" style="display:inline-flex;align-items:center;gap:4px;background:rgba(234,179,8,0.18);color:#ca8a04;border:1px solid rgba(202,138,4,0.3);padding:2px 8px;border-radius:12px;font-size:0.75rem;font-weight:700;margin-inline-start:10px;"><i class="fas fa-flask"></i> <span data-i18n="common.demo_badge">نسخة تجريبية</span></span>` : ''}
         </div>
         <div class="top-bar-actions">
           <a href="track-order.html" class="top-track-link">
@@ -47,7 +56,7 @@
         <!-- Logo Zone -->
         <div class="logo">
           <a href="index.html" class="logo-link">
-            <img src="/images/logo-32.webp" srcset="/images/logo-32.webp 1x, /images/logo-64.webp 2x" alt="" class="site-logo-img" width="38" height="38" fetchpriority="high">
+            <img src="/images/logo-32.webp" srcset="/images/logo-32.webp 1x, /images/logo-64.webp 2x" alt="متجر رواق" data-i18n-alt="common.store_name" class="site-logo-img" width="38" height="38" fetchpriority="high" onerror="this.onerror=null;this.srcset='';this.src='/images/logo.svg';">
             <span class="logo-text" data-i18n="common.store_name">متجر رواق</span>
           </a>
         </div>
@@ -113,7 +122,7 @@
           <!-- Store Description -->
           <div class="footer-col">
             <div class="footer-brand-lockup">
-              <img src="/images/logo-32.webp" srcset="/images/logo-32.webp 1x, /images/logo-64.webp 2x" alt="" class="site-logo-img" width="32" height="32" style="border-radius: 8px; vertical-align: middle;" loading="lazy">
+              <img src="/images/logo-32.webp" srcset="/images/logo-32.webp 1x, /images/logo-64.webp 2x" alt="متجر رواق" data-i18n-alt="common.store_name" class="site-logo-img" width="32" height="32" style="border-radius: 8px; vertical-align: middle;" loading="lazy" onerror="this.onerror=null;this.srcset='';this.src='/images/logo.svg';">
               <span class="footer-brand dynamic-store-name" data-i18n="footer.brand">المتجر الإلكتروني</span>
             </div>
             <p class="footer-tagline" data-i18n="footer.tagline">وجهتك الموثوقة للتسوق الإلكتروني في الجزائر، منتجات عالية الجودة، شحن سريع لـ 58 ولاية، وضمان الدفع عند الاستلام.</p>

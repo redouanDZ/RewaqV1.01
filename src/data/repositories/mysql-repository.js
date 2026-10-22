@@ -54,7 +54,7 @@ const DEFAULT_PRODUCTS = [
     image_url: '/images/prod_sneakers.webp',
     images: [
       '/images/prod_sneakers.webp',
-      '/images/prod_sneakers_black.webp',
+      '/images/prod_sneakers_sole.webp',
       '/images/prod_sneakers_detail.webp'
     ],
     status: 'active',

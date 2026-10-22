@@ -58,7 +58,8 @@
         "online_notice": "✅ تمت استعادة الاتصال بالإنترنت بنجاح!",
         "lang_ar": "العربية 🇩🇿",
         "lang_fr": "Français 🇫🇷",
-        "lang_en": "English 🇬🇧"
+        "lang_en": "English 🇬🇧",
+        "demo_badge": "نسخة تجريبية"
     },
     "filters": {
         "title": "فلاتر المنتجات",

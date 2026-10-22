@@ -51,22 +51,7 @@ const imageDefs = [
         desc: 'تفاصيل قماش الفستان وحزام الخصر'
     },
 
-    // 3. Sport Sneakers (Product 3)
-    {
-        photoId: 'photo-1549298916-b41d501d3772',
-        baseName: 'prod_sneakers',
-        desc: 'حذاء رياضي مريح للجري والمشي (رمادي رياضي)'
-    },
-    {
-        photoId: 'photo-1608231387042-66d1773070a5',
-        baseName: 'prod_sneakers_black',
-        desc: 'حذاء رياضي مريح (أسود داكن)'
-    },
-    {
-        photoId: 'photo-1595950653106-6c9ebd614d3a',
-        baseName: 'prod_sneakers_detail',
-        desc: 'تفاصيل نعل الحذاء الهوائي والقماش الشبكي'
-    },
+    // 3. Sport Sneakers (Product 3): handled manually (images/prod_sneakers*, no brand logos) - not regenerated here.
 
     // 4. Classic Watch (Product 4)
     {

@@ -58,7 +58,8 @@
         "online_notice": "✅ Internet connection restored successfully!",
         "lang_ar": "العربية 🇩🇿",
         "lang_fr": "Français 🇫🇷",
-        "lang_en": "English 🇬🇧"
+        "lang_en": "English 🇬🇧",
+        "demo_badge": "Demo Version"
     },
     "filters": {
         "title": "Product Filters",

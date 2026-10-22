@@ -142,9 +142,20 @@ async function login(req, res) {
     }
 }
 
+const demoCsrfTokens = new Map();
+
 function getCsrfToken(req, res) {
     const csrfToken = randomToken();
     setCookie(res, 'csrf_token', csrfToken, { req, httpOnly: false, maxAge: 60 * 60 * 1000 });
+    if (process.env.DEMO_MODE === 'true') {
+        demoCsrfTokens.set(csrfToken, Date.now() + 60 * 60 * 1000);
+        if (demoCsrfTokens.size > 2000) {
+            const now = Date.now();
+            for (const [token, exp] of demoCsrfTokens.entries()) {
+                if (exp <= now) demoCsrfTokens.delete(token);
+            }
+        }
+    }
     res.json({ csrfToken });
 }
 
@@ -468,5 +479,6 @@ module.exports = {
     getSession,
     listSessions,
     revokeUserSession,
-    logout
+    logout,
+    demoCsrfTokens
 };

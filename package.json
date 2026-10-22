@@ -17,6 +17,7 @@
     "seed:demo": "node scripts/seedDemoData.js",
     "check:i18n": "node scripts/check-i18n.js",
     "check:responsive": "node scripts/responsive-check.js",
+    "check:headers": "node scripts/check-headers.js",
     "test": "node test/all.test.js"
   },
   "keywords": [

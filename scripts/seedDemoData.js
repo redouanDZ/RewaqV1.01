@@ -109,7 +109,7 @@ async function seedDemoData() {
             image_url: '/images/prod_sneakers.webp',
             images: [
                 '/images/prod_sneakers.webp',
-                '/images/prod_sneakers_black.webp',
+                '/images/prod_sneakers_sole.webp',
                 '/images/prod_sneakers_detail.webp'
             ],
             description: 'حذاء سنيكرز خفيف الوزن بتقنية النعل الهوائي الماص للصدمات وقماش شبكي مسامي للتهوية الفائقة، صُمم خصيصاً للراحة اليومية والتمارين الرياضية الطويلة.',
@@ -253,9 +253,9 @@ async function seedDemoData() {
         { productId: 2, sku: 'DRESS-CORAL-M', name: 'المقاس: M / اللون: مرجاني زهري', priceModifier: 150, stock: 4, imageUrl: '/images/prod_summer_dress_coral.webp' },
 
         // Product 3: Sports Sneakers
-        { productId: 3, sku: 'SNK-41', name: 'المقاس: 41 / اللون: رمادي رياضي', priceModifier: 0, stock: 8, imageUrl: '/images/prod_sneakers.webp' },
-        { productId: 3, sku: 'SNK-42', name: 'المقاس: 42 / اللون: رمادي رياضي', priceModifier: 0, stock: 10, imageUrl: '/images/prod_sneakers.webp' },
-        { productId: 3, sku: 'SNK-BLK-42', name: 'المقاس: 42 / اللون: أسود داكن', priceModifier: 200, stock: 5, imageUrl: '/images/prod_sneakers_black.webp' },
+        { productId: 3, sku: 'SNK-41', name: 'المقاس: 41 / اللون: أبيض', priceModifier: 0, stock: 8, imageUrl: '/images/prod_sneakers.webp' },
+        { productId: 3, sku: 'SNK-42', name: 'المقاس: 42 / اللون: أبيض', priceModifier: 0, stock: 10, imageUrl: '/images/prod_sneakers.webp' },
+        { productId: 3, sku: 'SNK-43', name: 'المقاس: 43 / اللون: أبيض', priceModifier: 0, stock: 5, imageUrl: '/images/prod_sneakers.webp' },
 
         // Product 4: Classic Watch
         { productId: 4, sku: 'WATCH-BRWN', name: 'سوار جلد بني فاخر', priceModifier: 0, stock: 4, imageUrl: '/images/prod_classic_watch.webp' },

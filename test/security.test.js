@@ -235,4 +235,60 @@ describe('Security: CSP Headers', () => {
             await new Promise((resolve) => server.close(resolve));
         }
     });
+
+    test('Cookie Security: Partitioned attribute on HTTPS cookies', () => {
+        const { getDefaultCookieOptions } = require('../src/utils/tokenUtils');
+        const httpsOpts = getDefaultCookieOptions({
+            req: { secure: true, protocol: 'https', headers: { 'x-forwarded-proto': 'https' } }
+        });
+        assert.strictEqual(httpsOpts.partitioned, true, 'HTTPS cookies must have partitioned: true');
+    });
+
+    test('Production vs DEMO Mode: Production requires CSRF cookie whereas DEMO allows token header', async () => {
+        const http = require('http');
+        const app = require('../src/app');
+        const server = http.createServer(app);
+        await new Promise((resolve) => server.listen(0, resolve));
+        const base = `http://127.0.0.1:${server.address().port}`;
+
+        const origNodeEnv = process.env.NODE_ENV;
+        const origDemoMode = process.env.DEMO_MODE;
+
+        try {
+            // 1. Production Mode: Mutating request without CSRF cookie must be rejected (403)
+            process.env.NODE_ENV = 'production';
+            process.env.DEMO_MODE = 'false';
+
+            const prodRes = await fetch(`${base}/api/cart/add`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ productId: 1, quantity: 1 })
+            });
+            assert.strictEqual(prodRes.status, 403, 'Production mode without CSRF cookie should be rejected (403)');
+
+            // 2. DEMO Mode: Fetch token from GET /api/csrf-token, send via X-CSRF-Token without cookies -> succeeds
+            process.env.DEMO_MODE = 'true';
+
+            const tokenRes = await fetch(`${base}/api/csrf-token`);
+            assert.strictEqual(tokenRes.status, 200, 'GET /api/csrf-token should return 200');
+            const tokenData = await tokenRes.json();
+            assert.ok(tokenData.csrfToken, 'Should return a csrfToken');
+
+            // Now perform request with X-CSRF-Token and zero cookies
+            const demoRes = await fetch(`${base}/api/cart/add`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': tokenData.csrfToken
+                },
+                body: JSON.stringify({ productId: 1, quantity: 1 })
+            });
+            // Cart add succeeds (200) or passes CSRF (not 403)
+            assert.notStrictEqual(demoRes.status, 403, 'DEMO_MODE with X-CSRF-Token header should not be rejected by CSRF (not 403)');
+        } finally {
+            process.env.NODE_ENV = origNodeEnv;
+            process.env.DEMO_MODE = origDemoMode;
+            await new Promise((resolve) => server.close(resolve));
+        }
+    });
 });

@@ -1,4 +1,5 @@
 const { getCookie, secureCompare } = require('../utils/tokenUtils');
+const authController = require('../controllers/authController');
 
 function getCsrfTokenFromRequest(req) {
     if (!req || typeof req !== 'object') return '';
@@ -34,11 +35,44 @@ function requireCsrf(req, res, next) {
 
     const cookieToken = getCookie(req, 'csrf_token');
     const headerToken = getCsrfTokenFromRequest(req);
+    const isDemo = process.env.DEMO_MODE === 'true';
 
-    // Bearer-authenticated requests are not vulnerable to browser cookie CSRF.
-    // Browser sessions receive the CSRF cookie during login and must echo it.
-    if (cookieToken && (!headerToken || !secureCompare(cookieToken, headerToken))) {
+    // Bearer-authenticated requests are not vulnerable to browser cookie CSRF
+    const authHeader = req.get ? req.get('authorization') : null;
+    if (authHeader && authHeader.toLowerCase().startsWith('bearer ')) {
+        return next();
+    }
+
+    // 1. If cookieToken is present, it must match headerToken
+    if (cookieToken) {
+        if (!headerToken || !secureCompare(cookieToken, headerToken)) {
+            return res.status(403).json({ message: 'CSRF token missing or invalid' });
+        }
+        return next();
+    }
+
+    // 2. If cookieToken is absent:
+    // In DEMO_MODE: allow verifying against memory-backed demoCsrfTokens
+    if (isDemo) {
+        if (headerToken && authController.demoCsrfTokens && authController.demoCsrfTokens.has(headerToken)) {
+            const exp = authController.demoCsrfTokens.get(headerToken);
+            if (exp > Date.now()) {
+                return next();
+            }
+            authController.demoCsrfTokens.delete(headerToken);
+            return res.status(403).json({ message: 'CSRF token expired' });
+        }
+        // Guest checkout in demo mode is also supported for iframe previews
+        if (currentPath === '/api/orders' || req.path === '/api/orders') {
+            return next();
+        }
         return res.status(403).json({ message: 'CSRF token missing or invalid' });
+    }
+
+    // In Production mode (DEMO_MODE !== 'true'):
+    // Browser cookie sessions must present the CSRF cookie
+    if (process.env.NODE_ENV === 'production') {
+        return res.status(403).json({ message: 'CSRF cookie missing' });
     }
 
     next();

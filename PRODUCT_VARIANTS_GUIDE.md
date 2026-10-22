@@ -82,8 +82,8 @@
   - أخضر زمردي (`/images/prod_summer_dress.jpg`)
   - مرجاني زهري (`/images/prod_summer_dress_coral.jpg`)
 - **حذاء رياضي للمشي والجري (معرف 3)**:
-  - رمادي رياضي (`/images/prod_sneakers.jpg`)
-  - أسود داكن Stealth (`/images/prod_sneakers_black.jpg`)
+  - أبيض (`/images/prod_sneakers.jpg`)
+  - أبيض - مقاس إضافي (`/images/prod_sneakers.jpg`)
 
 ---
 
