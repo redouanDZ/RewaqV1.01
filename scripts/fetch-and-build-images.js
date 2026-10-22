@@ -60,11 +60,6 @@ const imageDefs = [
         desc: 'ساعة يد رجالية كلاسيكية بسوار جلدي فاخر'
     },
     {
-        photoId: 'photo-1508685096489-7aacd43bd3b1',
-        baseName: 'prod_classic_watch_angle',
-        desc: 'ساعة يد كلاسيكية بزاوية جانبية وسوار أنيق'
-    },
-    {
         photoId: 'photo-1524805444758-089113d48a6d',
         baseName: 'prod_classic_watch_detail',
         desc: 'تفاصيل تاج الساعة والمينا الكحلي الملكي'
@@ -98,17 +93,11 @@ const imageDefs = [
         baseName: 'prod_cookware_pan',
         desc: 'مقلاة غرانيت تركية غير لاصقة مع مقبض عازل'
     },
-    {
-        photoId: 'photo-1584269600464-37b1b58a9fe7',
-        baseName: 'prod_cookware_detail',
-        desc: 'طقم الطهي كامل في المطبخ العصري'
-    },
 
     // 7. Laptop (Product 100)
     {
         photoId: 'photo-1498050108023-c5249f4df085',
         baseName: 'christopher-gower-m_HRfLhgABo-unsplash',
-        aliases: ['prod_laptop'],
         desc: 'حاسوب محمول فائق الأداء للأعمال والبرمجة'
     },
     {
@@ -126,7 +115,6 @@ const imageDefs = [
     {
         photoId: 'photo-1510127034890-ba27508e9f1c',
         baseName: 'samsung-memory-RZM2cE0lx0Y-unsplash',
-        aliases: ['prod_camera'],
         desc: 'كاميرا رقمية احترافية خالية من الشعارات بدقة 4K للتصوير الفوتوغرافي'
     },
     {
