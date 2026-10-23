@@ -15,33 +15,32 @@
       body{font-family:'Cairo',system-ui,-apple-system,sans-serif;color:var(--text-color);background-color:#f8fafc;line-height:1.6;}
       .container{width:100%;max-width:1200px;margin:0 auto;padding:0 16px;}
       #site-header{display:block;min-height:154px;}
-      .page-title{background:linear-gradient(135deg,#1e1b4b 0%,#312e81 100%);color:#fff;padding:24px 0;min-height:88px;position:relative;z-index:10;scroll-margin-top:100px;}
-      .page-title h1{font-size:1.5rem;font-weight:800;margin-bottom:6px;}
+      .page-title{background:linear-gradient(135deg,#1e1b4b 0%,#312e81 100%);color:#fff;padding:20px 0;min-height:76px;position:relative;z-index:10;scroll-margin-top:100px;}
+      .page-title h1{font-size:1.4rem;font-weight:800;margin-bottom:4px;}
       .breadcrumb{font-size:0.85rem;color:rgba(255,255,255,0.75);display:flex;align-items:center;gap:8px;}
       .breadcrumb a{color:#fff;text-decoration:none;}
-      .product-details{margin:30px 0 60px;}
-      .product-container{display:grid;grid-template-columns:1fr 1fr;gap:40px;background-color:var(--card-bg,#fff);border-radius:12px;padding:30px;box-shadow:0 3px 10px rgba(0,0,0,0.06);min-height:550px;align-items:start;}
-      .product-images{display:flex;flex-direction:column;gap:20px;align-self:start;margin-top:0;}
+      .product-details{margin:24px 0 60px;}
+      .product-container{display:grid;grid-template-columns:1fr 1fr;gap:36px;background-color:var(--card-bg,#fff);border-radius:16px;padding:30px;box-shadow:0 3px 14px rgba(0,0,0,0.05);min-height:550px;align-items:start;}
+      .product-images{display:flex;flex-direction:column;gap:16px;align-self:start;margin-top:0;}
       @media(min-width:993px){.product-images{position:sticky;top:90px;align-self:start;margin-top:0;}}
-      .main-image{height:400px;overflow:hidden;border-radius:12px;background:#f1f5f9;position:relative;}
+      .main-image{aspect-ratio:1;border-radius:14px;background:#f8fafc;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;}
       .main-image img{width:100%;height:100%;object-fit:cover;}
-      .thumbnail-images{display:flex;gap:10px;min-height:80px;}
-      .thumbnail-images img{width:80px;height:80px;object-fit:cover;border-radius:8px;}
+      .thumbnail-images{display:flex;gap:10px;justify-content:center;min-height:72px;}
+      .thumbnail-images img{width:72px;height:72px;object-fit:cover;border-radius:10px;}
       .product-info h2{font-size:26px;margin-bottom:12px;}
       .product-rating{display:flex;align-items:center;margin-bottom:12px;}
       .product-price{display:flex;align-items:center;margin-bottom:16px;gap:10px;}
       .price{font-size:24px;font-weight:bold;color:var(--primary-color);}
-      .express-checkout-box{background:var(--card-bg,#fff);border:2px solid var(--primary-color);border-radius:12px;padding:20px;margin-top:24px;}
-      @media(max-width:992px){.product-container{grid-template-columns:1fr;}}
-      @media(max-width:768px){#site-header{min-height:144px;}.main-image{height:320px;}}
+      @media(max-width:992px){.product-container{grid-template-columns:1fr;gap:24px;}}
+      @media(max-width:768px){#site-header{min-height:144px;}.page-title{padding:12px 0;min-height:auto;}.page-title h1{font-size:1.15rem;}.product-details{margin:16px 0 40px;}.product-container{padding:16px;}}
     </style>
 
     <!-- Asynchronous Non-blocking Stylesheets -->
     <link rel="stylesheet" href="/fonts/fonts.css">
     <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css"></noscript>
-    <link rel="stylesheet" href="/css/style.min.css" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="/css/style.min.css"></noscript>
+    <link rel="stylesheet" href="/css/style.min.css?v=1.1.3" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="/css/style.min.css?v=1.1.3"></noscript>
 
   <meta name="theme-color" content="#2563eb">
   <link rel="manifest" href="/manifest.json">
@@ -88,48 +87,48 @@
                     </div>
 
                     <!-- ===== ⚡ 1-Click Direct COD Checkout Box ===== -->
-                    <div class="express-checkout-box" id="express-checkout-box" style="background: var(--card-bg, #fff); border: 2px solid var(--primary-color, #2563eb); border-radius: 12px; padding: 20px; margin-top: 24px; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.08);">
-                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">
-                            <h3 style="margin: 0; font-size: 1.12rem; color: var(--text-color, #1e293b); display: flex; align-items: center; gap: 8px;">
-                                <i class="fas fa-bolt" style="color: #f59e0b;"></i> <span data-i18n="product.quick_buy_title">الشراء السريع (الدفع عند الاستلام)</span>
+                    <div class="express-checkout-box" id="express-checkout-box">
+                        <div class="express-checkout-header">
+                            <h3>
+                                <i class="fas fa-bolt"></i> <span data-i18n="product.quick_buy_title">الشراء السريع (الدفع عند الاستلام)</span>
                             </h3>
-                            <span style="background: rgba(14, 165, 233, 0.1); color: var(--primary-color, #0284c7); font-size: 0.78rem; font-weight: bold; padding: 3px 8px; border-radius: 6px;">
+                            <span class="express-badge">
                                 <i class="fas fa-shield-alt"></i> <span data-i18n="product.direct_order">طلب مباشر</span>
                             </span>
                         </div>
 
-                        <form id="express-order-form" data-action="handleExpressOrder" style="display: grid; gap: 12px;">
-                            <div>
-                                <label style="display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 4px; color: var(--text-color, #334155);"><span data-i18n="checkout.full_name">الاسم الكامل</span> <span style="color:var(--danger-color);">*</span></label>
-                                <input type="text" id="express-name" required data-i18n-placeholder="product.name_placeholder" placeholder="مثال: أحمد بن علي" style="width: 100%; padding: 10px 14px; border: 1px solid var(--border-color, #cbd5e1); border-radius: 8px; font-size: 0.95rem; background: var(--card-bg, #fff);">
+                        <form id="express-order-form" data-action="handleExpressOrder" class="express-form">
+                            <div class="form-group">
+                                <label><span data-i18n="checkout.full_name">الاسم الكامل</span> <span class="required-star">*</span></label>
+                                <input type="text" id="express-name" required data-i18n-placeholder="product.name_placeholder" placeholder="مثال: أحمد بن علي">
                             </div>
 
-                            <div>
-                                <label style="display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 4px; color: var(--text-color, #334155);"><span data-i18n="checkout.phone">رقم الهاتف</span> <span style="color:var(--danger-color);">*</span></label>
-                                <input type="tel" id="express-phone" required placeholder="05 / 06 / 07 XX XX XX XX" style="width: 100%; padding: 10px 14px; border: 1px solid var(--border-color, #cbd5e1); border-radius: 8px; font-size: 0.95rem; background: var(--card-bg, #fff);" dir="ltr">
+                            <div class="form-group">
+                                <label><span data-i18n="checkout.phone">رقم الهاتف</span> <span class="required-star">*</span></label>
+                                <input type="tel" id="express-phone" required placeholder="05 / 06 / 07 XX XX XX XX" dir="ltr">
                             </div>
 
                             <div class="express-grid-2">
-                                <div>
-                                    <label style="display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 4px; color: var(--text-color, #334155);"><span data-i18n="checkout.wilaya">الولاية</span> <span style="color:var(--danger-color);">*</span></label>
-                                    <select id="express-wilaya" required data-action="onExpressWilayaChange" style="width: 100%; padding: 10px 10px; border: 1px solid var(--border-color, #cbd5e1); border-radius: 8px; font-size: 0.9rem; background: var(--card-bg, #fff);">
+                                <div class="form-group">
+                                    <label><span data-i18n="checkout.wilaya">الولاية</span> <span class="required-star">*</span></label>
+                                    <select id="express-wilaya" required data-action="onExpressWilayaChange">
                                         <option value="" data-i18n="product.select_wilaya">-- اختر الولاية --</option>
                                     </select>
                                 </div>
-                                <div>
-                                    <label style="display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 4px; color: var(--text-color, #334155);" data-i18n="checkout.address">البلدية / العنوان</label>
-                                    <input type="text" id="express-address" data-i18n-placeholder="product.address_placeholder" placeholder="البلدية أو العنوان" style="width: 100%; padding: 10px 10px; border: 1px solid var(--border-color, #cbd5e1); border-radius: 8px; font-size: 0.9rem; background: var(--card-bg, #fff);">
+                                <div class="form-group">
+                                    <label data-i18n="checkout.address">البلدية / العنوان</label>
+                                    <input type="text" id="express-address" data-i18n-placeholder="product.address_placeholder" placeholder="البلدية أو العنوان">
                                 </div>
                             </div>
 
-                            <div>
-                                <label style="display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 4px; color: var(--text-color, #334155);" data-i18n="product.delivery_type">نوع التوصيل</label>
-                                <div class="express-grid-2">
-                                    <label style="display: flex; align-items: center; gap: 6px; background: var(--card-bg, #fff); padding: 8px 10px; border: 1px solid var(--border-color, #cbd5e1); border-radius: 8px; cursor: pointer; font-size: 0.84rem;">
+                            <div class="form-group">
+                                <label data-i18n="product.delivery_type">نوع التوصيل</label>
+                                <div class="express-delivery-options">
+                                    <label class="delivery-option">
                                         <input type="radio" name="express-delivery" value="home" checked data-action="updateExpressCalculations">
                                         <span>🏠 <span data-i18n="product.home_delivery">للمنزل</span> (<span id="express-home-price">500</span> <span data-i18n="common.currency">دج</span>)</span>
                                     </label>
-                                    <label style="display: flex; align-items: center; gap: 6px; background: var(--card-bg, #fff); padding: 8px 10px; border: 1px solid var(--border-color, #cbd5e1); border-radius: 8px; cursor: pointer; font-size: 0.84rem;">
+                                    <label class="delivery-option">
                                         <input type="radio" name="express-delivery" value="desk" data-action="updateExpressCalculations">
                                         <span>🏢 <span data-i18n="product.desk_delivery">للمكتب</span> (<span id="express-desk-price">350</span> <span data-i18n="common.currency">دج</span>)</span>
                                     </label>
@@ -137,40 +136,40 @@
                             </div>
 
                             <!-- ملخص السعر المباشر -->
-                            <div style="background: var(--card-bg, #fff); border: 1px solid var(--border-color, #e2e8f0); border-radius: 8px; padding: 12px; margin-top: 2px; font-size: 0.9rem;">
-                                <div style="display: flex; justify-content: space-between; margin-bottom: 6px; color: var(--light-text, #64748b);">
+                            <div class="express-summary-box">
+                                <div class="summary-row">
                                     <span><span data-i18n="product.products_price">سعر المنتجات:</span> (<span id="express-qty-display">1</span>x)</span>
-                                    <span id="express-subtotal-display" style="font-weight: 600; color: var(--text-color, #1e293b);">0 <span data-i18n="common.currency">دج</span></span>
+                                    <span id="express-subtotal-display" class="summary-val">0 <span data-i18n="common.currency">دج</span></span>
                                 </div>
-                                <div style="display: flex; justify-content: space-between; margin-bottom: 6px; color: var(--light-text, #64748b);">
+                                <div class="summary-row">
                                     <span data-i18n="product.delivery_cost">تكلفة التوصيل:</span>
-                                    <span id="express-shipping-display" style="font-weight: 600; color: var(--text-color, #1e293b);">500 <span data-i18n="common.currency">دج</span></span>
+                                    <span id="express-shipping-display" class="summary-val">500 <span data-i18n="common.currency">دج</span></span>
                                 </div>
-                                <div style="display: flex; justify-content: space-between; border-top: 1px dashed var(--border-color); padding-top: 8px; font-size: 1.05rem; font-weight: 800; color: var(--primary-color, #2563eb);">
+                                <div class="summary-row total-row">
                                     <span data-i18n="product.total_price">المجموع الإجمالي:</span>
                                     <span id="express-total-display">0 <span data-i18n="common.currency">دج</span></span>
                                 </div>
                             </div>
 
                             <!-- زر الإرسال -->
-                            <button type="submit" id="express-submit-btn" style="width: 100%; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: var(--bg-color, #fff); border: none; border-radius: var(--radius-sm, 8px); padding: 14px 20px; font-size: 1.08rem; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); transition: all 0.2s ease;">
+                            <button type="submit" id="express-submit-btn" class="express-submit-btn">
                                 <i class="fas fa-check-circle"></i> <span data-i18n="product.confirm_order_now">اضغط هنا لتأكيد الطلب الآن ⚡</span>
                             </button>
                         </form>
                     </div>
 
                     <!-- مزايا الشراء والضمان -->
-                    <div class="product-guarantees" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-color, #e2e8f0);">
-                        <div style="display: flex; align-items: center; gap: 10px; font-size: 0.86rem; color: var(--text-color);">
-                            <i class="fas fa-truck" style="color: var(--primary-color); font-size: 1.1rem;"></i>
+                    <div class="product-guarantees">
+                        <div class="guarantee-card">
+                            <i class="fas fa-truck"></i>
                             <span data-i18n="product.shipping_58_wilayas">شحن متوفر لـ 58 ولاية</span>
                         </div>
-                        <div style="display: flex; align-items: center; gap: 10px; font-size: 0.86rem; color: var(--text-color);">
-                            <i class="fas fa-money-bill-wave" style="color: var(--success-color); font-size: 1.1rem;"></i>
+                        <div class="guarantee-card">
+                            <i class="fas fa-money-bill-wave"></i>
                             <span data-i18n="product.cod_available">الدفع نقداً عند الاستلام</span>
                         </div>
-                        <div style="display: flex; align-items: center; gap: 10px; font-size: 0.86rem; color: var(--text-color);">
-                            <i class="fas fa-shield-alt" style="color: var(--secondary-color); font-size: 1.1rem;"></i>
+                        <div class="guarantee-card">
+                            <i class="fas fa-shield-alt"></i>
                             <span data-i18n="product.authentic_guarantee">منتج أصلي ومضمون 100%</span>
                         </div>
                     </div>
