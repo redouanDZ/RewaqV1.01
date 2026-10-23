@@ -12,9 +12,9 @@
   <meta property="og:description" data-i18n="shop.meta_description" content="تسوق أفضل المنتجات مع متجر رواق، استمتع بعروض وتخفيضات حصرية، جودة مضمونة وتوصيل سريع إلى 58 ولاية مع ميزة الدفع عند الاستلام.">
   <meta property="og:type" content="website">
 
-  <!-- Preload Primary Font for LCP / Text Performance -->
+  <!-- Preload Primary Font & LCP Hero Product Image for Instant Discovery -->
   <link rel="preload" href="/fonts/font-1.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="css/style.min.css" as="style">
+  <link rel="preload" as="image" href="/images/prod_linen_shirt-400.webp" type="image/webp" fetchpriority="high">
 
   <!-- Critical CSS for Instant Paint and Zero CLS (استقرار أبعاد الصفحة ومنع ارتداد العناصر) -->
   <style>
@@ -195,9 +195,10 @@
     }
   </style>
 
-  <!-- أنماط الموقع الأساسية والخطوط والأيقونات -->
+  <!-- أنماط الموقع الأساسية والخطوط والأيقونات (Non-Render-Blocking) -->
   <link rel="stylesheet" href="/fonts/fonts.css">
-  <link rel="stylesheet" href="css/style.min.css">
+  <link rel="stylesheet" href="css/style.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="css/style.min.css"></noscript>
   <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css"></noscript>
 
@@ -418,10 +419,11 @@
   <!-- التذييل الموحد -->
   <footer id="site-footer"></footer>
 
-  <!-- Main Deferred Scripts -->
+  <!-- Main Deferred Scripts (Non-Render-Blocking) -->
   <script src="js/layout.js" defer></script>
   <script src="js/api-client.js" defer></script>
   <script src="js/main.js" defer></script>
+  <script src="js/user-system.js" defer></script>
   <script src="js/i18n.js" defer></script>
   <script src="js/pages/shop.js" defer></script>
 </body>

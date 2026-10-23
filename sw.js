@@ -1,4 +1,4 @@
-const CACHE_NAME = 'rewaq-pwa-v4faad96006';
+const CACHE_NAME = 'rewaq-pwa-v00a0d73629';
 const STATIC_ASSETS = [
   '/',
   '/index.html',

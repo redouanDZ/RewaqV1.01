@@ -431,6 +431,11 @@ try {
         if (url.includes('res.cloudinary.com') && url.includes('/upload/')) {
           return url.replace('/upload/', '/upload/w_400,h_400,c_fill,f_auto,q_auto/');
         }
+        if (typeof url === 'string' && url.startsWith('/images/')) {
+          const clean = url.replace(/-(400|800)\.(jpg|jpeg|png|webp)$/i, '');
+          const baseName = clean.endsWith('.webp') ? clean.slice(0, -5) : clean.replace(/\.[a-zA-Z0-9]+$/, '');
+          return `${baseName}-400.webp`;
+        }
         return url;
       };
 
@@ -445,8 +450,7 @@ try {
         const m = imgUrl.match(/^(\/images\/[^\/]+?)(\.[a-zA-Z0-9]+)$/);
         if (m) {
           const base = m[1].replace(/-(400|800)$/, '');
-          const ext = m[2];
-          return `${base}-400${ext} 400w, ${base}-800${ext} 800w, ${base}${ext} 1600w`;
+          return `${base}-400.webp 400w, ${base}-800.webp 800w, ${base}.webp 1600w`;
         }
         return '';
       };
@@ -462,13 +466,14 @@ try {
         const rating = Number(product.rating) || 5;
         const fullStars = Math.min(5, Math.max(1, Math.round(rating)));
         const starsHtml = '<i class="fas fa-star"></i>'.repeat(fullStars) + '<i class="far fa-star"></i>'.repeat(5 - fullStars);
-        const isAboveFold = index < 4;
+        const isAboveFold = index < 2;
         const loadingVal = isAboveFold ? 'eager' : 'lazy';
         const fetchPriorityAttr = isAboveFold ? 'fetchpriority="high"' : '';
+        const decodingVal = isAboveFold ? 'sync' : 'async';
         const fallbackPlaceholder = '/images/product-placeholder.jpg';
         const safeImg = imgUrl || fallbackPlaceholder;
         const realSrcset = getProductSrcset(safeImg);
-        const srcsetAttr = realSrcset ? `srcset="${realSrcset}" sizes="(max-width: 600px) 50vw, (max-width: 992px) 33vw, 280px"` : '';
+        const srcsetAttr = realSrcset ? `srcset="${realSrcset}" sizes="(max-width: 480px) 168px, (max-width: 768px) 50vw, (max-width: 992px) 33vw, 280px"` : '';
 
         return `
         <div class="product-card" id="shop-product-${product.id}">
@@ -478,7 +483,10 @@ try {
               <i class="${isFav ? 'fas fa-heart text-danger' : 'far fa-heart'}"></i>
             </button>
             <a href="product.html?id=${product.id}" class="product-image">
-              <img src="${safeImg}" ${srcsetAttr} width="400" height="400" alt="${safeName}" loading="${loadingVal}" ${fetchPriorityAttr} decoding="async" onerror="this.onerror=null;this.src='${fallbackPlaceholder}';">
+              <picture>
+                ${realSrcset ? `<source type="image/webp" srcset="${realSrcset}" sizes="(max-width: 480px) 168px, (max-width: 768px) 50vw, (max-width: 992px) 33vw, 280px">` : ''}
+                <img src="${safeImg}" width="168" height="168" alt="${safeName}" loading="${loadingVal}" ${fetchPriorityAttr} decoding="${decodingVal}" onerror="this.onerror=null;this.src='${fallbackPlaceholder}';">
+              </picture>
             </a>
           </div>
           <div class="product-info">
@@ -976,13 +984,14 @@ window.handleToggleWishlist = handleToggleWishlist;
     });
 })();
 
-// Schedule loading of secondary interactive modules on idle or first interaction to minimize TBT
+// Schedule loading of secondary interactive modules on user interaction or idle to eliminate Main Thread contention
 (function scheduleSecondaryModules() {
     let loaded = false;
     function loadModules() {
         if (loaded) return;
         loaded = true;
-        ['js/user-system.js', 'js/cart.js', 'js/wishlist.js'].forEach(src => {
+        ['js/cart.js', 'js/wishlist.js'].forEach(src => {
+            if (document.querySelector(`script[src="${src}"]`)) return;
             const s = document.createElement('script');
             s.src = src;
             s.defer = true;
@@ -990,13 +999,13 @@ window.handleToggleWishlist = handleToggleWishlist;
         });
     }
 
-    if ('requestIdleCallback' in window) {
-        window.requestIdleCallback(loadModules, { timeout: 2000 });
-    } else {
-        setTimeout(loadModules, 600);
-    }
-
-    ['touchstart', 'mouseover', 'scroll', 'click', 'keydown'].forEach(evt => {
+    ['touchstart', 'click', 'keydown'].forEach(evt => {
         window.addEventListener(evt, loadModules, { once: true, passive: true });
     });
+
+    if ('requestIdleCallback' in window) {
+        window.addEventListener('load', () => {
+            window.requestIdleCallback(loadModules, { timeout: 6000 });
+        }, { once: true });
+    }
 })();
