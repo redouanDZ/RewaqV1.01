@@ -590,6 +590,11 @@
     },
     "shop": {
         "meta_title": "Boutique | Boutique Rewaq - Parcourir les Produits",
+        "meta_description": "Achetez les meilleurs produits avec Boutique Rewaq. Profitez d'offres exclusives et d'une livraison rapide dans 58 wilayas avec paiement à la livraison.",
+        "search_label": "Rechercher des produits par nom",
+        "price_range_label": "Fourchette de prix maximum",
+        "sort_label": "Trier les produits par",
+        "products_list": "Liste des produits et catégories",
         "title": "Boutique",
         "filters_title": "Filtres de produits",
         "reset_filters": "Réinitialiser",

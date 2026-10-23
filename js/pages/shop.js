@@ -13,7 +13,7 @@ try {
       if (!container) return;
       const card = `
         <div class="product-card skeleton-card" aria-hidden="true" style="pointer-events:none;">
-          <div class="product-image-container skeleton" style="height:240px; background:var(--border-color,#e2e8f0); border-radius:12px 12px 0 0;"></div>
+          <div class="product-image-container skeleton skeleton-image" style="width:100%; aspect-ratio:1/1; background:var(--border-color,#e2e8f0); border-radius:12px 12px 0 0;"></div>
           <div class="product-info" style="padding:16px;">
             <div class="skeleton" style="height:14px; width:40%; margin-bottom:10px; background:var(--border-color,#e2e8f0); border-radius:4px;"></div>
             <div class="skeleton" style="height:18px; width:80%; margin-bottom:12px; background:var(--border-color,#e2e8f0); border-radius:4px;"></div>
@@ -149,13 +149,17 @@ try {
       return `<span class="product-stock-note"><i class="fas fa-check-circle" style="color:var(--success-color, #10b981);"></i> ${window.I18n ? window.I18n.t('common.in_stock', 'متوفر في المخزون') : 'متوفر في المخزون'}</span>`;
     }
 
+    let searchDebounceTimer = null;
     function onSearchInput() {
       const searchInput = document.getElementById('searchInput');
       const clearBtn = document.getElementById('clearSearchBtn');
       if (clearBtn && searchInput) {
         clearBtn.style.display = searchInput.value.trim() ? 'block' : 'none';
       }
-      applyFilters();
+      clearTimeout(searchDebounceTimer);
+      searchDebounceTimer = setTimeout(() => {
+        applyFilters();
+      }, 200);
     }
 
     function clearSearch() {

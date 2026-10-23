@@ -590,6 +590,11 @@
     },
     "shop": {
         "meta_title": "Shop | Rewaq Store - Browse Products and Categories",
+        "meta_description": "Shop top products with Rewaq Store. Enjoy exclusive deals, guaranteed quality, and fast shipping to 58 provinces with cash on delivery.",
+        "search_label": "Search products by name",
+        "price_range_label": "Maximum price range",
+        "sort_label": "Sort products by",
+        "products_list": "Products and Categories List",
         "title": "Shop",
         "filters_title": "Product Filters",
         "reset_filters": "Reset",

@@ -4615,10 +4615,14 @@ body.dark-mode .sidebar-header {
     border-bottom-color: #334155 !important;
 }
 
+[data-theme="dark"] .filter-group h3,
 [data-theme="dark"] .filter-group h4,
+[data-theme="dark"] .sidebar-header h2,
 [data-theme="dark"] .sidebar-header h3,
 [data-theme="dark"] .product-name,
+body.dark-mode .filter-group h3,
 body.dark-mode .filter-group h4,
+body.dark-mode .sidebar-header h2,
 body.dark-mode .sidebar-header h3,
 body.dark-mode .product-name {
     color: #f1f5f9 !important;
@@ -7753,9 +7757,19 @@ input[type="checkbox"]:checked {
     }
 }
 
-/* =====================================================================
-   v1.4 — Touch Targets & Accessibility Enhancements (Min 44x44px)
-   ===================================================================== */
+/* Screen reader only utility class for accessible labels & headings */
+.sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
 .logo-link,
 .logo a {
     display: inline-flex;
@@ -7886,6 +7900,7 @@ input[type="checkbox"]:checked {
     border-bottom: 2px solid var(--border-color, #f1f5f9);
 }
 
+.sidebar-header h2,
 .sidebar-header h3 {
     font-size: 1.15rem;
     font-weight: 700;
@@ -7922,6 +7937,7 @@ input[type="checkbox"]:checked {
     margin-bottom: 0;
 }
 
+.filter-group h3,
 .filter-group h4 {
     font-size: 0.95rem;
     font-weight: 700;
@@ -8284,6 +8300,7 @@ input[type="checkbox"]:checked {
         gap: 10px;
     }
 
+    .sidebar-header h2,
     .sidebar-header h3 {
         flex: 1 1 auto;
     }
