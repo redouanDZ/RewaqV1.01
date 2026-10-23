@@ -440,7 +440,7 @@
                 const itemsHtml = items.map(item => `
                     <tr style="border-bottom: 1px solid var(--border-color);">
                         <td style="padding: 10px; display: flex; align-items: center; gap: 10px;">
-                            <img src="${AdminTable.escapeHtml(item.image_url || '../images/product-placeholder.jpg')}" alt="${AdminTable.escapeHtml(item.name)}" style="width: 40px; height: 40px; border-radius: 4px; object-fit: cover;">
+                            <img src="${AdminTable.escapeHtml(item.image_url || '../images/product-placeholder.jpg')}" alt="${AdminTable.escapeHtml(item.name)}" width="40" height="40" style="width: 40px; height: 40px; border-radius: 4px; object-fit: cover;">
                             <strong>${AdminTable.escapeHtml(item.name)}</strong>
                         </td>
                         <td style="padding: 10px; text-align: center;">${Number(item.price).toLocaleString()} دج</td>

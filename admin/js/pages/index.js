@@ -130,7 +130,7 @@ let ordersChartInstance = null;
             container.innerHTML = products.map(p => `
                 <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border-color);">
                     <div style="display: flex; align-items: center; gap: 10px;">
-                        <img src="${AdminTable.escapeHtml(p.image_url || '/images/product-placeholder.jpg')}" alt="${AdminTable.escapeHtml(p.name)}" style="width: 42px; height: 42px; border-radius: 6px; object-fit: cover;">
+                        <img src="${AdminTable.escapeHtml(p.image_url || '/images/product-placeholder.jpg')}" alt="${AdminTable.escapeHtml(p.name)}" width="42" height="42" style="width: 42px; height: 42px; border-radius: 6px; object-fit: cover;">
                         <div>
                             <strong style="display: block; font-size: 0.95rem;">${AdminTable.escapeHtml(p.name)}</strong>
                             <span style="font-size: 0.85rem; color: var(--light-text, #64748b);">السعر: ${Number(p.price).toLocaleString()} دج</span>

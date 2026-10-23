@@ -56,7 +56,7 @@ async function loadOrderConfirmation() {
                     return `
                         <div class="order-item-card">
                             <div class="item-info-wrapper">
-                                <img src="${item.image_url || '/images/product-placeholder.jpg'}" alt="${safeName}" loading="lazy">
+                                <img src="${item.image_url || '/images/product-placeholder.jpg'}" alt="${safeName}" width="55" height="55" loading="lazy">
                                 <div>
                                     <strong style="display: block; color: var(--text-color);">${safeName}</strong>
                                     <span style="font-size: 0.85rem; color: var(--light-text);">${t('cart.item_qty', 'الكمية: {qty}').replace('{qty}', item.quantity)}</span>

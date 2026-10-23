@@ -68,7 +68,7 @@
                         <td data-label="#" style="padding: 12px 15px; font-weight: bold;">${r.id}</td>
                         <td data-label="المنتج" style="padding: 12px 15px;">
                             <div class="product-cell" style="display: flex; align-items: center; gap: 10px;">
-                                <img src="${r.productImage || '../images/product-placeholder.jpg'}" alt="" style="width: 44px; height: 44px; border-radius: 6px; object-fit: cover; flex-shrink: 0;">
+                                <img src="${r.productImage || '../images/product-placeholder.jpg'}" alt="" width="44" height="44" style="width: 44px; height: 44px; border-radius: 6px; object-fit: cover; flex-shrink: 0;">
                                 <div class="product-cell-text" style="min-width: 0;">
                                     <strong class="product-cell-name" style="font-size: 0.95rem;">${AdminTable.escapeHtml(r.productName)}</strong>
                                 </div>

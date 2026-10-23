@@ -159,7 +159,7 @@ function createCartItemHTML(item) {
     const lineTotal = (priceNum * qtyNum).toLocaleString();
     return `
         <div class="cart-item" data-id="${item.id}">
-            <div class="item-image"><img src="${safeImg}" alt="${safeName}" loading="lazy"></div>
+            <div class="item-image"><img src="${safeImg}" alt="${safeName}" width="85" height="85" loading="lazy"></div>
             <div class="item-details">
                 <h3>${safeName}</h3>
             </div>

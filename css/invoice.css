@@ -144,7 +144,8 @@
             color: var(--text-color);
         }
         .totals-table {
-            width: 320px;
+            width: 100%;
+            max-width: 320px;
             border-collapse: collapse;
         }
         .totals-table tr td {
@@ -190,7 +191,7 @@
             align-items: center;
             flex-wrap: wrap;
         }
-        .btn { min-height: 44px;
+        .btn { min-height: 48px;
             display: inline-flex;
             align-items: center;
             justify-content: center;

@@ -93,7 +93,7 @@ async function submitTrack() {
             <tr>
                 <td>
                     <div class="product-cell">
-                        <img src="${item.image_url || '/images/product-placeholder.jpg'}" alt="${safeName}" loading="lazy">
+                        <img src="${item.image_url || '/images/product-placeholder.jpg'}" alt="${safeName}" width="55" height="55" loading="lazy">
                         <span>${safeName}</span>
                     </div>
                 </td>

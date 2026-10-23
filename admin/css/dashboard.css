@@ -629,14 +629,17 @@ header .container {
 }
 
 .action-btn {
-    width: 35px;
-    height: 35px;
-    border-radius: var(--border-radius-sm, 6px);
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    border-radius: var(--border-radius-sm, 8px);
     border: none;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    font-size: 1rem;
     transition: var(--transition);
 }
 
@@ -706,10 +709,15 @@ header .container {
 
 .order-actions button {
     border: none;
-    padding: 8px 12px;
+    min-height: 44px;
+    padding: 8px 14px;
     border-radius: var(--border-radius-sm, 6px);
     cursor: pointer;
     color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
     transition: var(--transition);
 }
 
@@ -1521,7 +1529,7 @@ header .container {
 .stats-container > .stat-card { flex: 1 1 185px; min-width: 0; padding: 18px; gap: 12px; }
 
 /* pagination buttons: comfortable touch size */
-.page-btn { min-width: 36px; min-height: 36px; }
+.page-btn { min-width: 44px; min-height: 44px; }
 
 /* KPI values keep their currency on the same line; icon never shrinks */
 .stats-container > .stat-card .stat-info { min-width: 0; }
@@ -1807,8 +1815,12 @@ header .container {
     font-weight: bold;
 }
 .page-dots {
-    padding: 6px 4px;
-    color: var(--light-text) !important;
+    padding: 6px 8px;
+    color: var(--light-text, #64748b) !important;
+    font-weight: 700;
+}
+[data-theme="dark"] .page-dots {
+    color: #94a3b8 !important;
 }
 
 .success-card {
@@ -3030,6 +3042,8 @@ input:checked + .slider:before {
 .modal-table-scroll-wrap {
     max-height: 300px;
     overflow-y: auto;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
     border: 1px solid var(--border-color, #e2e8f0);
     border-radius: 6px;
 }
@@ -3037,6 +3051,8 @@ input:checked + .slider:before {
 .modal-table-scroll-wrap-lg {
     max-height: 320px;
     overflow-y: auto;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
     border: 1px solid var(--border-color, #e2e8f0);
     border-radius: 8px;
 }
@@ -3115,11 +3131,11 @@ input:checked + .slider:before {
 }
 
 .variant-btn-remove-preview {
-    width: 36px;
-    height: 36px;
-    min-width: 36px;
-    min-height: 36px;
-    font-size: 0.75rem;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    font-size: 0.85rem;
 }
 
 .variant-url-input {

@@ -280,7 +280,7 @@
             <div class="price-range-box">
               <div class="price-slider-container">
                 <label for="priceRange" class="sr-only" data-i18n="shop.price_range_label">نطاق السعر الأقصى</label>
-                <input type="range" id="priceRange" min="0" max="200000" step="5000" value="200000" data-action="updatePriceRange" aria-label="نطاق السعر الأقصى">
+                <input type="range" id="priceRange" min="0" max="200000" step="5000" value="200000" data-action="updatePriceRange" aria-label="نطاق السعر الأقصى" data-i18n-aria-label="shop.price_range_label">
               </div>
               <div class="price-labels">
                 <span>0 <span data-i18n="common.currency">دج</span></span>
@@ -358,7 +358,7 @@
 
               <!-- ربط select بوسم label متوافق و sr-only لقارئات الشاشة -->
               <label for="sortFilter" class="sr-only" data-i18n="shop.sort_label">ترتيب المنتجات حسب</label>
-              <select id="sortFilter" name="sortFilter" aria-label="ترتيب المنتجات" data-action="applyFilters" data-args="">
+              <select id="sortFilter" name="sortFilter" aria-label="ترتيب المنتجات" data-i18n-aria-label="shop.sort_label" data-action="applyFilters" data-args="">
                 <option value="newest" data-i18n="shop.sort_newest">الأحدث أولاً</option>
                 <option value="rating-desc" data-i18n="shop.sort_rating">التقييم: الأعلى تقييماً ⭐</option>
                 <option value="price-asc" data-i18n="shop.sort_price_asc">السعر: الأقل إلى الأعلى</option>

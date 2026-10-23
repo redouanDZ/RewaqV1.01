@@ -194,7 +194,7 @@ function renderReviewItems() {
         return `
         <div class="order-item" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border-color);">
             <div style="display: flex; align-items: center; gap: 10px;">
-                <img ${index === 0 ? '' : 'loading="lazy"'} src="${safeImg}" alt="${safeName}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px;">
+                <img ${index === 0 ? '' : 'loading="lazy"'} src="${safeImg}" alt="${safeName}" width="50" height="50" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px;">
                 <div>
                     <strong style="display: block; font-size: 0.95rem; color: var(--text-color);">${safeName}</strong>
                     <span style="font-size: 0.85rem; color: var(--light-text);">${window.I18n.t('cart.item_qty', 'الكمية: {qty}').replace('{qty}', item.quantity)}</span>

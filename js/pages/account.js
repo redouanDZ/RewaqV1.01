@@ -395,7 +395,7 @@
                             return `
                             <div class="product-card" id="account-wishlist-${p.id}">
                                 <a href="product.html?id=${p.id}" class="product-image">
-                                    <img ${index === 0 ? '' : 'loading="lazy"'} src="${window.escapeHtml(optImg)}" alt="${safeName}">
+                                    <img ${index === 0 ? '' : 'loading="lazy"'} src="${window.escapeHtml(optImg)}" alt="${safeName}" width="300" height="300">
                                 </a>
                                 <div class="product-info">
                                     <h3 class="product-name"><a href="product.html?id=${p.id}">${safeName}</a></h3>

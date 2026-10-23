@@ -404,7 +404,7 @@
                     <tr style="border-bottom: 1px solid var(--border-color);">
                         <td data-label="المنتج" style="padding: 12px 10px;">
                             <div class="product-cell" style="display: flex; align-items: center; gap: 10px;">
-                                <img src="${AdminTable.escapeHtml(product.image_url || '../images/product-placeholder.jpg')}" alt="${AdminTable.escapeHtml(product.name)}" style="width: 44px; height: 44px; border-radius: 6px; object-fit: cover;">
+                                <img src="${AdminTable.escapeHtml(product.image_url || '../images/product-placeholder.jpg')}" alt="${AdminTable.escapeHtml(product.name)}" width="44" height="44" style="width: 44px; height: 44px; border-radius: 6px; object-fit: cover;">
                                 <div class="product-cell-text">
                                     <strong class="product-cell-name" style="display: block; font-size: 0.95rem; color: var(--text-color, #1e293b);">${AdminTable.escapeHtml(product.name)}</strong>
                                     <span style="font-size: 0.8rem; color: var(--light-text);">ID: #${product.id}</span>
@@ -487,7 +487,7 @@
                 tbody.innerHTML = variants.map(v => `
                     <tr style="border-bottom: 1px solid var(--border-color);">
                         <td style="padding: 6px 12px; text-align: center;">
-                            ${v.imageUrl ? `<img src="${AdminTable.escapeHtml(v.imageUrl)}" alt="${AdminTable.escapeHtml(v.name)}"  style="width: 38px; height: 38px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border-color, #e2e8f0); vertical-align: middle;">` : '<span style="color:var(--light-text); font-size: 0.8rem;">-</span>'}
+                            ${v.imageUrl ? `<img src="${AdminTable.escapeHtml(v.imageUrl)}" alt="${AdminTable.escapeHtml(v.name)}" width="38" height="38" style="width: 38px; height: 38px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border-color, #e2e8f0); vertical-align: middle;">` : '<span style="color:var(--light-text); font-size: 0.8rem;">-</span>'}
                         </td>
                         <td style="padding: 10px 12px; font-weight: bold; color: var(--text-color, #1e293b);">${AdminTable.escapeHtml(v.name)}</td>
                         <td style="padding: 10px 12px; color: var(--light-text); font-size: 0.85rem;">${AdminTable.escapeHtml(v.sku || '-')}</td>
