@@ -104,9 +104,8 @@ app.use((req, res, next) => {
 app.use((req, res, next) => {
     const pathName = req.path || '/';
     if (pathName === '/' || pathName.endsWith('.html')) {
-        res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+        res.setHeader('Cache-Control', 'no-cache, must-revalidate');
         res.setHeader('Pragma', 'no-cache');
-        res.setHeader('Expires', '0');
     } else if (/\.(?:js|css|png|jpe?g|webp|svg|ico|woff2?|ttf|map|json)$/i.test(pathName)) {
         res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
     }
