@@ -172,9 +172,9 @@ async function seedDemoData() {
             old_price: 5200.00,
             cost_price: 2100.00,
             stock: 16,
-            image_url: '/images/christopher-gower-m_HRfLhgABo-unsplash.webp',
+            image_url: '/images/prod_laptop.webp',
             images: [
-                '/images/christopher-gower-m_HRfLhgABo-unsplash.webp',
+                '/images/prod_laptop.webp',
                 '/images/prod_laptop_screen.webp',
                 '/images/prod_laptop_side.webp'
             ],
@@ -189,9 +189,9 @@ async function seedDemoData() {
             old_price: 5800.00,
             cost_price: 2400.00,
             stock: 5,
-            image_url: '/images/samsung-memory-RZM2cE0lx0Y-unsplash.webp',
+            image_url: '/images/prod_camera.webp',
             images: [
-                '/images/samsung-memory-RZM2cE0lx0Y-unsplash.webp',
+                '/images/prod_camera.webp',
                 '/images/prod_camera_lens.webp',
                 '/images/prod_camera_detail.webp'
             ],
@@ -270,11 +270,11 @@ async function seedDemoData() {
         { productId: 6, sku: 'COOK-PAN', name: 'مقلاة منفردة 28 سم', priceModifier: -3500, stock: 5, imageUrl: '/images/prod_cookware_pan.webp' },
 
         // Product 100: Laptop
-        { productId: 100, sku: 'LAP-16-512', name: '16GB RAM / 512GB SSD', priceModifier: 0, stock: 10, imageUrl: '/images/christopher-gower-m_HRfLhgABo-unsplash.webp' },
+        { productId: 100, sku: 'LAP-16-512', name: '16GB RAM / 512GB SSD', priceModifier: 0, stock: 10, imageUrl: '/images/prod_laptop.webp' },
         { productId: 100, sku: 'LAP-32-1TB', name: '32GB RAM / 1TB SSD', priceModifier: 1200, stock: 6, imageUrl: '/images/prod_laptop_screen.webp' },
 
         // Product 101: 4K Digital Camera
-        { productId: 101, sku: 'CAM-BODY', name: 'هيكل الكاميرا فقط (Body)', priceModifier: 0, stock: 3, imageUrl: '/images/samsung-memory-RZM2cE0lx0Y-unsplash.webp' },
+        { productId: 101, sku: 'CAM-BODY', name: 'هيكل الكاميرا فقط (Body)', priceModifier: 0, stock: 3, imageUrl: '/images/prod_camera.webp' },
         { productId: 101, sku: 'CAM-KIT', name: 'طقم مع عدسة احترافية (Kit)', priceModifier: 1800, stock: 2, imageUrl: '/images/prod_camera_lens.webp' }
     ];
 

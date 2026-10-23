@@ -34,7 +34,8 @@ describe('Public store settings: allow-list & CCP details', () => {
         }
         // Only allow-listed keys may ever be returned
         for (const key of Object.keys(res.body)) {
-            assert.ok(adminController.PUBLIC_SETTING_KEYS.includes(key), `unexpected public key: ${key}`);
+            // demo_mode is a runtime flag (derived from the DEMO_MODE env var, not from the settings table)
+            assert.ok(adminController.PUBLIC_SETTING_KEYS.includes(key) || key === 'demo_mode', `unexpected public key: ${key}`);
         }
 
         await db.updateStoreSettings({ telegram_bot_token: '', telegram_chat_id: '', telegram_notifications_enabled: 'false', some_future_private_key: '' });

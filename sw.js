@@ -1,4 +1,4 @@
-const CACHE_NAME = 'rewaq-pwa-v00a0d73629';
+const CACHE_NAME = 'rewaq-pwa-v782e95903d';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -59,29 +59,17 @@ const CACHE_VERSION_ASSETS = [
   '/images/hero-banner.jpg',
   '/images/hero-banner.webp',
   '/images/prod_classic_watch.webp',
-  '/images/prod_classic_watch.jpg',
   '/images/prod_cookware.webp',
-  '/images/prod_cookware.jpg',
   '/images/prod_linen_shirt.webp',
-  '/images/prod_linen_shirt.jpg',
   '/images/prod_linen_shirt_navy.webp',
-  '/images/prod_linen_shirt_navy.jpg',
   '/images/prod_linen_shirt_white.webp',
-  '/images/prod_linen_shirt_white.jpg',
   '/images/prod_perfume.webp',
-  '/images/prod_perfume.jpg',
   '/images/prod_sneakers.webp',
-  '/images/prod_sneakers.jpg',
   '/images/prod_sneakers_sole.webp',
-  '/images/prod_sneakers_sole.jpg',
   '/images/prod_summer_dress.webp',
-  '/images/prod_summer_dress.jpg',
   '/images/prod_summer_dress_coral.webp',
-  '/images/prod_summer_dress_coral.jpg',
-  '/images/christopher-gower-m_HRfLhgABo-unsplash.webp',
-  '/images/christopher-gower-m_HRfLhgABo-unsplash.jpg',
-  '/images/samsung-memory-RZM2cE0lx0Y-unsplash.webp',
-  '/images/samsung-memory-RZM2cE0lx0Y-unsplash.jpg',
+  '/images/prod_laptop.webp',
+  '/images/prod_camera.webp',
   '/images/product-placeholder.jpg'
 ];
 

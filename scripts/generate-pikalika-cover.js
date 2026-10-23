@@ -7,10 +7,10 @@ async function buildCover() {
   console.log('--- 🎨 Generating Pikalika Main Product Cover ---');
 
   // Load local assets as base64 for reliable, zero-latency rendering
-  const watchImg = fs.readFileSync(path.join(__dirname, '../images/prod_classic_watch.jpg')).toString('base64');
-  const shirtImg = fs.readFileSync(path.join(__dirname, '../images/prod_linen_shirt.jpg')).toString('base64');
-  const perfumeImg = fs.readFileSync(path.join(__dirname, '../images/prod_perfume.jpg')).toString('base64');
-  const sneakersImg = fs.readFileSync(path.join(__dirname, '../images/prod_sneakers.jpg')).toString('base64');
+  const watchImg = fs.readFileSync(path.join(__dirname, '../images/prod_classic_watch-800.webp')).toString('base64');
+  const shirtImg = fs.readFileSync(path.join(__dirname, '../images/prod_linen_shirt-800.webp')).toString('base64');
+  const perfumeImg = fs.readFileSync(path.join(__dirname, '../images/prod_perfume-800.webp')).toString('base64');
+  const sneakersImg = fs.readFileSync(path.join(__dirname, '../images/prod_sneakers-800.webp')).toString('base64');
   const logoSvg = fs.readFileSync(path.join(__dirname, '../images/logo.svg'), 'utf8');
   const logoBase64 = Buffer.from(logoSvg).toString('base64');
 
@@ -578,7 +578,7 @@ async function buildCover() {
             <!-- Card 1: Watch -->
             <div class="mockup-card">
               <div class="card-thumb-wrap">
-                <img src="data:image/jpeg;base64,${watchImg}" alt="ساعة كلاسيكية">
+                <img src="data:image/webp;base64,${watchImg}" alt="ساعة كلاسيكية">
                 <span class="card-discount-badge">-25%</span>
                 <span class="card-heart-btn"><i class="fas fa-heart"></i></span>
               </div>
@@ -599,7 +599,7 @@ async function buildCover() {
             <!-- Card 2: Linen Shirt -->
             <div class="mockup-card">
               <div class="card-thumb-wrap">
-                <img src="data:image/jpeg;base64,${shirtImg}" alt="قميص كتان">
+                <img src="data:image/webp;base64,${shirtImg}" alt="قميص كتان">
                 <span class="card-heart-btn"><i class="far fa-heart"></i></span>
               </div>
               <span class="card-category">أزياء وملابس</span>
@@ -618,7 +618,7 @@ async function buildCover() {
             <!-- Card 3: Perfume -->
             <div class="mockup-card">
               <div class="card-thumb-wrap">
-                <img src="data:image/jpeg;base64,${perfumeImg}" alt="عطر فاخر">
+                <img src="data:image/webp;base64,${perfumeImg}" alt="عطر فاخر">
                 <span class="card-discount-badge">-15%</span>
                 <span class="card-heart-btn"><i class="far fa-heart"></i></span>
               </div>
@@ -639,7 +639,7 @@ async function buildCover() {
             <!-- Card 4: Sneakers -->
             <div class="mockup-card">
               <div class="card-thumb-wrap">
-                <img src="data:image/jpeg;base64,${sneakersImg}" alt="حذاء رياضي">
+                <img src="data:image/webp;base64,${sneakersImg}" alt="حذاء رياضي">
                 <span class="card-heart-btn"><i class="far fa-heart"></i></span>
               </div>
               <span class="card-category">أحذية ورياضة</span>

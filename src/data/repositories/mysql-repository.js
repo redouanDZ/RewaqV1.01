@@ -125,9 +125,9 @@ const DEFAULT_PRODUCTS = [
     old_price: 5200,
     cost_price: 2100,
     stock: 16,
-    image_url: '/images/christopher-gower-m_HRfLhgABo-unsplash.webp',
+    image_url: '/images/prod_laptop.webp',
     images: [
-      '/images/christopher-gower-m_HRfLhgABo-unsplash.webp',
+      '/images/prod_laptop.webp',
       '/images/prod_laptop_screen.webp',
       '/images/prod_laptop_side.webp'
     ],
@@ -144,9 +144,9 @@ const DEFAULT_PRODUCTS = [
     old_price: 5800,
     cost_price: 2400,
     stock: 5,
-    image_url: '/images/samsung-memory-RZM2cE0lx0Y-unsplash.webp',
+    image_url: '/images/prod_camera.webp',
     images: [
-      '/images/samsung-memory-RZM2cE0lx0Y-unsplash.webp',
+      '/images/prod_camera.webp',
       '/images/prod_camera_lens.webp',
       '/images/prod_camera_detail.webp'
     ],
@@ -2193,11 +2193,11 @@ function createFallbackRepository() {
     orders: [],
     orderItems: [],
     variants: [
-      { id: 1, productId: 1, product_id: 1, sku: 'SHIRT-BEIGE-M', name: 'المقاس: M / اللون: بيج كتاني', priceModifier: 0, stock: 6, imageUrl: '/images/prod_linen_shirt.jpg', status: 'active' },
-      { id: 2, productId: 1, product_id: 1, sku: 'SHIRT-BEIGE-L', name: 'المقاس: L / اللون: بيج كتاني', priceModifier: 0, stock: 8, imageUrl: '/images/prod_linen_shirt.jpg', status: 'active' },
-      { id: 3, productId: 1, product_id: 1, sku: 'SHIRT-BEIGE-XL', name: 'المقاس: XL / اللون: بيج كتاني', priceModifier: 0, stock: 4, imageUrl: '/images/prod_linen_shirt.jpg', status: 'active' },
-      { id: 4, productId: 1, product_id: 1, sku: 'SHIRT-WHITE-L', name: 'المقاس: L / اللون: أبيض ملكي', priceModifier: 0, stock: 5, imageUrl: '/images/prod_linen_shirt_white.jpg', status: 'active' },
-      { id: 5, productId: 1, product_id: 1, sku: 'SHIRT-NAVY-L', name: 'المقاس: L / اللون: كحلي داكن', priceModifier: 200, stock: 0, imageUrl: '/images/prod_linen_shirt_navy.jpg', status: 'active' }
+      { id: 1, productId: 1, product_id: 1, sku: 'SHIRT-BEIGE-M', name: 'المقاس: M / اللون: بيج كتاني', priceModifier: 0, stock: 6, imageUrl: '/images/prod_linen_shirt.webp', status: 'active' },
+      { id: 2, productId: 1, product_id: 1, sku: 'SHIRT-BEIGE-L', name: 'المقاس: L / اللون: بيج كتاني', priceModifier: 0, stock: 8, imageUrl: '/images/prod_linen_shirt.webp', status: 'active' },
+      { id: 3, productId: 1, product_id: 1, sku: 'SHIRT-BEIGE-XL', name: 'المقاس: XL / اللون: بيج كتاني', priceModifier: 0, stock: 4, imageUrl: '/images/prod_linen_shirt.webp', status: 'active' },
+      { id: 4, productId: 1, product_id: 1, sku: 'SHIRT-WHITE-L', name: 'المقاس: L / اللون: أبيض ملكي', priceModifier: 0, stock: 5, imageUrl: '/images/prod_linen_shirt_white.webp', status: 'active' },
+      { id: 5, productId: 1, product_id: 1, sku: 'SHIRT-NAVY-L', name: 'المقاس: L / اللون: كحلي داكن', priceModifier: 200, stock: 0, imageUrl: '/images/prod_linen_shirt_navy.webp', status: 'active' }
     ],
     nextUserId: 3,
     nextCartId: 1,

@@ -9,6 +9,15 @@ const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
 
+
+// NOTE: The product images in /images were selected and processed manually (logo-free crops,
+// WebP only, to keep the package small). This legacy generator would overwrite them and
+// recreate the JPG copies, so it only runs when FORCE_REGENERATE=1 is set.
+if (!process.env.FORCE_REGENERATE) {
+    console.log('fetch-and-build-images: skipped (images are maintained manually). Set FORCE_REGENERATE=1 to run.');
+    process.exit(0);
+}
+
 const IMAGES_DIR = path.join(__dirname, '..', 'images');
 
 const imageDefs = [
