@@ -34,8 +34,8 @@ const CSP_STRICT = process.env.CSP_STRICT === 'true';
 const buildCspDirectives = (strict) => ({
     defaultSrc: ["'self'"],
     scriptSrc: strict
-        ? ["'self'", 'https://cdnjs.cloudflare.com', 'https://cdn.jsdelivr.net', 'https://accounts.google.com', 'https://connect.facebook.net', 'https://analytics.tiktok.com', 'https://www.googletagmanager.com']
-        : ["'self'", "'unsafe-inline'", 'https://cdnjs.cloudflare.com', 'https://cdn.jsdelivr.net', 'https://accounts.google.com', 'https://connect.facebook.net', 'https://analytics.tiktok.com', 'https://www.googletagmanager.com'],
+        ? ["'self'", 'https://accounts.google.com', 'https://connect.facebook.net', 'https://analytics.tiktok.com', 'https://www.googletagmanager.com']
+        : ["'self'", "'unsafe-inline'", 'https://accounts.google.com', 'https://connect.facebook.net', 'https://analytics.tiktok.com', 'https://www.googletagmanager.com'],
     scriptSrcAttr: strict ? ["'none'"] : ["'unsafe-inline'"],
     styleSrc: ["'self'", "'unsafe-inline'", 'https://cdn.jsdelivr.net', 'https://accounts.google.com'],
     imgSrc: ["'self'", 'data:', 'blob:', 'https://res.cloudinary.com', 'https://flagcdn.com', 'https://www.facebook.com'],
@@ -43,6 +43,7 @@ const buildCspDirectives = (strict) => ({
     connectSrc: ["'self'", 'https://cdn.jsdelivr.net', 'https://geoip.maxmind.com', 'https://accounts.google.com', 'https://connect.facebook.net', 'https://analytics.tiktok.com', 'https://www.google-analytics.com', 'https://*.google-analytics.com', 'https://*.chargily.com', 'https://*.chargily.net', 'https://www.facebook.com', 'https://www.googletagmanager.com'],
     objectSrc: ["'none'"],
     baseUri: ["'self'"],
+    requireTrustedTypesFor: ["'script'"],
     frameAncestors: [
         "'self'",
         'https://*.pikalika.com',
@@ -69,7 +70,7 @@ app.use(helmet({
     crossOriginResourcePolicy: { policy: 'cross-origin' },
     frameguard: false,
     referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
-    hsts: config.isProduction ? { maxAge: 31536000, includeSubDomains: true, preload: true } : false
+    hsts: { maxAge: 31536000, includeSubDomains: true, preload: true }
 }));
 
 if (!CSP_STRICT && process.env.CSP_REPORT_ONLY !== 'true') {
@@ -223,6 +224,16 @@ const rootDir = path.join(__dirname, '..');
 const staticOptions = { maxAge: 31536000000, immutable: true, etag: true, lastModified: true };
 app.use('/admin', express.static(path.join(rootDir, 'admin'), staticOptions));
 app.use('/css', express.static(path.join(rootDir, 'css'), staticOptions));
+app.use('/js', (req, res, next) => {
+    if (req.path.endsWith('.js') && !req.path.endsWith('.min.js')) {
+        const minFile = req.path.replace(/\.js$/, '.min.js');
+        const absMin = path.join(rootDir, 'js', minFile);
+        if (fs.existsSync(absMin)) {
+            return res.sendFile(absMin, staticOptions);
+        }
+    }
+    next();
+});
 app.use('/js', express.static(path.join(rootDir, 'js'), staticOptions));
 app.use('/images', express.static(path.join(rootDir, 'images'), staticOptions));
 app.use('/locales', express.static(path.join(rootDir, 'locales'), staticOptions));
@@ -248,13 +259,101 @@ const sendWithBaseUrl = (fileName, contentType) => (req, res, next) => {
     }
 };
 
+const sendProductHtml = async (req, res, next) => {
+    try {
+        const baseUrl = getBaseUrl(req);
+        if (!templateCache.has('product.html') || !config.isProduction) {
+            templateCache.set('product.html', fs.readFileSync(path.join(rootDir, 'product.html'), 'utf8'));
+        }
+        let html = templateCache.get('product.html').replace(/\{\{BASE_URL\}\}/g, baseUrl);
+
+        const rawId = req.query.id;
+        const productId = parseInt(rawId, 10) || 1;
+
+        let product = null;
+        try {
+            const db = require('./data/db-connection.js');
+            product = await db.getProductById(productId);
+        } catch (e) {}
+
+        if (product && product.id) {
+            const safeProduct = { ...product };
+            delete safeProduct.cost_price;
+            delete safeProduct.costPrice;
+
+            const name = product.name || 'تفاصيل المنتج';
+            const rawDesc = product.description || '';
+            const plainDesc = rawDesc.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim().slice(0, 160);
+            const price = Number(product.price) || 0;
+            const formattedPrice = price.toLocaleString();
+
+            let rawImg = product.image_url || product.image || '/images/prod_linen_shirt-800.webp';
+            let img400 = rawImg;
+            let img800 = rawImg;
+
+            const m = rawImg.match(/^(\/images\/[^\/]+?)(\.[a-zA-Z0-9]+)$/);
+            if (m) {
+                const base = m[1].replace(/-(150|200|400|800)$/, '');
+                const ext = m[2];
+                img400 = `${base}-400${ext}`;
+                img800 = `${base}-800${ext}`;
+            }
+
+            // 1. High-Priority Preload in Head for Instant LCP
+            const preloadBlock = `
+    <!-- High-Priority LCP Image Preload for Instant First Paint -->
+    <link rel="preload" as="image" href="${img400}" fetchpriority="high">
+`;
+            html = html.replace('<!-- Preload Primary Fonts for LCP / Text Performance -->', `${preloadBlock}    <!-- Preload Primary Fonts for LCP / Text Performance -->`);
+
+            // 2. Safe JSON data for client-side synchronous hydration (CSP-compliant without inline JS execution)
+            const safeJsonScript = `\n    <script type="application/json" id="initial-product-data">${JSON.stringify(safeProduct).replace(/</g, '\\u003c')}</script>`;
+            html = html.replace('</head>', `${safeJsonScript}\n</head>`);
+
+            // 3. Update Title & Meta Description for Instant SEO & Social Share
+            html = html.replace(
+                /<title data-i18n="product\.meta_title">.*?<\/title>/,
+                `<title data-i18n="product.meta_title">${name} | متجر رواق</title>`
+            );
+            if (plainDesc) {
+                html = html.replace(
+                    /<meta name="description" data-i18n="product\.meta_description" content=".*?">/,
+                    `<meta name="description" data-i18n="product.meta_description" content="${plainDesc}">`
+                );
+            }
+
+            // 4. Populate Visible Headings & Prices for Instant Text Paint
+            html = html.replace(
+                /<span id="product-breadcrumb" data-i18n="product\.page_title">.*?<\/span>/,
+                `<span id="product-breadcrumb">${name}</span>`
+            );
+            html = html.replace(
+                /<h2 id="product-name" data-i18n="product\.loading_name">.*?<\/h2>/,
+                `<h2 id="product-name">${name}</h2>`
+            );
+            html = html.replace(
+                /<span class="price" id="product-price"><\/span>/,
+                `<span class="price" id="product-price">${formattedPrice} دج</span>`
+            );
+
+            // 5. Replace Main Image with exact product 400w image + responsive srcset
+            const newImgTag = `<img id="main-image" src="${img400}" srcset="${img400} 400w, ${img800} 800w" sizes="(max-width: 768px) 100vw, 500px" width="800" height="800" loading="eager" fetchpriority="high" data-i18n="product.main_image_alt" alt="${name}" style="cursor: zoom-in;" data-action="openLightbox">`;
+            html = html.replace(/<img id="main-image"[^>]*>/, newImgTag);
+        }
+
+        res.type('html').send(html);
+    } catch (error) {
+        next(error);
+    }
+};
+
 // Public HTML Pages
-const publicHtmlPages = ['index.html', 'landing.html', 'shop.html', 'product.html', 'cart.html', 'checkout.html', 'order-confirmation.html', 'account.html', 'track-order.html', 'invoice.html', 'wishlist.html', 'terms.html', 'privacy.html'];
+const publicHtmlPages = ['landing.html', 'shop.html', 'cart.html', 'checkout.html', 'order-confirmation.html', 'account.html', 'track-order.html', 'invoice.html', 'wishlist.html', 'terms.html', 'privacy.html'];
 publicHtmlPages.forEach((page) => {
-    if (page === 'index.html') return;
     app.get(`/${page}`, (req, res) => res.sendFile(path.join(rootDir, page)));
 });
 app.get('/index.html', sendWithBaseUrl('index.html', 'html'));
+app.get('/product.html', sendProductHtml);
 
 // Root Page fallback
 app.get('/', sendWithBaseUrl('index.html', 'html'));

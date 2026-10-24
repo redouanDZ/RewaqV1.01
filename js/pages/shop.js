@@ -484,8 +484,8 @@ try {
             </button>
             <a href="product.html?id=${product.id}" class="product-image">
               <picture>
-                ${realSrcset ? `<source type="image/webp" srcset="${realSrcset}" sizes="(max-width: 480px) 168px, (max-width: 768px) 50vw, (max-width: 992px) 33vw, 280px">` : ''}
-                <img src="${safeImg}" width="168" height="168" alt="${safeName}" loading="${loadingVal}" ${fetchPriorityAttr} decoding="${decodingVal}" onerror="this.onerror=null;this.src='${fallbackPlaceholder}';">
+                ${realSrcset ? `<source type="image/webp" srcset="${realSrcset}" sizes="(max-width: 600px) 100px, (max-width: 992px) 250px, 350px">` : ''}
+                <img src="${safeImg}" width="168" height="168" alt="${safeName}" loading="${loadingVal}" ${fetchPriorityAttr} decoding="${decodingVal}">
               </picture>
             </a>
           </div>

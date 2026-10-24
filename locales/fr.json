@@ -59,7 +59,9 @@
         "lang_ar": "العربية 🇩🇿",
         "lang_fr": "Français 🇫🇷",
         "lang_en": "English 🇬🇧",
-        "demo_badge": "Version démo"
+        "demo_badge": "Version démo",
+        "decrease_quantity": "Diminuer la quantité",
+        "increase_quantity": "Augmenter la quantité"
     },
     "filters": {
         "title": "Filtres des produits",
@@ -86,6 +88,7 @@
         "empty_desc": "Vous n'avez encore ajouté aucun produit à vos favoris. Parcourez la boutique et enregistrez vos produits préférés ici.",
         "explore_btn": "Explorer la boutique",
         "meta_title": "Favoris | Boutique Rewaq - Produits Sauvegardés",
+        "meta_description": "Consultez votre liste d'envies et vos produits favoris enregistrés sur la boutique Rewaq. Achetez vos articles préférés en toute simplicité.",
         "page_title": "Liste de souhaits (Favoris)",
         "empty_btn": "Parcourir la boutique maintenant",
         "remove_btn": "Retirer des favoris",
@@ -108,6 +111,7 @@
         "proceed_checkout": "Passer la commande",
         "continue_shopping": "Continuer vos achats",
         "meta_title": "Panier d'Achat | Boutique Rewaq",
+        "meta_description": "Consultez et gérez les articles ajoutés à votre panier sur la boutique Rewaq. Finalisez votre commande dès maintenant pour profiter des meilleurs produits.",
         "added_products": "Produits ajoutés",
         "empty_desc": "Vous n'avez encore ajouté aucun produit à votre panier. Explorez notre large collection et commencez vos achats dès maintenant.",
         "browse_shop": "Parcourir la boutique",
@@ -1045,5 +1049,32 @@
         "phone_label": "Téléphone :",
         "email_label": "Email :",
         "address_label": "Adresse :"
+    },
+    "track": {
+        "meta_title": "Suivi de Commande | Boutique Rewaq - Suivez votre colis étape par étape",
+        "meta_description": "Suivez l'acheminement de votre commande en temps réel en saisissant votre numéro de commande et votre téléphone sur Rewaq Algérie.",
+        "page_title": "Suivi de votre colis",
+        "form_desc": "Saisissez votre numéro de commande et votre numéro de téléphone pour suivre l'état de livraison",
+        "section_title": "Informations de suivi de colis",
+        "order_id_label": "Numéro de commande (Order ID / DZ-xxxx)",
+        "order_id_placeholder": "Ex: DZ-2026-12345 ou 1001",
+        "phone_label": "Numéro de téléphone enregistré",
+        "phone_placeholder": "Ex: 0550000000",
+        "submit_btn": "Suivre la commande",
+        "status_pending": "Commande reçue",
+        "status_processing": "En cours de préparation",
+        "status_shipped": "Expédiée pour livraison",
+        "status_delivered": "Livrée avec succès",
+        "status_shipped_truck": "Expédiée avec le livreur 🚚",
+        "status_delivered_check": "Livrée avec succès ✅",
+        "status_cancelled_cross": "Annulée ❌",
+        "wilaya_address": "Wilaya et Adresse",
+        "product": "Produit",
+        "total_price": "Prix Total",
+        "grand_total": "Montant Total (Livraison incluse) :",
+        "open_invoice": "Ouvrir la facture",
+        "searching": "Recherche en cours...",
+        "order_not_found": "Commande introuvable. Veuillez vérifier votre numéro de commande et de téléphone.",
+        "network_error": "Erreur de connexion avec le serveur, veuillez réessayer ultérieurement."
     }
 }

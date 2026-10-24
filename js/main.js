@@ -1037,7 +1037,7 @@ function bindSmartHeader(header) {
   if (!header || header._smartHeaderBound) return;
   header._smartHeaderBound = true;
 
-  let lastScrollY = Math.max(0, window.scrollY || window.pageYOffset || 0);
+  let lastScrollY = 0;
   let accumulatedDistance = 0;
   let activeDirection = 0;
   let ticking = false;
@@ -1124,6 +1124,17 @@ function bindSmartHeader(header) {
   }, { passive: true });
 }
 
+function loadDeferredFontAwesome() {
+  if (!document.querySelector('link[href*="fontawesome"]')) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = '/vendor/fontawesome/css/all.min.css';
+    link.media = 'print';
+    link.onload = function () { this.media = 'all'; };
+    document.head.appendChild(link);
+  }
+}
+
 function optimizeImageLoading() {
   const scheduleIdle = (callback) => {
     if ('requestIdleCallback' in window) {
@@ -1134,8 +1145,14 @@ function optimizeImageLoading() {
   };
 
   scheduleIdle(() => {
+    loadDeferredFontAwesome();
     document.querySelectorAll('img:not([data-performance-ready])').forEach((img) => {
       img.dataset.performanceReady = 'true';
+      if (img.classList.contains('hero-bg-img') || img.closest('.hero-section, #main-header, .banner-section')) {
+        img.setAttribute('loading', 'eager');
+        img.setAttribute('fetchpriority', 'high');
+        return;
+      }
       if (!img.hasAttribute('loading')) {
         img.setAttribute('loading', 'lazy');
       }
@@ -1160,8 +1177,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   initTheme();
   setupThemeToggleButtons();
-  initMobileNavigation();
-  initMobileSmartHeader();
 
   // Phase 2: Yield non-critical tasks to Idle / Next Frame to slash Total Blocking Time (TBT)
   const scheduleTask = (task) => {
@@ -1173,6 +1188,8 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   scheduleTask(() => {
+    initMobileNavigation();
+    initMobileSmartHeader();
     initMobileBottomBar();
     initBackToTop();
     optimizeImageLoading();

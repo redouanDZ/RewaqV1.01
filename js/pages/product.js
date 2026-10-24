@@ -8,14 +8,33 @@ let selectedVariant = null;
 
 const urlParams = new URLSearchParams(window.location.search);
 const productId = urlParams.get('id') || 1;
-const initialProductFetch = fetch(`/api/products/${productId}`)
-    .then(r => r.ok ? r.json() : null)
-    .catch(() => null);
+let preloadedProduct = null;
+try {
+    const dataEl = document.getElementById('initial-product-data');
+    if (dataEl && dataEl.textContent) {
+        preloadedProduct = JSON.parse(dataEl.textContent);
+    }
+} catch (e) {}
 
-function transformProductImage(url, width = 600, height = 600) {
+const initialProductFetch = preloadedProduct
+    ? Promise.resolve(preloadedProduct)
+    : fetch(`/api/products/${productId}`)
+        .then(r => r.ok ? r.json() : null)
+        .catch(() => null);
+
+function transformProductImage(url, width = 800, height = 800) {
     if (!url) return '/images/product-placeholder.jpg';
     if (url.includes('res.cloudinary.com') && url.includes('/upload/') && !url.includes('/upload/w_')) {
         return url.replace('/upload/', `/upload/w_${width},h_${height},c_fill,f_auto,q_auto/`);
+    }
+    const m = url.match(/^(\/images\/[^\/]+?)(\.[a-zA-Z0-9]+)$/);
+    if (m) {
+        const base = m[1].replace(/-(150|200|400|800)$/, '');
+        const ext = m[2];
+        if (width <= 150) return `${base}-150${ext}`;
+        if (width <= 200) return `${base}-200${ext}`;
+        if (width <= 400) return `${base}-400${ext}`;
+        return `${base}-800${ext}`;
     }
     return url;
 }
@@ -25,14 +44,24 @@ function getProductSrcset(imgUrl) {
     if (imgUrl.includes('res.cloudinary.com')) {
         const url400 = imgUrl.replace('/upload/', '/upload/w_400,c_fill,f_auto,q_auto/');
         const url800 = imgUrl.replace('/upload/', '/upload/w_800,c_fill,f_auto,q_auto/');
-        const url1600 = imgUrl.replace('/upload/', '/upload/w_1600,c_fill,f_auto,q_auto/');
-        return `${url400} 400w, ${url800} 800w, ${url1600} 1600w`;
+        return `${url400} 400w, ${url800} 800w`;
     }
     const m = imgUrl.match(/^(\/images\/[^\/]+?)(\.[a-zA-Z0-9]+)$/);
     if (m) {
-        const base = m[1].replace(/-(400|800)$/, '');
+        const base = m[1].replace(/-(150|200|400|800)$/, '');
         const ext = m[2];
-        return `${base}-400${ext} 400w, ${base}-800${ext} 800w, ${base}${ext} 1600w`;
+        return `${base}-400${ext} 400w, ${base}-800${ext} 800w`;
+    }
+    return '';
+}
+
+function getThumbSrcset(imgUrl) {
+    if (!imgUrl || typeof imgUrl !== 'string') return '';
+    const m = imgUrl.match(/^(\/images\/[^\/]+?)(\.[a-zA-Z0-9]+)$/);
+    if (m) {
+        const base = m[1].replace(/-(150|200|400|800)$/, '');
+        const ext = m[2];
+        return `${base}-200${ext} 200w, ${base}-400${ext} 400w`;
     }
     return '';
 }
@@ -348,8 +377,8 @@ function getProductSrcset(imgUrl) {
                 if (thumbnails) {
                     thumbnails.innerHTML = images.map((img, index) => {
                         const altText = window.I18n ? window.I18n.t('product.image_alt', 'صورة {index}').replace('{index}', index + 1) : `Image ${index + 1}`;
-                        const thumbImg = transformProductImage(img, 120, 120);
-                        return `<img src="${thumbImg}" data-full="${img}" width="80" height="80" alt="${altText}" class="${index === 0 ? 'active' : ''}" data-action="switchImage" data-index="${index}" ${index === 0 ? '' : 'loading="lazy"'}>`;
+                        const thumbImg = transformProductImage(img, 150, 150);
+                        return `<img src="${thumbImg}" data-full="${img}" width="150" height="150" alt="${altText}" class="thumbnail ${index === 0 ? 'active' : ''}" data-action="switchImage" data-index="${index}" loading="lazy">`;
                     }).join('');
                 }
                 if (mainImage) {
@@ -366,14 +395,16 @@ function getProductSrcset(imgUrl) {
                         revealImage();
                     };
 
-                    const mainImgSrc = transformProductImage(images[0], 600, 600);
-                    mainImage.src = mainImgSrc;
-                    mainImage.setAttribute('width', '600');
-                    mainImage.setAttribute('height', '600');
+                    const mainImgSrc = transformProductImage(images[0], 400, 400);
+                    if (!mainImage.src.includes(mainImgSrc)) {
+                        mainImage.src = mainImgSrc;
+                    }
+                    mainImage.setAttribute('width', '800');
+                    mainImage.setAttribute('height', '800');
                     const realSrcset = getProductSrcset(images[0]);
                     if (realSrcset) {
                         mainImage.srcset = realSrcset;
-                        mainImage.sizes = '(max-width: 768px) 100vw, 600px';
+                        mainImage.sizes = '(max-width: 768px) 100vw, 500px';
                     } else {
                         mainImage.removeAttribute('srcset');
                     }
@@ -450,7 +481,7 @@ function getProductSrcset(imgUrl) {
 
             thumbnails.forEach((thumb, i) => thumb.classList.toggle('active', i === index));
             const fullImg = thumbnails[index].getAttribute('data-full') || thumbnails[index].getAttribute('src');
-            const newSrc = transformProductImage(fullImg, 600, 600);
+            const newSrc = transformProductImage(fullImg, 800, 800);
 
             mainImage.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
             mainImage.style.opacity = '0.3';
@@ -459,7 +490,7 @@ function getProductSrcset(imgUrl) {
                 const realSrcset = getProductSrcset(fullImg);
                 if (realSrcset) {
                     mainImage.srcset = realSrcset;
-                    mainImage.sizes = '(max-width: 768px) 100vw, 600px';
+                    mainImage.sizes = '(max-width: 768px) 100vw, 800px';
                 } else {
                     mainImage.removeAttribute('srcset');
                 }
@@ -934,7 +965,8 @@ function getProductSrcset(imgUrl) {
                     const discountPct = hasDiscount ? Math.round((1 - Number(p.price) / Number(p.old_price)) * 100) : null;
                     const stockNum = Number(p.stock) || 0;
                     const isFav = wishlistIds.includes(p.id);
-                    const simImg = transformProductImage(p.image_url || '/images/product-placeholder.jpg', 300, 300);
+                    const simImg = transformProductImage(p.image_url || '/images/product-placeholder.jpg', 200, 200);
+                    const thumbSrcset = getThumbSrcset(p.image_url);
                     const rating = Number(p.rating) || 5;
                     const fullStars = Math.min(5, Math.max(1, Math.round(rating)));
                     const starsHtml = '<i class="fas fa-star"></i>'.repeat(fullStars) + '<i class="far fa-star"></i>'.repeat(5 - fullStars);
@@ -947,7 +979,7 @@ function getProductSrcset(imgUrl) {
                                 <i class="${isFav ? 'fas fa-heart text-danger' : 'far fa-heart'}"></i>
                             </button>
                             <a href="product.html?id=${p.id}" class="product-image">
-                                <img src="${simImg}" width="400" height="400" alt="${safeName}" loading="lazy">
+                                <img src="${simImg}" ${thumbSrcset ? `srcset="${thumbSrcset}" sizes="(max-width: 768px) 170px, 280px"` : ''} width="200" height="200" alt="${safeName}" loading="lazy" decoding="async">
                             </a>
                         </div>
                         <div class="product-info">

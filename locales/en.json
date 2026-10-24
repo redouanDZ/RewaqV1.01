@@ -59,7 +59,9 @@
         "lang_ar": "العربية 🇩🇿",
         "lang_fr": "Français 🇫🇷",
         "lang_en": "English 🇬🇧",
-        "demo_badge": "Demo Version"
+        "demo_badge": "Demo Version",
+        "decrease_quantity": "Decrease quantity",
+        "increase_quantity": "Increase quantity"
     },
     "filters": {
         "title": "Product Filters",
@@ -86,6 +88,7 @@
         "empty_desc": "You haven't added any products to your wishlist yet. Browse the store and save your favorite products here.",
         "explore_btn": "Explore Products Now",
         "meta_title": "Wishlist | Rewaq Store - Saved Favorites",
+        "meta_description": "Browse your wishlist and favorite saved products on Rewaq Store. Shop your favorite fashion and items easily now.",
         "page_title": "Wishlist",
         "empty_btn": "Browse Store Now",
         "remove_btn": "Remove from Wishlist",
@@ -108,6 +111,7 @@
         "proceed_checkout": "Proceed to Checkout",
         "continue_shopping": "Continue Shopping",
         "meta_title": "Shopping Cart | Rewaq Store",
+        "meta_description": "View and manage items added to your shopping cart on Rewaq Store. Proceed to checkout now for the best products.",
         "added_products": "Added Products",
         "empty_desc": "You haven't added any products to your cart yet. Explore our wide collection and start shopping now.",
         "browse_shop": "Browse Products Shop",
@@ -1045,5 +1049,32 @@
         "phone_label": "Phone:",
         "email_label": "Email:",
         "address_label": "Address:"
+    },
+    "track": {
+        "meta_title": "Track Order | Rewaq Store - Step by step parcel tracking",
+        "meta_description": "Track your order status and delivery updates in real-time by entering your order ID and phone number on Rewaq Algeria.",
+        "page_title": "Track Your Order",
+        "form_desc": "Enter your order ID and registered phone number to track your shipment status",
+        "section_title": "Shipment Tracking Information",
+        "order_id_label": "Order ID (DZ-xxxx or ID)",
+        "order_id_placeholder": "e.g. DZ-2026-12345 or 1001",
+        "phone_label": "Registered Phone Number",
+        "phone_placeholder": "e.g. 0550000000",
+        "submit_btn": "Track Order",
+        "status_pending": "Order Received",
+        "status_processing": "Processing & Confirmation",
+        "status_shipped": "Dispatched for Delivery",
+        "status_delivered": "Successfully Delivered",
+        "status_shipped_truck": "Dispatched with Courier 🚚",
+        "status_delivered_check": "Delivered Successfully ✅",
+        "status_cancelled_cross": "Cancelled ❌",
+        "wilaya_address": "Wilaya & Address",
+        "product": "Product",
+        "total_price": "Total Price",
+        "grand_total": "Grand Total (Shipping included):",
+        "open_invoice": "View Invoice",
+        "searching": "Searching...",
+        "order_not_found": "Order not found. Please verify your order number and phone number.",
+        "network_error": "A server network error occurred. Please try again later."
     }
 }

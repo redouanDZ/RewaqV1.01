@@ -88,8 +88,8 @@
     --box-shadow-hover: 0 20px 40px -12px rgba(79, 70, 229, 0.22);
 
     /* Animation & Transitions (Composited properties to prevent layout recalculation) */
-    --transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease, box-shadow 0.25s ease, border-color 0.2s ease;
-    --transition-fast: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+    --transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+    --transition-fast: transform 0.15s ease, opacity 0.15s ease;
 }
 
 [data-theme="dark"],
@@ -469,7 +469,7 @@ header {
     gap: 8px;
     overflow: visible;
     box-sizing: border-box;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.2s ease, opacity 0.2s ease;
     box-shadow: var(--shadow-xs);
     width: 100%;
 }
@@ -540,7 +540,7 @@ body.dark-mode .search-bar input {
     white-space: nowrap;
     flex-shrink: 0;
     box-shadow: 0 2px 6px rgba(79, 70, 229, 0.25);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.2s ease;
 }
 
 .header-search-btn:hover,
@@ -761,7 +761,7 @@ body.dark-mode .search-bar input {
     font-size: 0.92rem !important;
     font-weight: 600 !important;
     text-decoration: none !important;
-    transition: all 0.15s ease !important;
+    transition: transform 0.15s ease, opacity 0.15s ease !important;
 }
 
 .user-dropdown a:hover {
@@ -787,7 +787,7 @@ body.dark-mode .search-bar input {
     cursor: pointer !important;
     outline: none !important;
     font-family: inherit !important;
-    transition: all 0.2s ease !important;
+    transition: transform 0.2s ease, opacity 0.2s ease !important;
 }
 
 .lang-select:hover,
@@ -810,7 +810,7 @@ body.dark-mode .search-bar input {
     font-size: 1.25rem;
     color: var(--dark-color);
     cursor: pointer;
-    transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .mobile-menu-btn:hover {
@@ -827,7 +827,7 @@ body.dark-mode .search-bar input {
     z-index: 9998;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .mobile-nav-overlay.active {
@@ -985,6 +985,7 @@ body.dark-mode .search-bar form {
     margin-bottom: 10px;
     background: linear-gradient(135deg, var(--dark-color), var(--primary-color));
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -1190,7 +1191,7 @@ body.dark-mode .search-bar form {
     box-shadow: var(--shadow-sm);
     min-width: 0;
     height: 100%;
-    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.2s ease;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .trust-card:hover {
@@ -1210,7 +1211,7 @@ body.dark-mode .search-bar form {
     justify-content: center;
     font-size: 1.25rem;
     flex-shrink: 0;
-    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease, color 0.2s ease;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
 }
 
 .trust-card:hover .trust-icon-box {
@@ -1290,7 +1291,7 @@ body.dark-mode .search-bar form {
     min-height: 44px;
     padding: 6px 14px;
     border-radius: var(--radius-sm, 8px);
-    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
 }
 
 .section-link:hover {
@@ -1385,7 +1386,7 @@ body.dark-mode .search-bar form {
     padding: 24px 16px;
     text-align: center;
     text-decoration: none;
-    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.2s ease;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1414,7 +1415,7 @@ body.dark-mode .search-bar form {
     align-items: center;
     justify-content: center;
     font-size: 1.55rem;
-    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease, color 0.2s ease;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
     will-change: transform;
 }
 
@@ -1429,7 +1430,7 @@ body.dark-mode .search-bar form {
     font-weight: 800;
     color: var(--dark-color);
     margin: 0;
-    transition: color 0.2s;
+    transition: opacity 0.2s ease;
     white-space: normal !important;
     word-wrap: break-word !important;
     overflow-wrap: break-word !important;
@@ -1480,7 +1481,7 @@ body.dark-mode .search-bar form {
     font-weight: 700;
     white-space: nowrap;
     cursor: pointer;
-    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -1533,7 +1534,7 @@ body.dark-mode .search-bar form {
     overflow: hidden;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-sm);
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     display: flex;
     flex-direction: column;
     position: relative;
@@ -1608,7 +1609,7 @@ body.dark-mode .search-bar form {
     justify-content: center;
     cursor: pointer;
     box-shadow: var(--shadow-sm);
-    transition: transform 0.2s ease, background 0.2s ease;
+    transition: transform 0.2s ease, opacity 0.2s ease;
     z-index: 3;
     padding: 0;
 }
@@ -1641,7 +1642,7 @@ body.dark-mode .product-wishlist:hover {
 .product-wishlist i {
     color: var(--muted-text);
     font-size: 0.9rem;
-    transition: color 0.2s;
+    transition: transform 0.2s ease;
 }
 
 .product-wishlist.active i {
@@ -1692,7 +1693,7 @@ body.dark-mode .product-wishlist:hover {
 .product-name a {
     color: inherit;
     text-decoration: none;
-    transition: color 0.2s;
+    transition: opacity 0.2s ease;
 }
 
 .product-name a:hover {
@@ -2158,7 +2159,7 @@ body.dark-mode .product-wishlist:hover {
     font-size: 0.88rem;
     font-weight: 700;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .btn-copy-coupon:hover {
@@ -2406,7 +2407,7 @@ html[dir="ltr"] .footer-col ul li a:hover i,
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.2s ease, background-color 0.2s ease;
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .social-links a:hover {
@@ -4379,7 +4380,7 @@ body.dark-mode .skeleton {
     font-weight: 600;
     opacity: 0;
     transform: translateX(40px) scale(0.95);
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     overflow: hidden;
 }
 
@@ -4528,7 +4529,7 @@ body.dark-mode .skeleton {
     justify-content: center;
     cursor: pointer;
     margin-left: 15px;
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
     outline: none;
 }
 
@@ -4814,7 +4815,7 @@ body.dark-mode .skeleton {
     opacity: 0;
     visibility: hidden;
     transform: translateY(20px);
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 999;
 }
 
@@ -5053,7 +5054,7 @@ body.dark-mode .back-to-top-btn:hover {
     align-items: center !important;
     justify-content: center !important;
     vertical-align: middle !important;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    transition: transform 0.2s ease !important;
     position: relative !important;
     flex-shrink: 0 !important;
     outline: none !important;
@@ -5183,7 +5184,7 @@ body.dark-mode .checkbox-group input[type="checkbox"]:checked {
     font-weight: 700;
     padding: 6px 8px;
     border-radius: 10px;
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease, opacity 0.2s ease;
     flex: 1;
     text-align: center;
     min-height: 48px;
@@ -7829,7 +7830,7 @@ input[type="checkbox"]:checked {
     background: var(--card-bg, #ffffff);
     color: var(--text-color, #1e293b);
     border: 1px solid var(--border-color, #e2e8f0);
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 .category-pill:hover,
@@ -8377,7 +8378,7 @@ input[type="checkbox"]:checked {
     font-size: 0.92rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     user-select: none;
     min-height: 44px;
     text-align: start;
@@ -8511,7 +8512,7 @@ input[type="checkbox"]:checked {
     border-radius: 10px;
     border: 2px solid var(--border-color, #e2e8f0);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease, opacity 0.2s ease;
     background: var(--card-bg, #fff);
 }
 
@@ -8646,7 +8647,7 @@ body.dark-mode .main-image.skeleton {
     padding: 16px 18px;
     border-radius: 12px;
     background: var(--card-bg, #fff);
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease, opacity 0.2s ease;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
 }
 
@@ -8809,7 +8810,7 @@ body.dark-mode .main-image.skeleton {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease, opacity 0.2s ease;
     font-size: 0.95rem;
 }
 
@@ -8896,7 +8897,7 @@ body.dark-mode .main-image.skeleton {
     cursor: pointer;
     font-weight: 700;
     font-size: 0.9rem;
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease, opacity 0.2s ease;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -8921,7 +8922,7 @@ body.dark-mode .main-image.skeleton {
     margin-top: 8px;
     margin-bottom: 10px;
     font-weight: 800;
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease, opacity 0.2s ease;
     box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25);
     display: flex;
     align-items: center;
@@ -9001,7 +9002,7 @@ body.dark-mode .main-image.skeleton {
     font-weight: 600;
     border-radius: 10px;
     text-decoration: none;
-    transition: all 0.2s ease-in-out;
+    transition: transform 0.2s ease;
     border: none;
     box-shadow: 0 4px 14px rgba(99, 102, 241, 0.25);
 }
@@ -9305,7 +9306,7 @@ body.dark-mode .empty-cart-box .empty-state-icon i {
     border-radius: var(--radius-md, 12px);
     padding: 16px 14px;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: transform 0.2s ease;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -9333,7 +9334,7 @@ body.dark-mode .empty-cart-box .empty-state-icon i {
     border-radius: 50%;
     border: 2px solid var(--border-color);
     background: transparent;
-    transition: all 0.2s;
+    transition: transform 0.2s ease;
 }
 
 .delivery-card.active::before {
@@ -9394,7 +9395,7 @@ body.dark-mode .empty-cart-box .empty-state-icon i {
     border-radius: 12px;
     padding: 16px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease, opacity 0.2s ease;
     background: var(--card-bg);
     position: relative;
     min-height: 44px;
@@ -10160,7 +10161,7 @@ body.dark-mode .empty-cart-box .empty-state-icon i {
     align-items: center;
     justify-content: center;
     border-radius: 8px;
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .close-modal-btn:hover {
@@ -10490,7 +10491,7 @@ body.dark-mode .account-modal-actions {
     border-radius: var(--radius-md, 12px);
     overflow: hidden;
     box-shadow: var(--shadow-sm);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    transition: transform 0.25s ease;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -10939,7 +10940,7 @@ html[dir="ltr"] .timeline-progress-bar,
     color: var(--light-text);
     font-size: 1.1rem;
     box-shadow: 0 0 0 4px var(--card-bg, #fff);
-    transition: all 0.3s;
+    transition: transform 0.3s ease;
 }
 
 .step-node.completed .step-icon {
@@ -11499,7 +11500,7 @@ body.dark-mode .zoom-btn {
     background: #f8fafc;
     border: 2px solid var(--border-color, #e2e8f0);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease, opacity 0.2s ease;
     flex-shrink: 0;
 }
 
@@ -11781,7 +11782,7 @@ body.dark-mode .product-card .product-image-container {
     cursor: pointer;
     background: #f8fafc;
     flex-shrink: 0;
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .product-images .thumbnail-images img.active,
@@ -11852,7 +11853,7 @@ body.dark-mode .product-card .product-image-container {
     justify-content: center;
     gap: 8px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .product-actions .add-to-cart:hover {
@@ -11874,7 +11875,7 @@ body.dark-mode .product-card .product-image-container {
     cursor: pointer;
     font-size: 1.15rem;
     margin-left: 0 !important;
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .product-actions .add-to-wishlist:hover {
@@ -11955,7 +11956,7 @@ body.dark-mode .product-card .product-image-container {
     font-size: 0.95rem;
     background: var(--card-bg, #ffffff);
     color: var(--text-color);
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease, opacity 0.2s ease;
     outline: none;
     box-sizing: border-box;
 }
@@ -11990,7 +11991,7 @@ body.dark-mode .product-card .product-image-container {
     cursor: pointer;
     font-size: 0.86rem;
     font-weight: 600;
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .delivery-option:has(input:checked) {
@@ -12044,7 +12045,7 @@ body.dark-mode .product-card .product-image-container {
     justify-content: center;
     gap: 10px;
     box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .express-submit-btn:hover {
@@ -12115,7 +12116,7 @@ body.dark-mode .product-card .product-image-container {
     color: var(--light-text, #64748b);
     cursor: pointer;
     white-space: nowrap;
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .tab-btn.active {
@@ -12293,7 +12294,7 @@ body.dark-mode .summary-row .summary-val {
         font-size: 1.2rem !important;
         cursor: pointer !important;
         box-sizing: border-box !important;
-        transition: all 0.2s ease !important;
+        transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease !important;
     }
     .product-details .product-actions .add-to-wishlist:hover {
         border-color: #ef4444 !important;
@@ -12320,7 +12321,7 @@ body.dark-mode .summary-row .summary-val {
         color: var(--primary-color, #2563eb) !important;
         cursor: pointer !important;
         box-sizing: border-box !important;
-        transition: all 0.2s ease !important;
+        transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease !important;
     }
     .product-details .product-actions .add-to-cart:hover {
         background: var(--primary-color, #2563eb) !important;
@@ -12332,3 +12333,40 @@ body.dark-mode .summary-row .summary-val {
     }
 }
 
+/* Accessibility & Color Contrast for Product Variants */
+span.variant-name {
+    color: #2d2d2d;
+    font-weight: 700;
+}
+
+[data-theme="dark"] span.variant-name,
+body.dark-mode span.variant-name {
+    color: #f1f5f9;
+}
+
+button.variant-btn.out-of-stock {
+    background-color: #f1f1f1;
+    color: #767676;
+    border-color: #e2e8f0;
+}
+
+span.variant-price-mod {
+    color: #1a1a1a;
+    font-weight: 600;
+}
+
+[data-theme="dark"] span.variant-price-mod,
+body.dark-mode span.variant-price-mod {
+    color: #f8fafc;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}

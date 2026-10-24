@@ -2,15 +2,38 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-        <script src="/js/theme-init.js" defer></script>
+    <script src="/js/theme-init.min.js" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="checkout.meta_title">إتمام الطلب | متجر رواق - شراء آمن ودفع عند الاستلام</title>
+    <meta name="description" data-i18n="checkout.meta_description" content="أتمم طلبك بأمان مع متجر رواق. ندعم الدفع عند الاستلام والبطاقات الإلكترونية الجزائرية EDAHABIA وCIB. شحن سريع لجميع الولايات.">
+    <meta name="robots" content="noindex, nofollow">
 
+    <!-- Preload Primary Fonts for LCP / Text Performance -->
+    <link rel="preload" href="/fonts/font-1.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/font-3.woff2" as="font" type="font/woff2" crossorigin>
 
-    <!-- Local Fonts & Icons -->
-    <link rel="stylesheet" href="/fonts/fonts.css">
-    <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css">
+    <!-- Critical CSS for Instant Paint and Zero CLS -->
+    <style>
+      :root{--primary-color:#4f46e5;--dark-color:#0f172a;--border-color:#e2e8f0;--card-bg:#ffffff;--text-color:#1e293b;--light-text:#64748b;}
+      *{box-sizing:border-box;margin:0;padding:0;}
+      body{font-family:'Cairo',system-ui,-apple-system,sans-serif;color:var(--text-color);background-color:#f8fafc;line-height:1.6;}
+      .container{width:100%;max-width:1200px;margin:0 auto;padding:0 16px;}
+      #site-header{display:block;min-height:154px;}
+      .page-title{background:linear-gradient(135deg,#1e1b4b 0%,#312e81 100%);color:#fff;padding:24px 0;min-height:88px;}
+      .page-title h1{font-size:1.5rem;font-weight:800;margin-bottom:6px;}
+      .breadcrumb{font-size:0.85rem;color:rgba(255,255,255,0.75);display:flex;align-items:center;gap:8px;}
+      .breadcrumb a{color:#fff;text-decoration:none;}
+      .checkout-section{padding:30px 0 60px;min-height:500px;}
+      @media(max-width:768px){#site-header{min-height:144px;}.page-title{padding:12px 0;min-height:auto;}.page-title h1{font-size:1.15rem;}}
+    </style>
+
+    <!-- Asynchronous Non-blocking Fonts -->
+    <link rel="stylesheet" href="/fonts/fonts.css" data-async-css media="print">
+    <noscript><link rel="stylesheet" href="/fonts/fonts.css"></noscript>
+
+    <!-- Core Design Stylesheet -->
     <link rel="stylesheet" href="/css/style.min.css">
+    <noscript><link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css"></noscript>
 
   <meta name="theme-color" content="#2563eb">
   <link rel="manifest" href="/manifest.json">
@@ -233,13 +256,13 @@
     <!-- Modern Footer -->
     <footer id="site-footer"></footer>
 
-    <script src="js/layout.js" defer></script>
-    <script src="js/api-client.js" defer></script>
-    <script src="js/main.js" defer></script>
-    <script src="js/user-system.js" defer></script>
-    <script src="js/cart.js" defer></script>
-    <script src="js/wishlist.js" defer></script>
-    <script src="js/checkout.js" defer></script>
-    <script src="js/i18n.js" defer></script>
+    <script src="/js/layout.min.js" defer></script>
+    <script src="/js/api-client.min.js" defer></script>
+    <script src="/js/main.min.js" defer></script>
+    <script src="/js/user-system.min.js" defer></script>
+    <script src="/js/cart.min.js" defer></script>
+    <script src="/js/wishlist.min.js" defer></script>
+    <script src="/js/checkout.min.js" defer></script>
+    <script src="/js/i18n.min.js" defer></script>
 </body>
 </html>

@@ -288,8 +288,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (window.I18n.currentLang && window.I18n.currentLang !== 'ar') {
         await window.I18n.setLanguage(window.I18n.currentLang);
     } else {
-        await window.I18n.loadDictionary('ar');
-        document.dispatchEvent(new CustomEvent('i18nLoaded', { detail: { lang: 'ar' } }));
-        window.dispatchEvent(new CustomEvent('i18nLoaded', { detail: { lang: 'ar' } }));
+        const notifyReady = () => {
+            document.dispatchEvent(new CustomEvent('i18nLoaded', { detail: { lang: 'ar' } }));
+            window.dispatchEvent(new CustomEvent('i18nLoaded', { detail: { lang: 'ar' } }));
+        };
+        // Defer loading Arabic dictionary to idle time so it doesn't block the critical rendering path
+        if ('requestIdleCallback' in window) {
+            window.requestIdleCallback(() => {
+                window.I18n.loadDictionary('ar').then(notifyReady).catch(notifyReady);
+            }, { timeout: 2500 });
+        } else {
+            setTimeout(() => {
+                window.I18n.loadDictionary('ar').then(notifyReady).catch(notifyReady);
+            }, 300);
+        }
     }
 });

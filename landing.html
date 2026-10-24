@@ -2,12 +2,25 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-        <script src="/js/theme-init.js" defer></script>
+    <script src="/js/theme-init.min.js" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>رواق برو — باقات وأسعار المتجر الإلكتروني الجزائري</title>
     <meta name="description" content="امتلك متجرك الإلكتروني الاحترافي المصمم خصيصاً للتجارة الإلكترونية في الجزائر. متوافق مع الدفع بالذهبية، 58 ولاية، إشعارات تيليجرام وواتساب، وبوالص الشحن.">
-    <link rel="stylesheet" href="/fonts/fonts.css">
-    <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css">
+
+    <!-- Preload Primary Font for LCP / Text Performance -->
+    <link rel="preload" href="/fonts/font-1.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/font-3.woff2" as="font" type="font/woff2" crossorigin>
+
+    <!-- Asynchronous Fonts and Icons -->
+    <link rel="stylesheet" href="/fonts/fonts.css" data-async-css media="print">
+    <noscript><link rel="stylesheet" href="/fonts/fonts.css"></noscript>
+    <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css"></noscript>
+    
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/logo.png">
     
     <style>
         :root {
@@ -921,6 +934,6 @@
         </div>
     </footer>
 
-    <script src="js/pages/landing.js" defer></script>
+    <script src="/js/pages/landing.min.js" defer></script>
 </body>
 </html>

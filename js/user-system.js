@@ -189,7 +189,7 @@ function updateUIForLoggedInUser(user) {
                     ${isAdmin ? `<a href="admin/index.html" style="display:flex;align-items:center;gap:10px;padding:10px 16px;color:var(--primary-color,#6366f1);font-weight:700;text-decoration:none;font-size:0.9rem;"><i class="fas fa-tachometer-alt"></i> <span data-i18n="nav.admin_panel">${adminDashboard}</span></a>` : ''}
                     <a href="account.html" style="display:flex;align-items:center;gap:10px;padding:10px 16px;color:var(--text-color,#1e293b);text-decoration:none;font-size:0.9rem;"><i class="fas fa-user-circle"></i> <span data-i18n="nav.my_profile">${myProfile}</span></a>
                     <div style="border-top:1px solid var(--border-color,#e2e8f0);margin:4px 0;"></div>
-                    <button type="button" class="logout-btn-action" data-action="logoutUser" onclick="if(window.logoutUser)window.logoutUser();" style="display:flex;align-items:center;gap:10px;padding:10px 16px;color:var(--danger-color);background:none;border:none;cursor:pointer;width:100%;font-size:0.9rem;text-align:start;"><i class="fas fa-sign-out-alt"></i> <span data-i18n="nav.logout">${logoutText}</span></button>
+                    <button type="button" class="logout-btn-action" data-action="logoutUser" style="display:flex;align-items:center;gap:10px;padding:10px 16px;color:var(--danger-color);background:none;border:none;cursor:pointer;width:100%;font-size:0.9rem;text-align:start;"><i class="fas fa-sign-out-alt"></i> <span data-i18n="nav.logout">${logoutText}</span></button>
                 </div>
             </div>`;
 

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'rewaq-pwa-v782e95903d';
+const CACHE_NAME = 'rewaq-pwa-vf696cb72c1';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -17,12 +17,7 @@ const STATIC_ASSETS = [
   '/css/invoice.css',
   '/css/order-confirmation.css',
   '/fonts/fonts.css',
-  '/vendor/fontawesome/css/all.min.css',
-  '/vendor/fontawesome/webfonts/fa-solid-900.woff2',
-  '/vendor/fontawesome/webfonts/fa-regular-400.woff2',
-  '/vendor/fontawesome/webfonts/fa-brands-400.woff2',
   '/fonts/font-1.woff2',
-  '/fonts/font-2.woff2',
   '/fonts/font-3.woff2',
   '/js/layout.js',
   '/js/theme-init.js',
@@ -53,11 +48,7 @@ const CACHE_VERSION_ASSETS = [
   '/js/pages/wishlist.js',
   '/js/pages/track-order.js',
   '/images/hero-banner-desktop.webp',
-  '/images/hero-banner-desktop.jpg',
   '/images/hero-banner-mobile.webp',
-  '/images/hero-banner-mobile.jpg',
-  '/images/hero-banner.jpg',
-  '/images/hero-banner.webp',
   '/images/prod_classic_watch.webp',
   '/images/prod_cookware.webp',
   '/images/prod_linen_shirt.webp',

@@ -2,18 +2,27 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-        <script src="/js/theme-init.js" defer></script>
+    <script src="/js/theme-init.min.js" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="invoice.title">فاتورة الشراء | متجر رواق</title>
-    <!-- Fonts & Icons -->
-    <link rel="stylesheet" href="/fonts/fonts.css">
-    <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css">
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Preload Primary Font for LCP / Text Performance -->
+    <link rel="preload" href="/fonts/font-1.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/font-3.woff2" as="font" type="font/woff2" crossorigin>
+
+    <!-- Asynchronous Non-blocking Fonts -->
+    <link rel="stylesheet" href="/fonts/fonts.css" data-async-css media="print">
+    <noscript><link rel="stylesheet" href="/fonts/fonts.css"></noscript>
+
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="/css/style.min.css">
     <link rel="stylesheet" href="/css/invoice.css">
+    <noscript><link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css"></noscript>
 
-  <meta name="theme-color" content="#2563eb">
-  <link rel="manifest" href="/manifest.json">
-      <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="apple-touch-icon" href="/images/logo.png">
@@ -105,12 +114,12 @@
         <a href="index.html" class="btn btn-secondary"><i class="fas fa-arrow-right"></i> <span data-i18n="invoice.back_to_shop">العودة للمتجر</span></a>
         <div class="actions-bar-buttons">
             <a href="#" id="trackLinkBtn" class="btn btn-secondary"><i class="fas fa-truck"></i> <span data-i18n="footer.link_track">تتبع الطلب</span></a>
-            <button type="button" id="printInvoiceBtn" data-action="windowPrint" onclick="window.print()" class="btn btn-primary"><i class="fas fa-print"></i> <span data-i18n="invoice.print_btn">طباعة / تحميل PDF</span></button>
+            <button type="button" id="printInvoiceBtn" data-action="windowPrint" class="btn btn-primary"><i class="fas fa-print"></i> <span data-i18n="invoice.print_btn">طباعة / تحميل PDF</span></button>
         </div>
     </div>
 
-    <script src="js/main.js" defer></script>
-    <script src="js/i18n.js" defer></script>
-    <script src="js/pages/invoice.js" defer></script>
+    <script src="/js/main.min.js" defer></script>
+    <script src="/js/i18n.min.js" defer></script>
+    <script src="/js/pages/invoice.min.js" defer></script>
 </body>
 </html>

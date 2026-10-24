@@ -1,12 +1,36 @@
 
 let wishlistProducts = [];
 
-function transformProductImage(url) {
+function transformProductImage(url, width = 300) {
     if (!url) return '/images/product-placeholder.jpg';
     if (url.includes('res.cloudinary.com') && url.includes('/upload/') && !url.includes('/upload/w_')) {
-        return url.replace('/upload/', '/upload/w_400,h_400,c_fill,f_auto,q_auto/');
+        return url.replace('/upload/', `/upload/w_${width},h_${width},c_fill,f_auto,q_auto/`);
+    }
+    const m = url.match(/^(\/images\/[^\/]+?)(\.[a-zA-Z0-9]+)$/);
+    if (m) {
+        const base = m[1].replace(/-(150|200|400|800)$/, '');
+        const ext = m[2];
+        if (width <= 200) return `${base}-200${ext}`;
+        if (width <= 400) return `${base}-400${ext}`;
+        return `${base}-400${ext}`;
     }
     return url;
+}
+
+function getWishlistSrcset(url) {
+    if (!url || typeof url !== 'string') return '';
+    if (url.includes('res.cloudinary.com') && url.includes('/upload/')) {
+        const url200 = url.replace('/upload/', '/upload/w_200,h_200,c_fill,f_auto,q_auto/');
+        const url400 = url.replace('/upload/', '/upload/w_400,h_400,c_fill,f_auto,q_auto/');
+        return `${url200} 200w, ${url400} 400w`;
+    }
+    const m = url.match(/^(\/images\/[^\/]+?)(\.[a-zA-Z0-9]+)$/);
+    if (m) {
+        const base = m[1].replace(/-(150|200|400|800)$/, '');
+        const ext = m[2];
+        return `${base}-200${ext} 200w, ${base}-400${ext} 400w`;
+    }
+    return '';
 }
 
 async function renderWishlist() {
@@ -16,6 +40,15 @@ async function renderWishlist() {
     // Ensure dictionary is loaded only if current language is not Arabic
     if (window.I18n && typeof window.I18n.loadDictionary === 'function' && window.I18n.currentLang !== 'ar') {
         await window.I18n.loadDictionary(window.I18n.currentLang);
+    }
+
+    if (!window.WishlistManager) {
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', renderWishlist, { once: true });
+            return;
+        }
+        await new Promise(resolve => setTimeout(resolve, 50));
+        if (!window.WishlistManager) return;
     }
 
     wishlistProducts = await window.WishlistManager.getItems();
@@ -56,11 +89,12 @@ async function renderWishlist() {
                 const isOutOfStock = Number(p.stock) === 0;
                 const safeName = window.escapeHtml ? window.escapeHtml(p.name) : p.name;
                 const safeCat = window.escapeHtml ? window.escapeHtml(p.category || generalCat) : (p.category || generalCat);
-                const optimizedImg = transformProductImage(p.image_url || p.image);
+                const optimizedImg = transformProductImage(p.image_url || p.image, 200);
+                const srcset = getWishlistSrcset(p.image_url || p.image);
                 return `
                     <div class="wishlist-card" id="wishlist-card-${p.id}">
                         <div class="card-img-wrapper">
-                            <img ${index === 0 ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'} decoding="async" width="300" height="300" src="${optimizedImg}" alt="${safeName}">
+                            <img ${index === 0 ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'} decoding="async" width="200" height="200" src="${optimizedImg}" ${srcset ? `srcset="${srcset}" sizes="(max-width: 600px) 180px, 280px"` : ''} alt="${safeName}">
                             <button class="btn-remove-wishlist" data-action="removeItem" data-args="${p.id}" data-i18n-title="wishlist.remove_btn" title="${removeTitle}" aria-label="${removeTitle}">
                                 <i class="fas fa-times"></i>
                             </button>
@@ -112,7 +146,11 @@ async function renderWishlist() {
             }
         }
 
-        document.addEventListener('DOMContentLoaded', renderWishlist);
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', renderWishlist);
+        } else {
+            renderWishlist();
+        }
         document.addEventListener('languageChanged', renderWishlist);
     
 

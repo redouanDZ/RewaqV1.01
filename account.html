@@ -2,11 +2,12 @@
 <html lang="ar" dir="rtl" data-theme="light">
 <head>
     <meta charset="UTF-8">
-        <script src="/js/theme-init.js" defer></script>
+    <script src="/js/theme-init.min.js" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="account.title">حسابي | متجر رواق - إدارة الحساب والطلبات</title>
     <!-- Preload Primary Font for LCP / Text Performance -->
     <link rel="preload" href="/fonts/font-1.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/font-3.woff2" as="font" type="font/woff2" crossorigin>
 
     <!-- Critical CSS for Instant Paint and Zero CLS -->
     <style>
@@ -39,12 +40,10 @@
       @media(max-width:600px){.account-page-container{margin:16px auto 30px;padding:0 12px;gap:16px;}.account-sidebar{padding:18px 14px;}.account-content-card{padding:20px 14px;}}
     </style>
 
-    <!-- Asynchronous Non-blocking Stylesheets -->
+    <!-- Core Design Stylesheet -->
     <link rel="stylesheet" href="/fonts/fonts.css">
-    <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="/css/style.min.css">
     <noscript><link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css"></noscript>
-    <link rel="stylesheet" href="/css/style.min.css" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="/css/style.min.css"></noscript>
 
   <meta name="theme-color" content="#2563eb">
   <link rel="manifest" href="/manifest.json">
@@ -241,12 +240,12 @@
     <footer id="site-footer"></footer>
 
     <!-- Scripts -->
-    <script src="js/layout.js" defer></script>
-    <script src="js/api-client.js" defer></script>
-    <script src="js/main.js" defer></script>
-    <script src="js/user-system.js" defer></script>
-    <script src="js/i18n.js" defer></script>
-    <script src="js/pages/account.js" defer></script>
+    <script src="/js/layout.min.js" defer></script>
+    <script src="/js/api-client.min.js" defer></script>
+    <script src="/js/main.min.js" defer></script>
+    <script src="/js/user-system.min.js" defer></script>
+    <script src="/js/i18n.min.js" defer></script>
+    <script src="/js/pages/account.min.js" defer></script>
 </body>
 </html>
 

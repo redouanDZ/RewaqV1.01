@@ -47,16 +47,16 @@ async function fetchWithRetry(url, options = {}, retries = 2, timeoutMs = 8000) 
 function getProductSrcset(imgUrl) {
     if (!imgUrl || typeof imgUrl !== 'string') return '';
     if (imgUrl.includes('res.cloudinary.com')) {
+        const url200 = imgUrl.replace('/upload/', '/upload/w_200,c_fill,f_auto,q_auto/');
         const url400 = imgUrl.replace('/upload/', '/upload/w_400,c_fill,f_auto,q_auto/');
         const url800 = imgUrl.replace('/upload/', '/upload/w_800,c_fill,f_auto,q_auto/');
-        const url1600 = imgUrl.replace('/upload/', '/upload/w_1600,c_fill,f_auto,q_auto/');
-        return `${url400} 400w, ${url800} 800w, ${url1600} 1600w`;
+        return `${url200} 200w, ${url400} 400w, ${url800} 800w`;
     }
     const m = imgUrl.match(/^(\/images\/[^\/]+?)(\.[a-zA-Z0-9]+)$/);
     if (m) {
-        const base = m[1].replace(/-(400|800)$/, '');
+        const base = m[1].replace(/-(200|400|800)$/, '');
         const ext = m[2];
-        return `${base}-400${ext} 400w, ${base}-800${ext} 800w, ${base}${ext} 1600w`;
+        return `${base}-200${ext} 200w, ${base}-400${ext} 400w, ${base}-800${ext} 800w`;
     }
     return '';
 }
@@ -128,14 +128,23 @@ function getProductSrcset(imgUrl) {
                     const rating = Number(p.rating) || 5;
                     const fullStars = Math.min(5, Math.max(1, Math.round(rating)));
                     const starsHtml = '<i class="fas fa-star"></i>'.repeat(fullStars) + '<i class="far fa-star"></i>'.repeat(5 - fullStars);
-                    // First row (first 4 products) loads eagerly with high fetchpriority; rest load lazily
-                    const isFirstRow = index < 4;
-                    const loadingVal = isFirstRow ? 'eager' : 'lazy';
-                    const fetchPriorityAttr = isFirstRow ? 'fetchpriority="high"' : '';
+                    // Products are below the fold on mobile/tablet; lazy load all to avoid bandwidth contention with Hero LCP
+                    const loadingVal = 'lazy';
+                    const fetchPriorityAttr = '';
                     const placeholderImg = '/images/product-placeholder.jpg';
                     const safeImg = p.image_url || placeholderImg;
+                    const thumbImg = (function(url) {
+                        if (!url || typeof url !== 'string') return placeholderImg;
+                        if (url.includes('res.cloudinary.com')) return url.replace('/upload/', '/upload/w_200,c_fill,f_auto,q_auto/');
+                        const m = url.match(/^(\/images\/[^\/]+?)(\.[a-zA-Z0-9]+)$/);
+                        if (m) {
+                            const base = m[1].replace(/-(200|400|800)$/, '');
+                            return `${base}-200${m[2]}`;
+                        }
+                        return url;
+                    })(safeImg);
                     const realSrcset = getProductSrcset(safeImg);
-                    const srcsetAttr = realSrcset ? `srcset="${realSrcset}" sizes="(max-width: 600px) 50vw, (max-width: 992px) 33vw, 280px"` : '';
+                    const srcsetAttr = realSrcset ? `srcset="${realSrcset}" sizes="(max-width: 600px) 100px, (max-width: 992px) 250px, 350px"` : '';
 
                     return `
                     <div class="${cardClass}" id="${cardId}">
@@ -145,7 +154,7 @@ function getProductSrcset(imgUrl) {
                                 <i class="${isFav ? 'fas fa-heart text-danger' : 'far fa-heart'}"></i>
                             </button>
                             <a href="product.html?id=${p.id}" class="product-image">
-                                <img src="${safeImg}" ${srcsetAttr} width="400" height="400" alt="${safeName}" loading="${loadingVal}" ${fetchPriorityAttr} decoding="async" onerror="this.onerror=null;this.src='${placeholderImg}';">
+                                <img src="${thumbImg}" ${srcsetAttr} width="166" height="166" alt="${safeName}" loading="${loadingVal}" ${fetchPriorityAttr} decoding="async">
                             </a>
                         </div>
                         <div class="product-info">

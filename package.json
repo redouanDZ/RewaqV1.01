@@ -7,8 +7,9 @@
     "start": "node server.js",
     "dev": "node --watch server.js",
     "build:css": "node scripts/build-css.js",
+    "build:js": "node scripts/build-js.js",
     "build:sw": "node scripts/build-sw-hash.js",
-    "build": "npm run build:css && node scripts/build-sw-hash.js && node scripts/validate.js",
+    "build": "npm run build:css && npm run build:js && node scripts/build-sw-hash.js && node scripts/validate.js",
     "lint": "eslint server.js src/ database/ test/ scripts/ js/ admin/js/",
     "dev:node": "node server.js",
     "migrate": "node database/migrate.js",
@@ -47,6 +48,7 @@
     "eslint": "^10.9.0",
     "globals": "^17.11.0",
     "lightningcss": "^1.33.0",
-    "playwright": "^1.64.0"
+    "playwright": "^1.64.0",
+    "terser": "^5.51.2"
   }
 }

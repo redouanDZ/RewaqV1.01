@@ -96,7 +96,29 @@ function transformCartImage(url) {
   if (url.includes('res.cloudinary.com') && url.includes('/upload/') && !url.includes('/upload/w_')) {
     return url.replace('/upload/', '/upload/w_180,h_180,c_fill,f_auto,q_auto/');
   }
+  const m = url.match(/^(\/images\/[^\/]+?)(\.[a-zA-Z0-9]+)$/);
+  if (m) {
+    const base = m[1].replace(/-(150|200|400|800)$/, '');
+    const ext = m[2];
+    return `${base}-150${ext}`;
+  }
   return url;
+}
+
+function getCartSrcset(url) {
+  if (!url || typeof url !== 'string') return '';
+  if (url.includes('res.cloudinary.com') && url.includes('/upload/')) {
+    const url1x = url.replace('/upload/', '/upload/w_85,h_85,c_fill,f_auto,q_auto/');
+    const url2x = url.replace('/upload/', '/upload/w_170,h_170,c_fill,f_auto,q_auto/');
+    return `${url1x} 1x, ${url2x} 2x`;
+  }
+  const m = url.match(/^(\/images\/[^\/]+?)(\.[a-zA-Z0-9]+)$/);
+  if (m) {
+    const base = m[1].replace(/-(150|200|400|800)$/, '');
+    const ext = m[2];
+    return `${base}-150${ext} 1x, ${base}-200${ext} 2x`;
+  }
+  return '';
 }
 
 function loadCartFromLocalStorage() {
@@ -211,10 +233,11 @@ function renderCart() {
     const lineTotal = (priceNum * qtyNum).toLocaleString();
 
     const optimizedImg = transformCartImage(safeImg);
+    const cartSrcset = getCartSrcset(safeImg);
     return `
     <div class="cart-item" id="cart-item-${itemKey}" data-id="${prodId}" data-key="${itemKey}">
       <a href="product.html?id=${prodId}" class="cart-item-img-wrap" title="${safeName}">
-        <img ${index === 0 ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'} decoding="async" width="85" height="85" src="${optimizedImg}" alt="${safeName}">
+        <img ${index === 0 ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'} decoding="async" width="85" height="85" src="${optimizedImg}" ${cartSrcset ? `srcset="${cartSrcset}"` : ''} alt="${safeName}">
       </a>
       <div class="item-details">
         <a href="product.html?id=${prodId}" class="item-title-link">

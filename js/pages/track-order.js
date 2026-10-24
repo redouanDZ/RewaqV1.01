@@ -58,7 +58,7 @@ async function submitTrack() {
 
     msgBox.style.display = 'none';
     submitBtn.disabled = true;
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ' + (window.I18n ? window.I18n.t('common.searching', 'جاري البحث...') : 'جاري البحث...');
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ' + (window.I18n ? window.I18n.t('track.searching', 'جاري البحث...') : 'جاري البحث...');
 
     try {
         const response = await fetch(`/api/orders/status?orderId=${encodeURIComponent(orderId)}&phone=${encodeURIComponent(phone)}`);
@@ -66,7 +66,7 @@ async function submitTrack() {
 
         if (!response.ok) {
             msgBox.className = 'status-cancelled';
-            msgBox.textContent = getErrorMessage(data, 'messages.tracking_not_found');
+            msgBox.textContent = window.I18n ? window.I18n.t('track.order_not_found', 'تعذر العثور على الطلب. يرجى التحقق من صحة رقم الطلب ورقم الهاتف.') : 'تعذر العثور على الطلب. يرجى التحقق من صحة رقم الطلب ورقم الهاتف.';
             msgBox.style.display = 'block';
             resBox.style.display = 'none';
             return;
@@ -93,7 +93,7 @@ async function submitTrack() {
             <tr>
                 <td>
                     <div class="product-cell">
-                        <img src="${item.image_url || '/images/product-placeholder.jpg'}" alt="${safeName}" width="55" height="55" loading="lazy">
+                        <img src="${item.image_url || '/images/product-placeholder.jpg'}" alt="${safeName}" width="55" height="55" loading="lazy" decoding="async">
                         <span>${safeName}</span>
                     </div>
                 </td>
@@ -110,7 +110,7 @@ async function submitTrack() {
         resBox.style.display = 'block';
     } catch (err) {
         msgBox.className = 'status-cancelled';
-        msgBox.textContent = window.I18n ? window.I18n.t('messages.tracking_error_network', 'حدث خطأ في الاتصال بالخادم، يرجى المحاولة مرة أخرى.') : 'حدث خطأ في الاتصال بالخادم، يرجى المحاولة مرة أخرى.';
+        msgBox.textContent = window.I18n ? window.I18n.t('track.network_error', 'حدث خطأ في الاتصال بالخادم، يرجى المحاولة مرة أخرى.') : 'حدث خطأ في الاتصال بالخادم، يرجى المحاولة مرة أخرى.';
         msgBox.style.display = 'block';
     } finally {
         submitBtn.disabled = false;
